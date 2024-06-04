@@ -37,7 +37,7 @@ export const
           return selectedDate;
         }
 
-        return "";
+        return "" as any;
       }, [value]),
 
       handleFocus = (event : React.FocusEvent<HTMLInputElement, Element>) => {

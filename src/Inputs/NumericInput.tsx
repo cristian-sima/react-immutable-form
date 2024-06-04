@@ -3,9 +3,9 @@
 import Immutable from "immutable";
 import React from "react";
 import { formatZeroValue } from "x25/utility";
-import { clearFloatOnBlur, floatToEnglishComma, getFloatValueToStore, isFloat } from "../../../../../common";
 import { HandleBlurFunc, HandleChangeFunc } from "../types";
 import { SimpleInputProps } from "./SimpleInput";
+import { clearFloatOnBlur, floatToEnglishComma, getFloatValueToStore, isFloat } from "./util-numeric";
 
 type handleNumericBlurFunc = () => any;
 type handleNumericChangeFunc = () => any;
