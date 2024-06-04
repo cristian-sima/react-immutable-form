@@ -5,6 +5,7 @@ import { FormInterface, InitialValues, Nodes, ValidationResult, iFormState, iFor
 import { generateUniqueUUIDv4 } from "./uuid";
 
 export const 
+  FORM_ERROR = "I_FORM/form-error",
   REFERENCES_PATH = "REFERENCES",
   ARRAY_VALUES_FIELD = "VALUES",
   DEFAULT_VALUE_NO_ERROR = undefined,

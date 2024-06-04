@@ -1,11 +1,10 @@
 /* eslint-disable max-lines */
 
-import { FORM_ERROR } from "final-form";
 import Immutable from "immutable";
 import React, { useCallback } from "react";
 import { getInitialState, reducer } from "./reducers";
 import { FormOptions, iFormValidatorFunc, onSubmitFunc } from "./types";
-import { getDefaultField } from "./util";
+import { FORM_ERROR, getDefaultField } from "./util";
 import { getWords } from "./words";
 
 export const 

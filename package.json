@@ -1,7 +1,7 @@
 {
-  "version": "1.0.1",
-  "name": "i-form",
-  "description": "i-form the [i]mmutable form library for react - using hooks",
+  "version": "1.0.5",
+  "name": "react-immutable-form",
+  "description": "react-immutable-form the [i]mmutable form library for react - using hooks",
   "types": "./dist/index.d.ts",
   "scripts": {
     "load": "npm run intern-pre && cd dist && npm run ts && npm run intern-copy && npm publish",
@@ -109,7 +109,6 @@
   "dependencies": {
     "@docusaurus/react-loadable": "^5.5.2",
     "date-fns": "^3.6.0",
-    "final-form": "^4.20.10",
     "immutable": "^4.3.4",
     "react": "^17.0.2",
     "react-datepicker": "^4.24.0",

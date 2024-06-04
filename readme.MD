@@ -24,7 +24,7 @@ iForm was build on these principals:
 3. *focused on normal cases* 
     - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
     - create your own custom field using *Field* and *FieldRender*
-    - it provides out the box custom Inputs using `i-form-bootstrap` library
+    - it provides out the box custom Inputs using `react-immutable-form-bootstrap` library
         - *SimpleInput*         - it is a string input
         - *TemplateInput*       - used for input with a label
         - *NumericInput*        - used for numbers
@@ -72,8 +72,8 @@ By default the library uses **english** language, as default. You can change thi
 You must set this once, in the most upper component of your app:
 
 ```jsx
-    import { setWords } from "i-form/words";
-    import { romanianWords } from "i-form/words/ro";
+    import { setWords } from "react-immutable-form/words";
+    import { romanianWords } from "react-immutable-form/words/ro";
 
     const 
         YourApp = () => {
