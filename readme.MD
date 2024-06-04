@@ -243,13 +243,6 @@ const
                 
               const ID = current.get("ID");
 
-
-              // // <CSSTransition
-              // //   classNames="fade"
-              // //   key={ID}
-              // //   timeout={200}
-              // // >
-              // {/* </CSSTransition> */}
               return (
                 <TableRow
                   current={current}
@@ -557,8 +550,6 @@ const
 
       atLeastChars = (nrOfChars :number) => (
         (value: any) => {
-        // const paraschiv = formState.getIn(["paraschiv", "value"]);
-    
           if (typeof value !== "string" || String(value).length < nrOfChars ) {
             return `At least ${nrOfChars} chars`;
           }
@@ -593,14 +584,12 @@ const
           {
             "Name"    : atLeastChars(3),
             "Surname" : atLeastChars(7),
-            // "age"     : atLeastChars(2),
           },
         ),
       }),
       dispatch = useDispatch(),
       onSubmit : onSubmitFunc  = (values) => 
       {
-        // eslint-disable-next-line no-console
         console.log("values.toJS()", values.toJS());
 
         return new Promise((resolve, reject) => {
@@ -625,16 +614,12 @@ const
       }, []),
       decorators : iFormDecorators = Immutable.Map({
         "Items.Age": ({ formData, nodes }) => {
-          
           // console.group("Items.Age");
           // console.log("field", field);
           // console.log("formData", formData);
           // console.log("nodes", nodes);
           // console.log("value", value);
           // console.groupEnd("Items.Age");
-
-          // todo create a special helper for iterating array 
-
           const 
             sumAges = () => {
               const 
@@ -664,8 +649,6 @@ const
         initialValidators, 
         onSubmitError,
         decorators,
-      // validationDependencies,
-      // }, onSubmit),
       },
       formHandlers = useiForm(iFormOptions, onSubmit),
       [ source, setSource ] = React.useState("management"),
