@@ -13,33 +13,33 @@ iForm - the **immutableJS form** library for react. Based on best library: Immut
 **react-immutable-form** or **iForm** was build on these principals:
 
 ✅ 1. *efficiency* 
-    - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
-    - it can handle `1000 inputs out-of-the-box`, without any optimization 
-    - it `receives decorators` for computing additional states (eg. total of an invoice)
-    - `instant feedback` for validation, submitting and other events
-    - `smart-management` of the fields, using a complex system of references 
-        - if the fields are `displayed`, their value `is verified `
-        - if they are `hidden` they `will not be validated`, but `their values are kept`
+     - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
+     - it can handle `1000 inputs out-of-the-box`, without any optimization 
+     - it `receives decorators` for computing additional states (eg. total of an invoice)
+     - `instant feedback` for validation, submitting and other events
+     - `smart-management` of the fields, using a complex system of references 
+         - if the fields are `displayed`, their value `is verified `
+         - if they are `hidden` they `will not be validated`, but `their values are kept`
 
 ✅ 2. *simplicity* - comes out-of-the-box with all the features you would want to use:
-    - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
-    - *FocusPromt* - `warn the user` the form has unsaved changes
-    - *ErrorDisplay* - shows the `errors in a friendly way`
-    - `easy access` for the state
-    - `simple API` for managing the inputs
+     - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
+     - *FocusPromt* - `warn the user` the form has unsaved changes
+     - *ErrorDisplay* - shows the `errors in a friendly way`
+     - `easy access` for the state
+     - `simple API` for managing the inputs
     
 ✅ 3. *focused on normal cases* 
-    - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
-    - create your own custom field using *Field* and *FieldRender*
-    - it provides out the box custom Inputs using `react-immutable-form-with-bootstrap` library
-        - *SimpleInput*         - it is a string input
-        - *TemplateInput*       - used for input with a label
-        - *NumericInput*        - used for numbers
-        - *NumericTemplate*     - used for numeric input with a label
-        - *SimpleTextarea*      - used for textarea
-        - *TextareaTemplate*    - used for textarea with a label
-        - *SimpleSelect*        - displays a select 
-        - *SelectTemplate*      - a select input with a label
+     - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
+     - create your own custom field using *Field* and *FieldRender*
+     - it provides out the box custom Inputs using `react-immutable-form-with-bootstrap` library
+          - *SimpleInput*         - it is a string input
+          - *TemplateInput*       - used for input with a label
+          - *NumericInput*        - used for numbers
+          - *NumericTemplate*     - used for numeric input with a label
+          - *SimpleTextarea*      - used for textarea
+          - *TextareaTemplate*    - used for textarea with a label
+          - *SimpleSelect*        - displays a select 
+          - *SelectTemplate*      - a select input with a label
 
 ## Other features:
 1. `Small size` of library 
