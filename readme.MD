@@ -10,14 +10,14 @@ iForm was build on these principals:
     - it can handle `1000 inputs out-of-the-box`, without any optimization 
     - it `receives decorators` for computing additional states (eg. total of an invoice)
     - `instant feedback` for validation, submitting and other events
-    - `smart-management` of the inputs 
+    - `smart-management` of the fields, using a complex system of references 
         - if the fields are `displayed`, their value `is verified `
         - if they are `hidden` they `will not be validated`, but `their values are kept`
 
 2. *simplicity* - comes out-of-the-box with all the features you would want to use:
-    - full integration with arrays (add rows, delete, etc)
-    - *FocusPromt* - warn the user the form has unsaved changes
-    - *ErrorDisplay* - shows the errors in a friendly way
+    - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
+    - *FocusPromt* - `warn the user` the form has unsaved changes
+    - *ErrorDisplay* - shows the `errors in a friendly way`
     - `easy access` for the state
     - `simple API` for managing the inputs
     

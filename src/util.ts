@@ -1,8 +1,8 @@
 /* eslint-disable new-cap */
 import Immutable, { List } from "immutable";
 import { createContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { FormInterface, InitialValues, Nodes, ValidationResult, iFormState, iFormValidators } from "./types";
+import { generateUniqueUUIDv4 } from "./uuid";
 
 export const 
   REFERENCES_PATH = "REFERENCES",
@@ -26,7 +26,6 @@ export const
       nodes.insert(nodes.size - 1, ARRAY_VALUES_FIELD)
     )
   ),
-  getNewID = () => uuidv4(),
   getDefaultField = (name : string, value: string, path : string = name) => (
     Immutable.Map({
       path,
@@ -84,7 +83,7 @@ export const
         rows.
           reduce((acc, row: any) => {
             const
-              ID = getNewID(),
+              ID = generateUniqueUUIDv4(),
               result = createRow(ID, row, lisName);
 
             return acc.push(result);
