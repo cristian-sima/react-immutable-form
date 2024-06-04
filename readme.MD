@@ -1,4 +1,4 @@
-iForm - the **immutableJS form** library for React 17/18
+iForm - the **immutableJS form** library 
 
 
 ### Fast, scalable, efficient, predictable form
@@ -7,8 +7,8 @@ iForm - the **immutableJS form** library for React 17/18
 
 <img src="docs/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-[![install size](https://packagephobia.com/badge?p=react-immutable-form)](https://packagephobia.com/result?p=react-immutable-form)
-[![NPM Downloads](https://img.shields.io/npm/dm/react-immutable-form.svg?style=flat)](https://www.npmjs.com/package/react-immutable-form)
+[![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9) [![NPM Downloads](https://img.shields.io/npm/dm/react-immutable-form.svg?style=flat)](https://www.npmjs.com/package/react-immutable-form)
+![React Compatibility](https://badgen.net/badge/React/17%20%26%2018/blue)
 
 
 
@@ -47,10 +47,10 @@ iForm - the **immutableJS form** library for React 17/18
         - *SelectTemplate*      - a select input with a label
 
 ## Other features:
-1. `Small size` of library (it includes just React and ImmutableJS) - `only 25.1
+1. `Small size` of library  `only 25.1
 kB (compressed)`
 
-[![install size](https://packagephobia.com/badge?p=react-immutable-form)](https://packagephobia.com/result?p=react-immutable-form)
+[![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)
 
 2. `No extra dependencies` (React and ImmutableJS are excluded)
 <img src="docs/dependencies.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
