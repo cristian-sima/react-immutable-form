@@ -1,0 +1,14 @@
+{
+    "ignorePaths": [
+        "./src/utility/languages/ro.ts"
+    ],
+    "words": [
+        "acord",
+        "cump",
+        "mmutable",
+        "Promter",
+        "sidesand",
+        "usei",
+        "uuidv"
+    ]
+}

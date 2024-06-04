@@ -1,0 +1,46 @@
+import { TranslationMap } from "../types";
+
+const 
+  fieldsToDescriptions = {
+    "SerialID"            : "Serie",
+    "Serial"              : "Serie",
+    "Date"                : "Dată",
+    "DelegateID"          : "Delegat",
+    "ClientID"            : "Client",
+    "ProviderID"          : "Furnizor",
+    "Items"               : "Articole",
+    "InvoiceID"           : "Factura",
+    "ReceivedInvoiceID"   : "Factura primită",
+    "InvoiceDate"         : "Dată factură",
+    "InvoiceSerialNumber" : "Număr factură",
+    "Name"                : "Denumire",
+    "Quantity"            : "Cantitate",
+    "BuyBasePrice"        : "Preț fără TVA cump.",
+    "SellUnitPrice"       : "Preț cu TVA vânz.",
+    "DeliveryDate"        : "Dată transport",
+    "Observations"        : "Mențiuni",
+    "UnitPrice"           : "Preț",
+    "BaseUnitPrice"       : "Preț",
+    "Vat"                 : "Cotă T.V.A.",
+    "DelegateFullName"    : "Nume delegat",
+    "WarrantyForParts"    : "Garanție piese",
+    "WarrantyForService"  : "Garanție manoperă",
+    "Duration"            : "Durată",
+    "CarMileage"          : "Kilometraj",
+    "PartsFromClient"     : "Piese client",
+    "MalfunctionClaimed"  : "Defecțiune client",
+    "PartsMissing"        : "Piese lipsă",
+    "MalfunctionDetected" : "Defecțiune constatată",
+    "CashingTotal"        : "Sumă încasată",
+  } as TranslationMap,
+  romanianWords = {
+    "CONFIRMATION_FORM_LEAVE" : "Dacă părăsești această pagină, modificările la formular se vor pierde. Ești sigur că vrei să părăsești pagina?",
+    "SOMETHING_WENT_WRONG"    : "Ceva nu a mers cum trebuia. Încercați din nou în cateva minute",
+    "CHECK_THE_ERRORS"        : "Corectează următoarele probleme:",
+    "TO_HIDE_CLICK_HERE"      : "Pentru a ascunde mesajul click aici",
+    "ROW"                     : "Rândul",
+    "FIELDS_TO_DESCRIPTIONS"  : fieldsToDescriptions,
+    "PLEASE_SELECT_OPTION"    : "Selectați o opțiune",
+  };
+
+export  default romanianWords;
