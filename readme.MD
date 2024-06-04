@@ -2,7 +2,7 @@ iForm - the **immutableJS form** library for react. Based on best library: Immut
 
 ### Fast, scalable, efficient, predictable form
 
-<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDQwMCAxNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8ZGVmcz4KICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQxIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2MURBRkI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQ5MDg2MTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgICAgIDxmaWx0ZXIgaWQ9ImYxIiB4PSIwIiB5PSIwIj4KICAgICAgICAgICAgPGZlR2F1c3NpYW5CbHVyIGluPSJTb3VyY2VHcmFwaGljIiBzdGREZXZpYXRpb249IjE1IiAvPgogICAgICAgIDwvZmlsdGVyPgogICAgPC9kZWZzPgogICAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkMSkiIC8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MCw3NSkiPgogICAgICAgIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSI0MCIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNmMSkiIC8+CiAgICAgICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjMwIiBmaWxsPSIjNjFEQUZCIiAvPgogICAgICAgIDx0ZXh0IHg9IjAiIHk9IjUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiCiAgICAgICAgICAgIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIj4KCiAgICAgICAgPC90ZXh0PgogICAgPC9nPgogICAgPHRleHQgeD0iMjQwIiB5PSI4MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgICAgICBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSI+CiAgICAgICAgcmVhY3QtaW1tdXRhYmxlLWZvcm0KICAgIDwvdGV4dD4KPC9zdmc+" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="docs/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 💥 [**handles 1.000 inputs with no ease**](https://bundlephobia.com/result?p=react-immutable-form) 💥
 
@@ -45,8 +45,10 @@ iForm - the **immutableJS form** library for react. Based on best library: Immut
         - *SelectTemplate*      - a select input with a label
 
 ## Other features:
-1. `Small size` of library 
+1. `Small size` of library (it includes just React and ImmutableJS) 
+
 2. `No extra dependencies` 
+<img src="docs/dependencies.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 # Installation 
 
