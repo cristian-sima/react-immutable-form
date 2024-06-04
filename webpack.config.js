@@ -28,9 +28,9 @@ var config = {
     ],
   },
   resolve: {
-    alias: {
-      "react-loadable":"@docusaurus/react-loadable",
-    },
+    // alias: {
+    //   "react-loadable":"@docusaurus/react-loadable",
+    // },
     extensions: [".js", ".json", ".ts", ".tsx"],
     modules: [
       "node_modules",

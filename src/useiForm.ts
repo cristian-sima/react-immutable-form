@@ -15,7 +15,7 @@ export const
    * @param {onSubmitFunc} onSubmit - The function to handle form submission.
    * @returns {FormInterface} The form interface to manage form state and actions.
    */
-  useiForm = (options : FormOptions, onSubmit: onSubmitFunc) => {
+  rawUseiForm = (options : FormOptions, onSubmit: onSubmitFunc) => {
     const 
       initialState = React.useMemo(() => getInitialState(options), []),
       [formData, dispatchFormAction] = React.useReducer(reducer, initialState),
@@ -41,7 +41,7 @@ export const
         (formData.getIn(["state", field]) || getDefaultField(field, "")) as Immutable.Map<string, any>
       ),  [formData]),
 
-      handleChange = useCallback((field, value) => {
+      handleChange = useCallback((field : string, value : any) => {
         dispatchFormAction({
           type    : "field-event-onChange",
           payload : {
@@ -51,7 +51,7 @@ export const
         });
       }, [dispatchFormAction]),
 
-      handleFocus = useCallback((field) => {
+      handleFocus = useCallback((field : string) => {
         dispatchFormAction({
           type    : "field-event-onFocus",
           payload : {
@@ -60,7 +60,7 @@ export const
         });
       }, [dispatchFormAction]),
 
-      handleBlur = useCallback((field) => {
+      handleBlur = useCallback((field : string) => {
         dispatchFormAction({
           type    : "field-event-onBlur",
           payload : {
@@ -69,7 +69,7 @@ export const
         });
       }, [dispatchFormAction]),
 
-      registerField = useCallback((field) => {
+      registerField = useCallback((field : string) => {
         dispatchFormAction({
           type    : "field-event-registerField",
           payload : {
@@ -78,7 +78,7 @@ export const
         });
       }, [dispatchFormAction]),
 
-      unregisterField = useCallback((field) => {
+      unregisterField = useCallback((field : string) => {
         dispatchFormAction({
           type    : "field-event-unregisterField",
           payload : {
@@ -87,7 +87,7 @@ export const
         });
       }, [dispatchFormAction]),
 
-      handleArrayAdd = useCallback((listName, data = {}) => {
+      handleArrayAdd = useCallback((listName : string, data = {}) => {
         dispatchFormAction({
           type    : "array-event-add",
           payload : {
@@ -97,7 +97,7 @@ export const
         });
       }, [dispatchFormAction]),
 
-      handleArrayRemove = useCallback((listName, ID) => {
+      handleArrayRemove = useCallback((listName : string, ID : string) => {
         dispatchFormAction({
           type    : "array-event-remove",
           payload : {

@@ -4,7 +4,7 @@ import Immutable from "immutable";
 import { iFormState } from "../types";
 import { ArrayEventAdd, ArrayEventRemove } from "../types-actions";
 import { createRow } from "../util";
-import { generateUniqueUUIDv4 } from "src/uuid";
+import { generateUniqueUUIDv4 } from "../uuid";
 
 export const 
   handleArrayAddAction = (state : iFormState, action : ArrayEventAdd) => {

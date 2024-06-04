@@ -1,14 +1,13 @@
-import Immutable from "immutable";
 import React, { useContext } from "react";
-import FieldRenderer from "./FieldRender";
+import { RawFieldRenderer } from "./FieldRender";
 import { FieldProps, FieldRendererProps } from "./types";
-import { FormContext, getNodesFromString, getRealPath } from "./util";
+import { RawFormContext, getNodesFromString, getRealPath } from "./util";
 
 const 
   FieldInner = <T extends HTMLElement>(props: FieldProps<T>) => {
     const
       { hideError, inputProps, component, validate, index, listName, ID,  componentProps } = props,
-      form = useContext(FormContext),
+      form = useContext(RawFormContext),
       fieldName = props.name,
       hasIndex = typeof index !== "undefined",
       indexPath = hasIndex ? `${listName}.${index}.${fieldName}`: fieldName,
@@ -35,7 +34,7 @@ const
   
       memoizedFieldRenderer = React.useMemo(() => (
         component ? React.createElement(component, passedProps) : (
-          <FieldRenderer {...passedProps as any} />
+          <RawFieldRenderer {...passedProps as any} />
         )
       ), [component, passedProps]);
 
@@ -52,8 +51,9 @@ const
     }, []);
   
     return memoizedFieldRenderer;
-  },
-  /**
+  };
+
+/**
    * Field component.
    * 
    * This component renders a form field and manages its state, validation, and event handling. It supports
@@ -75,6 +75,4 @@ const
    * 
    * @returns {JSX.Element} The Field component.
    */
-  Field = React.memo(FieldInner);
-
-export default Field;
+export const RawField = React.memo(FieldInner);

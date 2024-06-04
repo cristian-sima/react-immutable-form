@@ -1,9 +1,8 @@
 /* eslint-disable new-cap */
 
-import Immutable from "immutable";
 import { iFormState } from "../types";
 import { FormSetIsSubmitting } from "../types-actions";
-import { verifyAllItems } from "../util-verify";
+import { verifyAllItems } from "./util-verify";
 
 
 export const 

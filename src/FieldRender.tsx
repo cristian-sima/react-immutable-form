@@ -60,8 +60,9 @@ const
         }
       </div>
     );
-  },
-  /**
+  };
+  
+/**
    * FieldRenderer component.
    * 
    * This component renders an individual form field, managing its value and metadata such as error messages.
@@ -82,6 +83,4 @@ const
    * 
    * @returns {JSX.Element} The FieldRenderer component.
    */
-  FieldRenderer = React.memo(FieldRendererInner);
-
-export default FieldRenderer;
+export const RawFieldRenderer = React.memo(FieldRendererInner);

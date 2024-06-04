@@ -10,7 +10,7 @@ export const
   ARRAY_VALUES_FIELD = "VALUES",
   DEFAULT_VALUE_NO_ERROR = undefined,
 
-  FormContext = createContext<FormInterface>({} as any),
+  RawFormContext = createContext<FormInterface>({} as any),
 
   getDefaultManagement = () => (
     Immutable.fromJS({

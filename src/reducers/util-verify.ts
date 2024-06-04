@@ -1,7 +1,7 @@
 
 import Immutable from "immutable";
-import { ManagementState, iFormState, iFormValidators } from "./types";
-import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, performValidation } from "./util";
+import { ManagementState, iFormState, iFormValidators } from "../types";
+import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, performValidation } from "../util";
 
 type verifyAllItemsFuncOptions = {
   validators: iFormValidators;
@@ -76,7 +76,7 @@ export const
 
                       const getNewItem = () => {
                         const shouldCheck = (
-                          Immutable.Map.isMap(rowField) &&
+                          Immutable.Map.isImmutable.Map(rowField) &&
                                               rowField.get("meta")
                         );
 
@@ -134,8 +134,8 @@ export const
                 return checkList(field as Immutable.List<Immutable.Map<string, any>>, fieldKey);
               }
 
-              if (Immutable.Map.isMap(field)) {
-                return checkMap();
+              if (Immutable.Map.isImmutable.Map(field)) {
+                return checkImmutable.Map();
               }
 
               return field;

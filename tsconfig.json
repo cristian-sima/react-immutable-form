@@ -33,9 +33,9 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "react-loadable": [
-        "node_modules/@docusaurus/react-loadable"
-      ]
+      // "react-loadable": [
+      //   "node_modules/@docusaurus/react-loadable"
+      // ]
     },
     "types": []
     // Ensure that Babel can safely transpile files in the TypeScript project
