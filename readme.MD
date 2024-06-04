@@ -1,17 +1,19 @@
-iForm - the **immutableJS form** library for react. Based on best library: Immutable.js
+iForm - the **immutableJS form** library for React 17/18
+
 
 ### Fast, scalable, efficient, predictable form
 
-<img src="docs/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+💥 [**handles 1️⃣0️⃣0️⃣0️⃣ fields, providing instant response**](https://bundlephobia.com/result?p=react-immutable-form) 💥
 
-💥 [**handles 1.000 inputs with no ease**](https://bundlephobia.com/result?p=react-immutable-form) 💥
+<img src="docs/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 [![install size](https://packagephobia.com/badge?p=react-immutable-form)](https://packagephobia.com/result?p=react-immutable-form)
 [![NPM Downloads](https://img.shields.io/npm/dm/react-immutable-form.svg?style=flat)](https://www.npmjs.com/package/react-immutable-form)
 
 
+
 # Principles
-**react-immutable-form** or **iForm** was build on these principals:
+**react-immutable-form** was created taking into account the following principles:
 
 1. *efficiency* ✅
     - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
@@ -45,15 +47,20 @@ iForm - the **immutableJS form** library for react. Based on best library: Immut
         - *SelectTemplate*      - a select input with a label
 
 ## Other features:
-1. `Small size` of library (it includes just React and ImmutableJS) 
+1. `Small size` of library (it includes just React and ImmutableJS) - `only 25.1
+kB (compressed)`
 
-2. `No extra dependencies` 
+[![install size](https://packagephobia.com/badge?p=react-immutable-form)](https://packagephobia.com/result?p=react-immutable-form)
+
+2. `No extra dependencies` (React and ImmutableJS are excluded)
 <img src="docs/dependencies.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 # Installation 
 
-To install please run the following
-react-immutable-form
+To install please run the following:
+```
+npm i react-immutable-form
+ ```
 
 # Examples
 
@@ -74,7 +81,7 @@ react-immutable-form
 
 By default the library uses **english** language, as default. You can change this by setting the language and providing the corresponding object. 
 
-## Available languages:
+## 🔠 Available languages:
 1. English 
 2. Romanian 
 
