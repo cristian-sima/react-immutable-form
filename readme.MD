@@ -10,6 +10,9 @@ iForm tries to achieve the following simple principals
     - it can handle `1000 inputs out-of-the-box`, without any optimization 
     - it `receives decorators` for computing additional states (eg. total of an invoice)
     - `instant feedback` for validation, submitting and other events
+    - `smart-management` of the inputs 
+        - if the fields are `displayed`, their value `is verified `
+        - if they are `hidden` they `will not be validated`, but `their values are kept`
 
 2. *simplicity* - comes out-of-the-box with all the features you would want to use:
     - full integration with arrays (add rows, delete, etc)
