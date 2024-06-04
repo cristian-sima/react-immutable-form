@@ -54,6 +54,51 @@ To install please run the following
 
     # This is achieved using a sistem of complex references  
 
+# Custom language
+
+By default the library uses **english** language, as default. You can change this by setting the language and providing the corresponding object. 
+
+## Available languages:
+1. English 
+2. Romanian 
+
+`If you want to provide translations for other languages, please check the examples at /words/ro.ts`
+
+You must set this once, in the most upper component of your app:
+
+```jsx
+    import { setWords } from "i-form/words";
+    import { romanianWords } from "i-form/words/ro";
+
+    const 
+        YourApp = () => {
+            const
+                iFormOptions = /* blablabla */, 
+                onSubmit = /* blablabla */, 
+                formHandlers = useiForm(iFormOptions, onSubmit);
+
+            return (
+                <>
+                <FormContext.Provider value={formHandlers}>
+                    <form onSubmit={formHandlers.handleSubmit}>
+                    {"...here the first form"}
+                    </form>
+                </FormContext.Provider>
+                </>
+            )
+        },
+        RootComponent = () => {
+            // do it once
+            React.useEffect(() => {
+                setWords(romanianWords);
+            }, []);
+
+            return (
+                <YourApp />
+            )
+        }
+```
+
 # FAQ
 
 ## If i have a nested array, how to handle it?
