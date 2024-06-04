@@ -6,18 +6,18 @@ iForm - the **[i]mmutable form** library for react. Based on best library: Immut
 iForm tries to achieve the following simple principals
 
 1. *efficiency* 
-    - it updates just the necessary fields, doing it efficiently using Immutable.Js
-    - it can handle 1000 inputs out-of-the-box, without any optimization 
-    - it receives decorators for computing additional states (eg. total of an invoice)
-    - instant feedback for validation, submitting and other events
+    - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
+    - it can handle `1000 inputs out-of-the-box`, without any optimization 
+    - it `receives decorators` for computing additional states (eg. total of an invoice)
+    - `instant feedback` for validation, submitting and other events
 
 2. *simplicity* - comes out-of-the-box with all the features you would want to use:
-    - full integration with arrays
+    - full integration with arrays (add rows, delete, etc)
     - *FocusPromt* - warn the user the form has unsaved changes
     - *ErrorDisplay* - shows the errors in a friendly way
     
 3. *focused on normal cases* 
-    - it handles the most common use cases, thus solving their key problems and removing the complexity of dealing with complex cases 
+    - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
     - create your own custom field using *Field* and *FieldRender*
     - it provides out the box custom Inputs using `i-form-bootstrap` library
         - *SimpleInput*         - it is a string input
@@ -30,8 +30,8 @@ iForm tries to achieve the following simple principals
         - *SelectTemplate*      - a select input with a label
 
 ## Other features:
-1. Small size of library 
-2. No extra dependencies 
+1. `Small size` of library 
+2. `No extra dependencies` 
 
 # Installation 
 
