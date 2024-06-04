@@ -1,6 +1,8 @@
 iForm - the **[i]mmutable form** library for react. Based on best library: Immutable.js
 
-# Built principals
+### Fast, scalable, efficient, predictable library
+
+# Established principles:
 iForm tries to achieve the following simple principals
 
 1. *efficiency* 
