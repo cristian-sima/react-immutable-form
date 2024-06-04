@@ -1,9 +1,9 @@
-iForm - the **[i]mmutable form** library for react. Based on best library: Immutable.js
+iForm - the **immutableJS form** library for react. Based on best library: Immutable.js
 
 ### Fast, scalable, efficient, predictable library
 
 # Principles
-iForm was build on these principals:
+**react-immutable-form** or **iForm** was build on these principals:
 
 1. *efficiency* 
     - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
@@ -24,7 +24,7 @@ iForm was build on these principals:
 3. *focused on normal cases* 
     - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
     - create your own custom field using *Field* and *FieldRender*
-    - it provides out the box custom Inputs using `react-immutable-form-bootstrap` library
+    - it provides out the box custom Inputs using `react-immutable-form-with-bootstrap` library
         - *SimpleInput*         - it is a string input
         - *TemplateInput*       - used for input with a label
         - *NumericInput*        - used for numbers
@@ -41,8 +41,7 @@ iForm was build on these principals:
 # Installation 
 
 To install please run the following
-
-``` npm install iForm```
+react-immutable-form
 
 # Examples
 
