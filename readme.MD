@@ -18,6 +18,8 @@ iForm tries to achieve the following simple principals
     - full integration with arrays (add rows, delete, etc)
     - *FocusPromt* - warn the user the form has unsaved changes
     - *ErrorDisplay* - shows the errors in a friendly way
+    - `easy access` for the state
+    - `simple API` for managing the inputs
     
 3. *focused on normal cases* 
     - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
