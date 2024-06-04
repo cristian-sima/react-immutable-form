@@ -3,8 +3,8 @@
 import Immutable from "immutable";
 import { iFormState } from "../types";
 import { ArrayEventAdd, ArrayEventRemove } from "../types-actions";
-import { createRow, getNewID } from "../util";
-
+import { createRow } from "../util";
+import { generateUniqueUUIDv4 } from "src/uuid";
 
 export const 
   handleArrayAddAction = (state : iFormState, action : ArrayEventAdd) => {
@@ -13,7 +13,7 @@ export const
       getNewFormState = (formState : Immutable.Map<string, any>) => {
         const listUpdater = (list: any) => {
           const 
-            ID = getNewID(),
+            ID = generateUniqueUUIDv4(),
             newRow = createRow(ID, data, listName);
         
           return list.push(newRow);
