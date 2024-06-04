@@ -19,7 +19,7 @@ iForm tries to achieve the following simple principals
 3. *focused on normal cases* 
     - it handles the most common use cases, thus solving their key problems and removing the complexity of dealing with complex cases 
     - create your own custom field using *Field* and *FieldRender*
-    - it provides out the box custom Inputs
+    - it provides out the box custom Inputs using `i-form-bootstrap` library
         - *SimpleInput*         - it is a string input
         - *TemplateInput*       - used for input with a label
         - *NumericInput*        - used for numbers
