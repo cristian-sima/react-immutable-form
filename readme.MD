@@ -24,6 +24,12 @@ iForm - the **immutableJS form** library
         - if the fields are `displayed`, their value `is verified `
         - if they are `hidden` they `will not be validated`, but `their values are kept`
 
+
+
+<img src="docs/state.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+
+
+
 2. *simplicity* ✅
     -  comes out-of-the-box with all the features you would want to use:
     - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
@@ -32,6 +38,9 @@ iForm - the **immutableJS form** library
     - `easy access` for the state
     - `simple API` for managing the inputs
     
+
+<img src="docs/field.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+
 3. *focused on normal used cases* ✅
     - your form must allow to get data, validate data, show errors and derive a new state
     - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
