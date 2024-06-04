@@ -1,6 +1,6 @@
 
 import Immutable from "immutable";
-import { ManagementState, iFormState, iFormValidators } from "../types";
+import { ManagementState, Nodes, ValidationResult, iFormState, iFormValidators } from "../types";
 import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, performValidation } from "../util";
 
 type verifyAllItemsFuncOptions = {
@@ -9,60 +9,68 @@ type verifyAllItemsFuncOptions = {
   management: ManagementState;
 }
 
+type updateValuesStateOptions = {
+  whatToSet : any;
+  fieldKey : string;
+  nodes: Nodes;
+}
+
 export const 
-  verifyAllItems = ({
-    validators, 
-    formState,
-    management,
-  } : verifyAllItemsFuncOptions) => {
+  updateValuesState = (givenValues : Immutable.Map<string, any>, options : updateValuesStateOptions) => {
+    const 
+      { fieldKey, nodes, whatToSet } = options,
+      setValueForSingleNodes = () => (
+        givenValues.set(fieldKey, whatToSet)
+      ),
+      setValueForArrays = () => {
+        const
+          listName = nodes.first() as string,
+          index = nodes.get(1),
+          fieldName = nodes.last(),
+          arrayUpdater = (theList = Immutable.List<any>()) => (
+            theList.setIn([index, fieldName], whatToSet)
+          );
+
+        return givenValues.update(listName, arrayUpdater);
+      };
+  
+    if (nodes.size === 1) {
+      return setValueForSingleNodes();
+    }
+
+    return setValueForArrays();
+  },
+  verifyAllItems = (verifyOptions : verifyAllItemsFuncOptions) => {
     
     let 
       errors = Immutable.Map<string, any>(),
       values = Immutable.Map<string, any>();
-
+    
     const 
+      { validators, formState, management } = verifyOptions,
       verifyItem = (field : Immutable.Map<string, any> , fieldKey : string  ) => {
         const 
           rawNodes = getNodesFromString(fieldKey),
           nodes = getRealPath(rawNodes),
           value = field.get("value"),
-          validatorErr = performValidation(validators, nodes, value, formState),
-          newState = field.withMutations((state) => {
-            state.mergeDeepIn(["meta"], Immutable.fromJS({
-              theError: validatorErr,
-            }));
-          }),
-          getNewState = (givenValues : Immutable.Map<string, any>, whatToSet : any) => {
-            const 
-              setValueForSingleNodes = () => (
-                givenValues.set(fieldKey, whatToSet)
-              ),
-              setValueForArrays = () => {
-                const
-                  listName = nodes.first() as string,
-                  index = nodes.get(1),
-                  fieldName = nodes.last(),
-                  arrayUpdater = (theList = Immutable.List<any>()) => (
-                    theList.setIn([index, fieldName], whatToSet)
-                  );
+          validatorErr = performValidation(validators, nodes, value, formState) as ValidationResult,
+          hasError = validatorErr !== undefined,
+          valuesOptions = { fieldKey, nodes, whatToSet: value } as updateValuesStateOptions;
+        
+        values = updateValuesState(values, valuesOptions);
 
-                return givenValues.update(listName, arrayUpdater);
-              };
-            
-            if (nodes.size === 1) {
-              return setValueForSingleNodes();
-            }
-
-            return setValueForArrays();
-          };
-          
-        values = getNewState(values, value);
-
-        if (validatorErr !== undefined ) {
+        if (hasError) {
           errors = errors.setIn(rawNodes, validatorErr);
+
+          return field.withMutations((state) => {
+            state.mergeDeepIn(["meta"], Immutable.fromJS({
+              isTouched : true,
+              theError  : validatorErr,
+            }));
+          });
         }
 
-        return newState;
+        return field;
       },
       
       newFormState = (
@@ -76,7 +84,7 @@ export const
 
                       const getNewItem = () => {
                         const shouldCheck = (
-                          Immutable.Map.isImmutable.Map(rowField) &&
+                          Immutable.Map.isMap(rowField) &&
                                               rowField.get("meta")
                         );
 
@@ -134,8 +142,8 @@ export const
                 return checkList(field as Immutable.List<Immutable.Map<string, any>>, fieldKey);
               }
 
-              if (Immutable.Map.isImmutable.Map(field)) {
-                return checkImmutable.Map();
+              if (Immutable.Map.isMap(field)) {
+                return checkMap();
               }
 
               return field;

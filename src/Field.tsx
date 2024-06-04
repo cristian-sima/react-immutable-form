@@ -1,3 +1,4 @@
+import Immutable from "immutable";
 import React, { useContext } from "react";
 import { RawFieldRenderer } from "./FieldRender";
 import { FieldProps, FieldRendererProps } from "./types";
