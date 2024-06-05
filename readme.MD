@@ -7,9 +7,9 @@ iForm - the **immutableJS form** library
 
 <img src="docs/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-[![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9) [![NPM Downloads](https://img.shields.io/npm/dm/react-immutable-form.svg?style=flat)](https://www.npmjs.com/package/react-immutable-form)
-![React Compatibility](https://badgen.net/badge/React/17%20%26%2018/blue)
 
+[![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9) [![NPM Downloads](https://img.shields.io/npm/dm/react-immutable-form.svg?style=flat)](https://www.npmjs.com/package/react-immutable-form)
+![React Compatibility](https://badgen.net/badge/React/17%20%26%2018/blue)![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue.svg)
 
 
 # Principles
@@ -24,11 +24,7 @@ iForm - the **immutableJS form** library
         - if the fields are `displayed`, their value `is verified `
         - if they are `hidden` they `will not be validated`, but `their values are kept`
 
-
-
 <img src="docs/cycle.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
-
-
 
 2. *simplicity* ✅
     -  comes out-of-the-box with all the features you would want to use:
@@ -79,11 +75,17 @@ npm i react-immutable-form
 
 # Create a new form:
 
-In order to create a new form, you must pass 2 arguments to the function useiForm:
-  1. the options contains all the options needed to illustrate the functionality of your form
-  2. the onSubmit specify what happens in the case of a successful submit
+In order to create a new form, you must pass 2 arguments to the function `useiForm`:
+  1. the `options` contains all the options needed to illustrate the functionality of your form
+  2. the `onSubmit` specify what happens in the case of a successful submit
 
-## 1. can useiForm(options, onSubmit)
+The following examples shows the use of `useiForm` for:
+  - defining a field `Total`, 
+    - which has an `initial value` of `1`
+    - `is computes a derived state` of all sums of previous values of Total
+    - is check the Total `has at least 3 chars`
+  - it `handles the onSubmit` when the Total is greater than 3 chars and the submit button is pressed
+  - it `handles the onSubmitError` when the Total is less than 3 chars 
 
 ```jsx
  import { useiForm, onSubmitFunc, onSubmitErrorFunc, iFormDecorators } from "react-immutable-form";
@@ -142,13 +144,13 @@ In order to create a new form, you must pass 2 arguments to the function useiFor
           const 
             increaseTotal = () => {
               return (
-                formData.updateIn(["computed", "sumOfAllTotals"], (
-                  (newAge : any = 0) => (value + 10) as any
+                formData.updateIn(["derived", "sumOfAllTotals"], (
+                  (newAge : any = 0) => (Number(value) + 10) as any
                 ))
               )
             };
             
-          formData.setIn(["computed", "sumOfAllTotals"], increaseTotal());
+          formData.setIn(["derived", "sumOfAllTotals"], increaseTotal());
         },
       }),
 
@@ -170,12 +172,21 @@ The second step is to write our form
 import React from "react";
 import { Field } from "react-immutable-form";
 
-const FormContent = () => (
+const FormContent = ({ form }) => (
   <>
     <Field
-      inputProps={{ autoFocus: false }}
+      inputProps={{ autoFocus: true }}
       name="Total"
      />
+     {
+      "Total previous sums:" + form.formState.getIn(["derived", "sumOfAllTotals"])
+     }
+    <button
+      className="btn btn-primary mx-1"
+      disabled={form.formState.getIn(["management", "isSubmitting"])}
+      type="submit">
+      {"Submit form"}
+    </button>
   </>
 );
 ```
@@ -674,7 +685,7 @@ const
       form = useContext(FormContext);
 
     return (
-      <RenderSum data={form.getFormData().get("computed")} />
+      <RenderSum data={form.getFormData().get("derived")} />
     );
   },
   MyForm = () => {
@@ -773,7 +784,7 @@ const
                     numericAge = isNumeric(currentAge) ? parseFloat(String(currentAge)) : 0;
 
                   formData.updateIn(
-                    ["computed", ...nodes, "NewAge"], 
+                    ["derived", ...nodes, "NewAge"], 
                     (newAge : any = 0) => (newAge + 10) as any,
                   );
 
@@ -783,7 +794,7 @@ const
               return newValue;
             };
             
-          formData.setIn(["computed", "sum"], sumAges());
+          formData.setIn(["derived", "sum"], sumAges());
         },
       }),
       iFormOptions : FormOptions = {
