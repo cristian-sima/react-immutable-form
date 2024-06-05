@@ -1,5 +1,5 @@
 {
-  "version": "1.0.10",
+  "version": "1.0.11",
   "name": "react-immutable-form",
   "description": "react-immutable-form the [i]mmutable form library for react - using hooks",
   "types": "./dist/index.d.ts",

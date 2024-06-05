@@ -1,4 +1,4 @@
-iForm - the **immutableJS form** library 
+react-immutable-form - the **immutableJS form** library 
 
 
 ### Fast, scalable, efficient, predictable form
@@ -105,11 +105,11 @@ The examples are in developing phase. We appreciate if you send improvements
 
 # Create a new form:
 
-In order to create a new form, you must pass 2 arguments to the function `useiForm`:
+In order to create a new form, you must pass 2 arguments to the function `useImmutableForm`:
   1. the `options` contains all the options needed to illustrate the functionality of your form
   2. the `onSubmit` specify what happens in the case of a successful submit
 
-The following examples shows the use of `useiForm` for:
+The following examples shows the use of `useImmutableForm` for:
   - defining a field `Total`, 
     - which has an `initial value` of `1`
     - `is computes a derived state` of all sums of previous values of Total
@@ -118,7 +118,7 @@ The following examples shows the use of `useiForm` for:
   - it `handles the onSubmitError` when the Total is less than 3 chars 
 
 ```jsx
- import { useiForm, onSubmitFunc, onSubmitErrorFunc, iFormDecorators } from "react-immutable-form";
+ import { useImmutableForm, onSubmitFunc, onSubmitErrorFunc, ImmutableFormDecorators } from "react-immutable-form";
  import Immutable from "immutable";
 
  const 
@@ -168,7 +168,7 @@ The following examples shows the use of `useiForm` for:
       }, []),
       
       // define your decorators
-      decorators : iFormDecorators = Immutable.Map({
+      decorators : ImmutableFormDecorators = Immutable.Map({
         "Total": ({ formData, nodes, value }) => {
 
           const 
@@ -185,7 +185,7 @@ The following examples shows the use of `useiForm` for:
       }),
 
       // prepare the options. any of the options are optional
-      iFormOptions : FormOptions = {
+      ImmutableFormOptions : FormOptions = {
         initialValues,
         initialValidators, 
         onSubmitError,
@@ -193,7 +193,7 @@ The following examples shows the use of `useiForm` for:
       },
 
       // create the handles
-      formHandlers = useiForm(iFormOptions, onSubmit);
+      formHandlers = useImmutableForm(ImmutableFormOptions, onSubmit);
 ```
 
 The second step is to write our form
@@ -226,14 +226,16 @@ Now, we are ready to inject our high-efficiency management to React. This can be
 ```jsx
 
 import React from "react";
-import { Form } from "react-immutable-form";
+import { ImmutableForm } from "react-immutable-form";
+
+// ... prepare the handles (see above)
 
 const 
   Form = ({ handlers, children } : any) => (
     // here the Form injects the handlers into the FormContent 
-    <Form handlers={formHandlers}> 
-      <FormContent />
-    </Form>
+    <ImmutableForm handlers={formHandlers}> 
+      <FormContent form={undefined as any} />
+    </ImmutableForm>
   ),
 ```
     
@@ -242,6 +244,8 @@ which is the same as:
 ```jsx
 import React from "react";
 import { FormContext } from "react-immutable-form";
+
+// ... prepare the handles (see above)
 
 const 
   Form = ({ handlers, children } : any) => (
@@ -271,7 +275,7 @@ import { notify, notifyError, notifyWarning } from "x25/actions";
 import { validateDate, validateFloat, validateSelect } from "x25/utility";
 
 import { getArray, getArrayRowFieldValue } from "react-immutable-form/getters";
-import { FieldProps, FormOptions, RemoveArrayFunc, iFormDecorators, onSubmitErrorFunc, onSubmitFunc } from "react-immutable-form/types";
+import { FieldProps, FormOptions, RemoveArrayFunc, ImmutableFormDecorators, onSubmitErrorFunc, onSubmitFunc } from "react-immutable-form/types";
 
 import { DateInput, DateTemplate, InputTemplate, NumericInput, NumericTemplate, SelectTemplate, SimpleInput, SimpleSelect, SimpleTextarea, SwitchInput, TextareaTemplate, onErrors } from "react-immutable-form-with-bootstrap";
 
@@ -280,7 +284,7 @@ import { JSONSyntaxFromData } from "Beta/Common/Syntax";
 // FormPrompt was declarated:
 // const FormPrompt = createFormPromter(history);
 import { FormPrompt } from "Beta/store/store";
-import { Field, FieldRenderer, FormArray, FormContext, useiForm } from "react-immutable-form";
+import { Field, FieldRenderer, FormArray, FormContext, useImmutableForm } from "react-immutable-form";
 
 type TableRowProps = {
   readonly current: Immutable.Map<string, any>;
@@ -795,7 +799,7 @@ const
   
         return onErrors(cb)(errors);
       }, []),
-      decorators : iFormDecorators = Immutable.Map({
+      decorators : ImmutableFormDecorators = Immutable.Map({
         "Items.Age": ({ formData, nodes }) => {
           // console.group("Items.Age");
           // console.log("field", field);
@@ -827,13 +831,13 @@ const
           formData.setIn(["derived", "sum"], sumAges());
         },
       }),
-      iFormOptions : FormOptions = {
+      ImmutableFormOptions : FormOptions = {
         initialValues,
         initialValidators, 
         onSubmitError,
         decorators,
       },
-      formHandlers = useiForm(iFormOptions, onSubmit),
+      formHandlers = useImmutableForm(ImmutableFormOptions, onSubmit),
       [ source, setSource ] = React.useState("management"),
       toggleJSONSource = () => {
         setSource((
@@ -914,9 +918,9 @@ You must set this once, in the most upper component of your app:
     const 
         YourApp = () => {
             const
-                iFormOptions = /* blablabla */, 
+                ImmutableFormOptions = /* blablabla */, 
                 onSubmit = /* blablabla */, 
-                formHandlers = useiForm(iFormOptions, onSubmit);
+                formHandlers = useImmutableForm(ImmutableFormOptions, onSubmit);
 
             return (
                 <>
