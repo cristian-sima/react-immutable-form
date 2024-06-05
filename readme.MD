@@ -74,7 +74,128 @@ To install please run the following:
 npm i react-immutable-form
  ```
 
-# Example
+# Examples 
+
+
+# Create a new form:
+
+In order to create a new form, you must pass 2 arguments to the function useiForm:
+  1. the options contains all the options needed to illustrate the functionality of your form
+  2. the onSubmit specify what happens in the case of a successful submit
+
+## 1. can useiForm(options, onSubmit)
+
+```jsx
+ import { useiForm, onSubmitFunc, onSubmitErrorFunc, iFormDecorators } from "react-immutable-form";
+ import Immutable from "immutable";
+
+ const 
+      // the initial values 
+      initialValues = Immutable.fromJS({
+        Total           : "1",
+      }),
+
+      // the validators 
+      atLeastChars = (nrOfChars :number) => (
+        (value: any) => {
+          if (typeof value !== "string" || String(value).length < nrOfChars ) {
+            return `At least ${nrOfChars} chars`;
+          }
+    
+          return undefined;
+        }
+      ),
+      initialValidators = Immutable.Map({
+        "Total" : atLeastChars(3),
+      }),
+      // define onSubmit
+      onSubmit : onSubmitFunc  = (values) => 
+      {
+        console.log("values.toJS()", values.toJS());
+
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              // done 
+              resolve("");
+            } catch (error) {
+              // errors
+              reject(error);
+            }
+          }, 2000);
+        });
+      },
+
+      // in case the form fails to validate
+      onSubmitError : onSubmitErrorFunc = useCallback((errors) => {
+        const cb = (node : any) => {
+          // handle the errors given as a node:JSX.Element
+        };
+  
+        return onErrors(cb)(errors);
+      }, []),
+      
+      // define your decorators
+      decorators : iFormDecorators = Immutable.Map({
+        "Total": ({ formData, nodes, value }) => {
+
+          const 
+            increaseTotal = () => {
+              return (
+                formData.updateIn(["computed", "sumOfAllTotals"], (
+                  (newAge : any = 0) => (value + 10) as any
+                ))
+              )
+            };
+            
+          formData.setIn(["computed", "sumOfAllTotals"], increaseTotal());
+        },
+      }),
+
+      // prepare the options. any of the options are optional
+      iFormOptions : FormOptions = {
+        initialValues,
+        initialValidators, 
+        onSubmitError,
+        decorators,
+      },
+
+      // create the handles
+      formHandlers = useiForm(iFormOptions, onSubmit);
+```
+
+Now, we are ready to inject our high-efficiency management to React. This can be done in two ways:
+
+```jsx
+
+import React from "react";
+import { Form } from "react-immutable-form";
+
+const 
+  Form = ({ handlers, children } : any) => (
+    <Form handlers={formHandlers}>
+        <FormContent />
+    </Form>
+  ),
+```
+    
+which is the same as:
+
+```jsx
+import React from "react";
+import { FormContext } from "react-immutable-form";
+
+const 
+  Form = ({ handlers, children } : any) => (
+    <FormContext.Provider value={handlers}>
+      <form onSubmit={handlers.handleSubmit}>
+        { React.cloneElement(children, { form: handlers })}
+      </form>
+    </FormContext.Provider>
+  ),
+```
+
+## Full Example
 
 The following example illustrates the use of all features of this library.
 
