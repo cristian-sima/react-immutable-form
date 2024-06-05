@@ -1,11 +1,11 @@
 
 import Immutable from "immutable";
-import { ManagementState, Nodes, ValidationResult, iFormState, iFormValidators } from "../types";
+import { ImmutableFormState, ImmutableFormValidators, ManagementState, Nodes, ValidationResult } from "../types";
 import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, performValidation } from "../util";
 
 type verifyAllItemsFuncOptions = {
-  validators: iFormValidators;
-  formState: iFormState;
+  validators: ImmutableFormValidators;
+  formState: ImmutableFormState;
   management: ManagementState;
 }
 

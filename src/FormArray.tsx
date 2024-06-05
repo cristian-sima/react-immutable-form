@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
+import FormContext from "./context";
 import { FormArrayProps } from "./types";
-import { RawFormContext } from "./util";
 
 const   
   FormArrayInner = ({ name, children }: FormArrayProps) => {
@@ -9,7 +9,7 @@ const
     }
 
     const
-      { formState, handleArrayAdd, handleArrayRemove } = useContext(RawFormContext),
+      { formState, handleArrayAdd, handleArrayRemove } = useContext(FormContext),
       data = formState.get(name) as Immutable.List<Immutable.Map<string, any>>,
       passedProps = {
         name,
@@ -22,9 +22,9 @@ const
       ), [name, data]);
 
     return memoizedFieldRenderer;
-  };
+  },
 
-/**
+  /**
    * FormArray component.
    * 
    * This component manages an array of form fields within a larger form. It provides functionality
@@ -38,4 +38,6 @@ const
    * 
    * @returns {JSX.Element | null} The FormArray component.
    */
-export const RawFormArray = React.memo(FormArrayInner);
+  FormArray = React.memo(FormArrayInner);
+
+export default FormArray;

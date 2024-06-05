@@ -1,13 +1,13 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { iFormState } from "../types";
+import { ImmutableFormState } from "../types";
 import { FieldEventOnFocusAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath } from "../util";
 
 
 export const 
-  handleOnFocus = (state : iFormState, action : FieldEventOnFocusAction) => {
+  handleOnFocus = (state : ImmutableFormState, action : FieldEventOnFocusAction) => {
     const 
       { field } = action.payload,
       stateUpdater = (formState : Immutable.Map<string, any>) => {

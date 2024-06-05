@@ -1,7 +1,7 @@
-import { iFormArray, iFormSingleField, iFormState } from "./types";
+import { ImmutableFormSingleField, ImmutableFormState } from "./types";
 import { ARRAY_VALUES_FIELD } from "./util";
 
-export const    
+const    
 /**
  * Retrieves the value of a specified field from a given row, for an array
  * 
@@ -15,20 +15,27 @@ export const
   /**
      * Retrieves a specified field from the form data.
      * 
-     * @param {iFormState} formData - The form data object.
+     * @param {ImmutableFormState} formData - The form data object.
      * @param {string} fieldName - The name of the field to retrieve.
-     * @returns {iFormField} - The field data.
+     * @returns {ImmutableFormSingleField} - The field data.
      */
-  getSingleField = (formData : iFormState, fieldName : string) => (
-    formData.getIn(["state", fieldName]) as iFormSingleField
+  getSingleField = (formData : ImmutableFormState, fieldName : string) => (
+    formData.getIn(["state", fieldName]) as ImmutableFormSingleField
   ),
   /**
  * Retrieves a specified array field from the form data.
  * 
- * @param {iFormState} formData - The form data object.
+ * @param {ImmutableFormState} formData - The form data object.
  * @param {string} fieldName - The name of the array field to retrieve.
- * @returns {iFormArray} - The array field data.
+ * @returns {ImmutableFormState} - The array field data.
  */  
-  getArray = (formData : iFormState, fieldName : string) => (
-    formData.getIn(["state", fieldName]) as iFormArray
-  );
+  getArray = (formData : ImmutableFormState, fieldName : string) => (
+    formData.getIn(["state", fieldName]) as ImmutableFormState
+  ),
+  immutableGetters = {
+    getArrayRowFieldValue,
+    getSingleField,
+    getArray,
+  };
+
+export default immutableGetters;

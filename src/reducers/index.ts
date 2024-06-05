@@ -2,7 +2,7 @@
 
 import Immutable from "immutable";
 import { FormOptions } from "../types";
-import { iFormActions } from "../types-actions";
+import { ImmutableFormActions } from "../types-actions";
 import { getDefaultManagement, parseInitialData } from "../util";
 import { handleArrayAddAction, handleArrayRemoveAction } from "./array";
 import { handleOnBlur } from "./field-onBlur";
@@ -13,7 +13,7 @@ import { handleUnregisterField } from "./field-unRegister";
 import { handleFormOnSubmit, handleFormSubmitHandled, setFormIsSubmitting } from "./form-events";
 
 export const 
-  reducer = (state : Immutable.Map<string, any> = Immutable.Map(), action : iFormActions) => {
+  reducer = (state : Immutable.Map<string, any> = Immutable.Map(), action : ImmutableFormActions) => {
 
     switch (action.type) {
       case "field-event-onFocus":

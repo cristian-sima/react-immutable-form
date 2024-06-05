@@ -2,7 +2,7 @@
 
 
 export default {
-  "root"    : "./src",
+  "root"    : "./",
   "browser" : {
     enabled : true,
     name    : "chrome",

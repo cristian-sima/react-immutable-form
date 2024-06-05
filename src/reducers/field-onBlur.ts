@@ -1,15 +1,15 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { iFormState, iFormValidators } from "../types";
+import { ImmutableFormState, ImmutableFormValidators } from "../types";
 import { FieldEventOnBlurAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
 
 export const 
-  handleOnBlur = (formData : iFormState, action : FieldEventOnBlurAction) => {
+  handleOnBlur = (formData : ImmutableFormState, action : FieldEventOnBlurAction) => {
     const 
-      validators = formData.get("validators") as iFormValidators,
+      validators = formData.get("validators") as ImmutableFormValidators,
       { field } = action.payload,
       stateUpdater = (formState : Immutable.Map<string, any>) => {
         const 

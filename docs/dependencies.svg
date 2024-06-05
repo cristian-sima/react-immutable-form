@@ -7,48 +7,48 @@
     </defs>
     <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 161.86)">
 
-        <text text-anchor="middle" x="525.8" y="-139.46" font-family="Roboto Condensed, sans-serif" font-size="12.00">react-immutable-form</text>
-        <!-- react&#45;immutable&#45;form@1.0.9 -->
-        <g id="node1" class="node selected" data-module="react-immutable-form@1.0.9">
-            <title>react-immutable-form@1.0.9</title>
+        <!-- <text text-anchor="middle" x="525.8" y="-139.46" font-family="Roboto Condensed, sans-serif" font-size="12.00">react-immutable-form</text> -->
+        <!-- react&#45;immutable&#45;form -->
+        <g id="node1" class="node selected" data-module="react-immutable-form">
+            <title>react-immutable-form</title>
             <path fill="none" stroke="black" d="M385.23,-89.35C385.23,-89.35 12,-89.35 12,-89.35 6,-89.35 0,-83.35 0,-77.35 0,-77.35 0,-55.61 0,-55.61 0,-49.61 6,-43.61 12,-43.61 12,-43.61 385.23,-43.61 385.23,-43.61 391.23,-43.61 397.23,-49.61 397.23,-55.61 397.23,-55.61 397.23,-77.35 397.23,-77.35 397.23,-83.35 391.23,-89.35 385.23,-89.35" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: #e8e6e3;"></path>
-            <text text-anchor="middle" x="198.61" y="-56.49" font-family="Roboto Condensed, sans-serif" font-size="22.32">react-immutable-form@1.0.9</text>
+            <text text-anchor="middle" x="198.61" y="-56.49" font-family="Roboto Condensed, sans-serif" font-size="22.32">react-immutable-form</text>
         </g>
-        <!-- immutable@4.3.6 -->
-        <g id="node2" class="node downstream" data-module="immutable@4.3.6">
-            <title>immutable@4.3.6</title>
+        <!-- immutable -->
+        <g id="node2" class="node downstream" data-module="immutable">
+            <title>immutable</title>
             <path fill="none" stroke="black" d="M730.53,-130.66C730.53,-130.66 445.23,-130.66 445.23,-130.66 439.23,-130.66 433.23,-124.66 433.23,-118.66 433.23,-118.66 433.23,-86.3 433.23,-86.3 433.23,-80.3 439.23,-74.3 445.23,-74.3 445.23,-74.3 730.53,-74.3 730.53,-74.3 736.53,-74.3 742.53,-80.3 742.53,-86.3 742.53,-86.3 742.53,-118.66 742.53,-118.66 742.53,-124.66 736.53,-130.66 730.53,-130.66" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: #e8e6e3;"></path>
-            <text text-anchor="middle" x="587.88" y="-89.83" font-family="Roboto Condensed, sans-serif" font-size="21.17">immutable@4.3.6</text>
+            <text text-anchor="middle" x="587.88" y="-89.83" font-family="Roboto Condensed, sans-serif" font-size="21.17">immutable</text>
         </g>
-        <!-- react&#45;immutable&#45;form@1.0.9&#45;&gt;immutable@4.3.6 -->
+        <!-- react&#45;immutable&#45;form&#45;&gt;immutable -->
 
-        <!-- react@17.0.2 -->
-        <g id="node3" class="node downstream" data-module="react@17.0.2">
-            <title>react@17.0.2</title>
+        <!-- react -->
+        <g id="node3" class="node downstream" data-module="react">
+            <title>react</title>
             <path fill="none" stroke="black" d="M680.94,-56.22C680.94,-56.22 494.81,-56.22 494.81,-56.22 488.81,-56.22 482.81,-50.22 482.81,-44.22 482.81,-44.22 482.81,-16.74 482.81,-16.74 482.81,-10.74 488.81,-4.74 494.81,-4.74 494.81,-4.74 680.94,-4.74 680.94,-4.74 686.94,-4.74 692.94,-10.74 692.94,-16.74 692.94,-16.74 692.94,-44.22 692.94,-44.22 692.94,-50.22 686.94,-56.22 680.94,-56.22" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: #e8e6e3;"></path>
-            <text text-anchor="middle" x="587.88" y="-19.05" font-family="Roboto Condensed, sans-serif" font-size="21.10">react@17.0.2</text>
+            <text text-anchor="middle" x="587.88" y="-19.05" font-family="Roboto Condensed, sans-serif" font-size="21.10">react</text>
         </g>
-        <!-- react&#45;immutable&#45;form@1.0.9&#45;&gt;react@17.0.2 -->
+        <!-- react&#45;immutable&#45;form&#45;&gt;react -->
 
         <!-- loose&#45;envify@1.4.0 -->
 
-        <!-- react@17.0.2&#45;&gt;loose&#45;envify@1.4.0 -->
+        <!-- react&#45;&gt;loose&#45;envify@1.4.0 -->
 
         <!-- object&#45;assign@4.1.1 -->
 
-        <!-- react@17.0.2&#45;&gt;object&#45;assign@4.1.1 -->
+        <!-- react&#45;&gt;object&#45;assign@4.1.1 -->
 
         <!-- js&#45;tokens@4.0.0 -->
 
         <!-- loose&#45;envify@1.4.0&#45;&gt;js&#45;tokens@4.0.0 -->
 
         <g id="edge2" class="edge downstream">
-            <title>react-immutable-form@1.0.9-&gt;react@17.0.2</title>
+            <title>react-immutable-form-&gt;react</title>
             <path fill="none" stroke="black" d="M397.5,-48.08C422.71,-45.74 447.83,-43.41 471.14,-41.24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: #e8e6e3;"></path>
             <polygon fill="black" stroke="black" points="471.29,-44.74 480.93,-40.33 470.64,-37.77 471.29,-44.74" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill: #e8e6e3; --darkreader-inline-stroke: #e8e6e3;"></polygon>
         </g>
         <g id="edge1" class="edge downstream">
-            <title>react-immutable-form@1.0.9-&gt;immutable@4.3.6</title>
+            <title>react-immutable-form-&gt;immutable</title>
             <path fill="none" stroke="black" d="M397.5,-84.88C405.54,-85.62 413.57,-86.37 421.54,-87.11" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: #e8e6e3;"></path>
             <polygon fill="black" stroke="black" points="420.96,-90.57 431.24,-88.01 421.61,-83.6 420.96,-90.57" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill: #e8e6e3; --darkreader-inline-stroke: #e8e6e3;"></polygon>
         </g>

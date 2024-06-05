@@ -1,16 +1,13 @@
 /* eslint-disable new-cap */
 import Immutable, { List } from "immutable";
-import { createContext } from "react";
-import { FormInterface, InitialValues, Nodes, ValidationResult, iFormState, iFormValidators } from "./types";
+import { ImmutableFormState, ImmutableFormValidators, InitialValues, Nodes, ValidationResult } from "./types";
 import { generateUniqueUUIDv4 } from "./uuid";
 
 export const 
-  FORM_ERROR = "I_FORM/form-error",
+  FORM_ERROR = "REACT_IMMUTABLE_FORM/error",
   REFERENCES_PATH = "REFERENCES",
   ARRAY_VALUES_FIELD = "VALUES",
   DEFAULT_VALUE_NO_ERROR = undefined,
-
-  RawFormContext = createContext<FormInterface>({} as any),
 
   getDefaultManagement = () => (
     Immutable.fromJS({
@@ -40,31 +37,27 @@ export const
       }),
     })
   ),
-  createRow = (ID: string, target: Immutable.Map<string, any>, listName : string) => {
-    const
-      parseRow = () => Immutable.Map((
-        target.reduce((rowAcc, rowFieldDefaultValue, rowFieldName) => {
-          const 
-            path = `${listName}.${ID}.${rowFieldName}`,
-            givenValue = rowFieldDefaultValue || "",
-            rowField = getDefaultField(rowFieldName, givenValue, path);
+  createRowValues = (ID: string, target: Immutable.Map<string, any>, listName : string) => Immutable.Map((
+    target.reduce((rowAcc, rowFieldDefaultValue, rowFieldName) => {
+      const 
+        path = `${listName}.${ID}.${rowFieldName}`,
+        givenValue = rowFieldDefaultValue || "",
+        rowField = getDefaultField(rowFieldName, givenValue, path);
 
-          return (
-            rowAcc.set(rowFieldName, rowField)
-          );
-        }, Immutable.Map() as InitialValues)
-      ));
-
-    return (
-      Immutable.Map(
-        {
-          ID,
-          [ARRAY_VALUES_FIELD]: parseRow(),
-        },
-      )
-    );
-  },
-  performValidation = (validators : iFormValidators, nodes : Nodes, valueToCheck : any, prevState : iFormState) => {
+      return (
+        rowAcc.set(rowFieldName, rowField)
+      );
+    }, Immutable.Map() as InitialValues)
+  )),
+  createRow = (ID: string, target: Immutable.Map<string, any>, listName : string) => (
+    Immutable.Map(
+      {
+        ID,
+        [ARRAY_VALUES_FIELD]: createRowValues(ID, target, listName),
+      },
+    )
+  ),
+  performValidation = (validators : ImmutableFormValidators, nodes : Nodes, valueToCheck : any, prevState : ImmutableFormState) => {
     const 
       validatorNodes = nodes.size === 1 ? [nodes.first()] : (
         [nodes.first(), nodes.last()]

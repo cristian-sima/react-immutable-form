@@ -65,13 +65,11 @@ iForm - the **immutableJS form** library
 
 # Installation 
 
-To install please run the following:
-```
-npm i react-immutable-form
- ```
+To install please run the following: `npm i react-immutable-form`
 
 # Examples 
 
+The examples are in developing phase. We appreciate if you send improvements
 
 # Create a new form:
 
@@ -911,6 +909,32 @@ You must set this once, in the most upper component of your app:
 ```
 
 # FAQ
+
+## Why using Immutable.JS, while Emmer is the newest big thing?
+
+For one big reason, that Emmer can not provide: `Performance`: Immutable.JS can offer performance benefits for certain operations due to structural sharing. This means it can efficiently handle large data sets.
+
+Given a scenario when you have `a complicated form`, with possibly an array of hundreds of rows, each row with a few fields, Immutable.JS backs you by providing efficiency `without thinking about it`. Starting to think about using hook in this complex scenario may backfire
+
+
+## Immutable.JS requires additional steps for conversion, so how can this be simple?
+
+This is not quite true.
+
+If you keep you stare in an Immutable.JS redux state, you have all the operations in Immutable.JS. The only 2 situations when there is a need for using `.toJS()` or `.fromJS()` are when you are reading from server or writing to it.
+
+In all other scenarios, you will handle the data in Immutable functions. So why don't you handle it in an Immutable way inside the forms?
+
+
+## Why not using `redux-form` rather than this library?
+
+[Redux form](https://redux-form.com/8.3.0/) is a very powerful library, however there are a few downfalls: 
+1. It does `not provide support for React` hooks (React 17/18)
+2. It `is no longer maintained` as the focus is now for `react-final-form`
+3. `Complex system` of action creators and getters, whiles `react-final-form` has simple API
+4. Different philosophy: 
+  - `react-immutable-form` does `not pollute the entire react state` and just use a separate redux-state for each form, where as `redux-form` injects the entire form in the app state
+  - `redux-form` supports all events and has an extension for Immutable, whiles `react-immutable-form` was created using Immutable in mind
 
 ## If i have a nested array, how to handle it?
 

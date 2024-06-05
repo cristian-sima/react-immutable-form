@@ -1,20 +1,20 @@
-import { iFormActions } from "./types-actions";
+import { ImmutableFormActions } from "./types-actions";
 
-export type onSubmitFunc = (values : iFormState, dispatchFormAction : React.Dispatch<iFormActions>) => any;
+export type onSubmitFunc = (values : ImmutableFormState, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => any;
 
-export type onSubmitErrorFunc =  (errors :  Immutable.Map<string, any>, dispatchFormAction : React.Dispatch<iFormActions>) => any;
+export type onSubmitErrorFunc =  (errors :  Immutable.Map<string, any>, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => any;
 
 export type FormOptions = {
   initialValues: InitialValues, 
-  initialValidators: iFormValidators,
-  decorators: iFormDecorators;
+  initialValidators: ImmutableFormValidators,
+  decorators: ImmutableFormDecorators;
   management? : Immutable.Map<string, any>,
-  validationDependencies? : iFormValidationDependencies, 
+  validationDependencies? : ImmutableFormValidationDependencies, 
   onSubmitError?: onSubmitErrorFunc;
 }
 
 type DecoratorOptions = {
-  formData: iFormState;
+  formData: ImmutableFormState;
   field: string;
   value: string;
   nodes: Nodes;
@@ -22,24 +22,24 @@ type DecoratorOptions = {
 
 export type Decorator = (options : DecoratorOptions) => any; 
 
-export type iFormDecorators = Immutable.Map<string, Decorator>
+export type ImmutableFormDecorators = Immutable.Map<string, Decorator>
 
 export type ManagementState = Immutable.Map<string, any>;
 
-export type iFormSingleField = Immutable.Map<string, any>;
+export type ImmutableFormSingleField = Immutable.Map<string, any>;
 
-export type iFormArray =  Immutable.List<iFormSingleField>
-export type iFormField = iFormSingleField
+export type ImmutableFormArray =  Immutable.List<ImmutableFormSingleField>
+export type ImmutableFormField = ImmutableFormSingleField
   
 export type ValidationResult = string | undefined;
   
-export type iFormValidatorFunc = (value: any, formState : iFormState) => ValidationResult;
+export type ImmutableFormValidatorFunc = (value: any, formState : ImmutableFormState) => ValidationResult;
   
-export type iFormState = Immutable.Map<string, any>;
+export type ImmutableFormState = Immutable.Map<string, any>;
   
-export type iFormValidators = Immutable.Map<string, iFormValidatorFunc | iFormValidators>
+export type ImmutableFormValidators = Immutable.Map<string, ImmutableFormValidatorFunc | ImmutableFormValidators>
   
-export type iFormValidationDependencies = Immutable.Map<string, any>;
+export type ImmutableFormValidationDependencies = Immutable.Map<string, any>;
   
 export type InitialValues = Immutable.Map<string, any>
   
@@ -56,7 +56,7 @@ export type HandleBlurFunc = (field: any) => void;
 export type HandleFocusFunc =  (field: any) => void;
   
 export type FormMutators = {
-  readonly setFieldValidator: (field: string, validator: iFormValidatorFunc) => void;
+  readonly setFieldValidator: (field: string, validator: ImmutableFormValidatorFunc) => void;
   readonly registerField: (field: string) => void;
   readonly unregisterField: (field: string) => void;
 }
@@ -66,21 +66,19 @@ export type Getters = {
   getFormData: () => Immutable.Map<string, any>;
 }
   
-export type FormInterface = ArrayMutators & FieldMutators & FormMutators & Getters & {
-  formState: iFormState;
+export type ImmutableFormHandlers = ArrayMutators & FieldMutators & FormMutators & Getters & {
+  formState: ImmutableFormState;
   management: ManagementState;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
   
 // fields 
-  
 export type FieldMutators = {
   readonly handleChange: HandleChangeFunc;
   readonly handleFocus:HandleFocusFunc;
   readonly handleBlur: HandleBlurFunc;
 }
   
-
 export type InputProps<T extends HTMLElement> = T extends HTMLInputElement
   ? React.InputHTMLAttributes<T> & { ref?: React.RefObject<T> }
   : T extends HTMLTextAreaElement
@@ -90,7 +88,7 @@ export type InputProps<T extends HTMLElement> = T extends HTMLInputElement
 export type GenericFieldProps<T extends HTMLElement> = {
   component?: React.JSXElementConstructor<FieldRendererProps<T> & any>;
   readonly name: string;
-  validate?: iFormValidatorFunc;
+  validate?: ImmutableFormValidatorFunc;
   inputProps?:  InputProps<T>;
 }
 

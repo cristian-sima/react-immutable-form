@@ -3,11 +3,12 @@
 import Immutable from "immutable";
 import React, { useCallback } from "react";
 import { getInitialState, reducer } from "./reducers";
-import { FormOptions, iFormValidatorFunc, onSubmitFunc } from "./types";
+import { FormOptions, ImmutableFormHandlers, ImmutableFormValidatorFunc, onSubmitFunc } from "./types";
 import { FORM_ERROR, getDefaultField } from "./util";
+import { generateUniqueUUIDv4 } from "./uuid";
 import { getWords } from "./words";
 
-export const 
+const 
   /**
    * Custom hook to handle form logic.
    * 
@@ -15,7 +16,7 @@ export const
    * @param {onSubmitFunc} onSubmit - The function to handle form submission.
    * @returns {FormInterface} The form interface to manage form state and actions.
    */
-  rawUseiForm = (options : FormOptions, onSubmit: onSubmitFunc) => {
+  useImmutableForm = (options : FormOptions, onSubmit: onSubmitFunc) => {
     const 
       initialState = React.useMemo(() => getInitialState(options), []),
       [formData, dispatchFormAction] = React.useReducer(reducer, initialState),
@@ -23,7 +24,7 @@ export const
       formState = formData.get("state") as Immutable.Map<string, any>,
       management = formData.get("management") as Immutable.Map<string, any>,
 
-      setFieldValidator = useCallback((field: string, value : iFormValidatorFunc) => {
+      setFieldValidator = useCallback((field: string, value : ImmutableFormValidatorFunc) => {
         dispatchFormAction({
           type    : "form-set-field-validator",
           payload : {
@@ -87,10 +88,11 @@ export const
         });
       }, [dispatchFormAction]),
 
-      handleArrayAdd = useCallback((listName : string, data = {}) => {
+      handleArrayAdd = useCallback((listName : string, data = Immutable.Map<string, any>()) => {
         dispatchFormAction({
           type    : "array-event-add",
           payload : {
+            ID: generateUniqueUUIDv4(),
             listName,
             data,
           },
@@ -132,26 +134,30 @@ export const
 
       }, [dispatchFormAction]),
 
-      validationResult = React.useMemo(() => ({
-        // form
-        formState,
-        management,
-        handleSubmit,
-        getFormData,
-        getFieldState,
-
-        // array mutators
-        handleArrayAdd,
-        handleArrayRemove,
+      api = React.useMemo(() => {
+        const inner :ImmutableFormHandlers = {
+          // form
+          formState,
+          management,
+          handleSubmit,
+          getFormData,
+          getFieldState,
+  
+          // array mutators
+          handleArrayAdd,
+          handleArrayRemove,
+          
+          // field mutators
+          handleChange,
+          handleFocus,
+          handleBlur,
+          setFieldValidator,
+          registerField,
+          unregisterField,
+        };
         
-        // field mutators
-        handleChange,
-        handleFocus,
-        handleBlur,
-        setFieldValidator,
-        registerField,
-        unregisterField,
-      }), [formState, management]);
+        return inner; 
+      }, [formState, management]);
 
     React.useEffect(() => {
       const 
@@ -207,5 +213,7 @@ export const
       }
     }, [management]);
 
-    return validationResult;
+    return api;
   };
+
+export default useImmutableForm;

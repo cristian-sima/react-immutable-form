@@ -1,13 +1,13 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { iFormState } from "../types";
+import { ImmutableFormState } from "../types";
 import { FormSetIsSubmitting } from "../types-actions";
 import { verifyAllItems } from "./util-verify";
 
 
 export const 
-  handleFormOnSubmit = (formData : iFormState) => {
+  handleFormOnSubmit = (formData : ImmutableFormState) => {
     const 
       validationResult = verifyAllItems({
         formState  : formData.get("state"),
@@ -23,7 +23,7 @@ export const
         "errors"        : validationResult.errors,
       }));
   },
-  handleFormSubmitHandled = (formData : iFormState) => (
+  handleFormSubmitHandled = (formData : ImmutableFormState) => (
     formData
       .mergeDeepIn(["management"], Immutable.Map({
         "formError"     : undefined,
@@ -32,7 +32,7 @@ export const
         "errors"        : undefined,
       }))
   ),
-  setFormIsSubmitting = (formData : iFormState, action : FormSetIsSubmitting) => (
+  setFormIsSubmitting = (formData : ImmutableFormState, action : FormSetIsSubmitting) => (
     formData
       .mergeDeepIn(["management"], Immutable.Map({
         "isSubmitting" : action.payload.isSubmitting,

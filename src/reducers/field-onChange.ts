@@ -1,19 +1,19 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { Decorator, DependenciesValidationList, iFormDecorators, iFormState, iFormValidationDependencies, iFormValidators } from "../types";
+import { Decorator, DependenciesValidationList, ImmutableFormDecorators, ImmutableFormState, ImmutableFormValidationDependencies, ImmutableFormValidators } from "../types";
 import { FieldEventOnChangeAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
 
 export const 
-  handleOnChange = (formData : iFormState, action : FieldEventOnChangeAction) => {
+  handleOnChange = (formData : ImmutableFormState, action : FieldEventOnChangeAction) => {
     const 
-      validators = formData.get("validators") as iFormValidators,
-      decorators = formData.get("decorators") as iFormDecorators,
+      validators = formData.get("validators") as ImmutableFormValidators,
+      decorators = formData.get("decorators") as ImmutableFormDecorators,
       { value, field } = action.payload,
       nodes = getRealPath(getNodesFromString(field)),
-      applyDecorators = (givenFormData : iFormState) => {
+      applyDecorators = (givenFormData : ImmutableFormState) => {
         const 
           getDecoratorPath = () => {
             if (nodes.size === 1) {
@@ -65,7 +65,7 @@ export const
 
           dependenciesUpdater = (givenState : Immutable.Map<string, any>) => {
             const 
-              validationDependencies = formData.get("validationDependencies") as iFormValidationDependencies,
+              validationDependencies = formData.get("validationDependencies") as ImmutableFormValidationDependencies,
               source = validationDependencies.get(field) as DependenciesValidationList | undefined,
               performValidationDependenciesCheck = (theSource : DependenciesValidationList) => (
                 theSource.reduce((acc, target) => {

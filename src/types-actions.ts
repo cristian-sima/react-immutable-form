@@ -1,4 +1,4 @@
-import { iFormValidatorFunc } from "./types";
+import { ImmutableFormValidatorFunc } from "./types";
 
 export type FieldEventOnFocusAction = {
   type: "field-event-onFocus",
@@ -41,6 +41,7 @@ export type FieldEventUnregisterFieldAction = {
 export type ArrayEventAdd = {
   type: "array-event-add",
   payload: {
+    ID: string;
     listName: string;
     data: any;
   };
@@ -68,7 +69,7 @@ export type FormSetFieldValidator = {
   type: "form-set-field-validator",
   payload: {
     field: string;
-    value: iFormValidatorFunc;
+    value: ImmutableFormValidatorFunc;
   };
 }
 
@@ -80,7 +81,7 @@ export type FormSetIsSubmitting = {
   };
 }
 
-export type iFormActions = 
+export type ImmutableFormActions = 
   // field
   FieldEventOnFocusAction | 
   FieldEventOnBlurAction | 

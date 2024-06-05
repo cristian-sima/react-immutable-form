@@ -1,19 +1,18 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { iFormState } from "../types";
 import { ArrayEventAdd, ArrayEventRemove } from "../types-actions";
 import { createRow } from "../util";
-import { generateUniqueUUIDv4 } from "../uuid";
+
+export type ImmutableFormState = Immutable.Map<string, any>;
 
 export const 
-  handleArrayAddAction = (state : iFormState, action : ArrayEventAdd) => {
+  handleArrayAddAction = (state : ImmutableFormState, action : ArrayEventAdd) => {
     const 
-      { data, listName } = action.payload,
+      { data, listName, ID  } = action.payload,
       getNewFormState = (formState : Immutable.Map<string, any>) => {
-        const listUpdater = (list: any) => {
+        const listUpdater = (list = Immutable.List<Immutable.Map<string, any>>()) => {
           const 
-            ID = generateUniqueUUIDv4(),
             newRow = createRow(ID, data, listName);
         
           return list.push(newRow);
@@ -24,14 +23,22 @@ export const
 
     return state.update("state", getNewFormState);
   },
-  handleArrayRemoveAction = (state : iFormState, action : ArrayEventRemove) => {
+  handleArrayRemoveAction = (state : ImmutableFormState, action : ArrayEventRemove) => {
     const 
       { ID, listName } = action.payload,
       getNewFormState = (formState : Immutable.Map<string, any>) =>  {
         const listUpdater = (data: Immutable.List<Immutable.Map<string, any>>) => {
+          if (typeof data === "undefined") {
+            return data;
+          }
+          
           const index = data.findIndex((current: Immutable.Map<string, any>) => (
             current.get("ID") === ID
           ));
+
+          if (index === -1) {
+            return data;
+          }
 
           return data.delete(index);
         };

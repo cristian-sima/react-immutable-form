@@ -1,13 +1,13 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { iFormState } from "../types";
+import { ImmutableFormState } from "../types";
 import { FieldEventUnregisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getNodesFromString, getRealPath } from "../util";
 
 
 export const 
-  handleUnregisterField= (formData : iFormState, action : FieldEventUnregisterFieldAction) => {
+  handleUnregisterField= (formData : ImmutableFormState, action : FieldEventUnregisterFieldAction) => {
     const 
       // formState = formData.get("state"),
       { field } = action.payload,
