@@ -26,7 +26,7 @@ iForm - the **immutableJS form** library
 
 
 
-<img src="docs/state.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="docs/cycle.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 
 
@@ -55,11 +55,14 @@ iForm - the **immutableJS form** library
         - *SimpleSelect*        - displays a select 
         - *SelectTemplate*      - a select input with a label
 
-## Other features:
-1. `Small size` of library  `only 25.1
-kB (compressed)`
+## A simple illustration of an invoice form
 
-[![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)
+<img src="docs/state.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+
+## Other features:
+1. `Small size` of library  ⚡⚡⚡⚡ [![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)
+
+
 
 2. `No extra dependencies` (React and ImmutableJS are excluded)
 <img src="docs/dependencies.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
