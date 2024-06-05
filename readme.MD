@@ -164,6 +164,22 @@ In order to create a new form, you must pass 2 arguments to the function useiFor
       formHandlers = useiForm(iFormOptions, onSubmit);
 ```
 
+The second step is to write our form
+
+```jsx
+import React from "react";
+import { Field } from "react-immutable-form";
+
+const FormContent = () => (
+  <>
+    <Field
+      inputProps={{ autoFocus: false }}
+      name="Total"
+     />
+  </>
+);
+```
+
 Now, we are ready to inject our high-efficiency management to React. This can be done in two ways:
 
 ```jsx
@@ -173,8 +189,9 @@ import { Form } from "react-immutable-form";
 
 const 
   Form = ({ handlers, children } : any) => (
-    <Form handlers={formHandlers}>
-        <FormContent />
+    // here the Form injects the handlers into the FormContent 
+    <Form handlers={formHandlers}> 
+      <FormContent />
     </Form>
   ),
 ```
@@ -189,11 +206,12 @@ const
   Form = ({ handlers, children } : any) => (
     <FormContext.Provider value={handlers}>
       <form onSubmit={handlers.handleSubmit}>
-        { React.cloneElement(children, { form: handlers })}
+         <FormContent handlers={handlers} />
       </form>
     </FormContext.Provider>
   ),
 ```
+That's all to make it working. Of course, the form can accept different options and can be customized according to your needs.
 
 ## Full Example
 
