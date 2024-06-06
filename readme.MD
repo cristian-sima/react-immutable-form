@@ -284,7 +284,7 @@ import { JSONSyntaxFromData } from "Beta/Common/Syntax";
 // FormPrompt was declarated:
 // const FormPrompt = createFormPromter(history);
 import { FormPrompt } from "Beta/store/store";
-import { Field, FieldRenderer, FormArray, FormContext, useImmutableForm } from "react-immutable-form";
+import { ImmutableField as Field, ImmutableFieldRenderer as FieldRenderer, ImmutableFormArray as FormArray, ImmutableFormContext as FormContext, useImmutableForm } from "react-immutable-form";
 
 type TableRowProps = {
   readonly current: Immutable.Map<string, any>;
