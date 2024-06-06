@@ -13,7 +13,7 @@ export type FormOptions = {
   onSubmitError?: onSubmitErrorFunc;
 }
 
-type DecoratorOptions = {
+export type DecoratorOptions = {
   formData: ImmutableFormState;
   field: string;
   value: string;

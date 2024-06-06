@@ -30,6 +30,7 @@ export const
             const elementDefaultValue = (
               getDefaultField(field, "").withMutations((state) => {
                 state.mergeDeepIn(["meta"], Immutable.fromJS({
+                  isTouched : true,
                   isFocused : false,
                   theError  : validatorErr,
                 }));
