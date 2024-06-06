@@ -239,21 +239,21 @@ const
   ),
 ```
     
-which is the same as:
+which is the same as
 
 ```jsx
 import React from "react";
-import { FormContext } from "react-immutable-form";
+import { ImmutableFormContext } from "react-immutable-form";
 
 // ... prepare the handles (see above)
 
 const 
   Form = ({ handlers, children } : any) => (
-    <FormContext.Provider value={handlers}>
+    <ImmutableFormContext.Provider value={handlers}>
       <form onSubmit={handlers.handleSubmit}>
          <FormContent handlers={handlers} />
       </form>
-    </FormContext.Provider>
+    </ImmutableFormContext.Provider>
   ),
 ```
 That's all to make it working. Of course, the form can accept different options and can be customized according to your needs.
