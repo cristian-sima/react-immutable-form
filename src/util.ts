@@ -57,7 +57,7 @@ export const
       },
     )
   ),
-  performValidation = (validators : ImmutableFormValidators, nodes : Nodes, valueToCheck : any, prevState : ImmutableFormState) => {
+  performValidation = (validators : ImmutableFormValidators, nodes : Nodes, valueToCheck : any, entireFormState : ImmutableFormState) => {
     const 
       validatorNodes = nodes.size === 1 ? [nodes.first()] : (
         [nodes.first(), nodes.last()]
@@ -65,7 +65,7 @@ export const
       validator = validators.getIn(validatorNodes);
 
     if (typeof validator === "function") {
-      return validator(valueToCheck, prevState) as ValidationResult;
+      return validator(valueToCheck, entireFormState) as ValidationResult;
     }
 
     return DEFAULT_VALUE_NO_ERROR;
