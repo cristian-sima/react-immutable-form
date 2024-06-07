@@ -15,7 +15,7 @@ export type FormOptions = {
 
 export type DecoratorOptions = {
   formData: ImmutableFormState;
-  field: ID_FieldName;
+  idFieldName: ID_FieldName;
   value: string;
   nodes: Nodes;
 }
@@ -71,13 +71,13 @@ export type HandleBlurFunc = (idFieldName: ID_FieldName, indexFieldName : INDEX_
 export type HandleFocusFunc =  (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
   
 export type FormMutators = {
-  readonly setFieldValidator: (field: ID_FieldName, validator: ImmutableFormValidatorFunc) => void;
-  readonly registerField: (field: ID_FieldName, name : INDEX_FieldName) => void;
-  readonly unregisterField: (field: ID_FieldName, name : INDEX_FieldName) => void;
+  readonly setFieldValidator: (idFieldName: ID_FieldName, validator: ImmutableFormValidatorFunc) => void;
+  readonly registerField: (idFieldName: ID_FieldName, name : INDEX_FieldName) => void;
+  readonly unregisterField: (idFieldName: ID_FieldName, name : INDEX_FieldName) => void;
 }
   
 export type Getters = {
-  getFieldState: (field: ID_FieldName) => Immutable.Map<string, any>;
+  getFieldState: (idFieldName: ID_FieldName) => Immutable.Map<string, any>;
   getFormData: () => Immutable.Map<string, any>;
 }
   
@@ -106,7 +106,6 @@ export type GenericFieldProps<T extends HTMLElement> = {
   validate?: ImmutableFormValidatorFunc;
   inputProps?:  InputProps<T>;
 }
-
   
 export type FieldRendererProps<T extends HTMLElement> = FieldMutators & {
   readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
@@ -145,7 +144,7 @@ export type FormArrayProps = {
   
 export type ArrayMutators = {
   handleArrayAdd: (listName : string, value: Immutable.Map<string, any>) => void;
-  handleArrayRemove: (field: any, index: any) => void;
+  handleArrayRemove: (listName: any, index: any) => void;
 }
 
 

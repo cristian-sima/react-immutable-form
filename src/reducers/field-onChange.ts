@@ -125,8 +125,8 @@ export class FieldOnChangeUpdaters {
     }
 
     const decoratorOptions : DecoratorOptions = { 
-      formData: givenFormData,
-      field, 
+      formData    : givenFormData,
+      idFieldName : field, 
       value,
       nodes,
     };
