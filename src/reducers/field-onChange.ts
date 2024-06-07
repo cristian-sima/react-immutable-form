@@ -1,12 +1,12 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { Decorator, DecoratorOptions, DependenciesValidationList, ImmutableFormDecorators, ImmutableFormState, ImmutableFormValidationDependencies, ImmutableFormValidators, Nodes } from "../types";
+import { Decorator, DecoratorOptions, DependenciesValidationList, ID_FieldName, ImmutableFormDecorators, ImmutableFormState, ImmutableFormValidationDependencies, ImmutableFormValidators, Nodes } from "../types";
 import { FieldEventOnChangeAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
 type genericWrapperOptions = {
-  field: string;
+  field: ID_FieldName;
   nodes: Nodes;
   value: any;
   /*** 
@@ -20,8 +20,8 @@ type managementUpdaterOptions = genericWrapperOptions
 type stateUpdaterOptions = genericWrapperOptions 
 type dependenciesUpdaterOptions = stateUpdaterOptions
 
-export const 
-  fieldOnChangeDependenciesUpdater = (options : dependenciesUpdaterOptions) => {
+export class FieldOnChangeUpdaters {
+  static dependenciesUpdater = (options : dependenciesUpdaterOptions) => {
     const 
       { givenFormData, field } = options,
       validators = givenFormData.get("validators") as ImmutableFormValidators,
@@ -43,8 +43,9 @@ export const
     if (Immutable.List.isList(source)) {      
       performValidationDependenciesCheck(source);
     }
-  },
-  fieldOnChangeStateUpdater = (options : stateUpdaterOptions) => {
+  };
+
+  static stateUpdater = (options : stateUpdaterOptions) => {
     const
       { givenFormData, nodes, value, field } = options,
       validators = givenFormData.get("validators") as ImmutableFormValidators,
@@ -72,8 +73,9 @@ export const
     givenFormData.updateIn(["state", ...nodes], (
       (inner : any) => elementUpdater(inner as Immutable.Map<string, any> | undefined)
     ));            
-  },
-  fieldOnChangeManagementUpdater = (options : managementUpdaterOptions) => {
+  };
+
+  static managementUpdater = (options : managementUpdaterOptions) => {
     const 
       { givenFormData, nodes, value } = options,
       dirtyFieldsUpdater = (current : Immutable.Set<string> = Immutable.Set<string>()) => {
@@ -103,8 +105,9 @@ export const
     givenFormData.updateIn(["management", "dirtyFields"], (innerValue : any) => (
       dirtyFieldsUpdater(innerValue as Immutable.Set<string>)
     ));
-  },
-  fieldOnChangeApplyDecorators = (options : applyDecoratorsOptions) => {
+  };
+
+  static applyDecorators = (options : applyDecoratorsOptions) => {
     const 
       { nodes, value, field, givenFormData } = options,
       decorators = givenFormData.get("decorators") as ImmutableFormDecorators,
@@ -129,7 +132,10 @@ export const
     };
 
     decorator(decoratorOptions);
-  },
+  };
+}
+
+export const 
   handleOnChange = (initialFormData : ImmutableFormState, action : FieldEventOnChangeAction) => {
     const 
       formDataUpdater = (givenFormData : ImmutableFormState) => {
@@ -143,7 +149,12 @@ export const
             field, 
             nodes,
           },
-          updaters = [fieldOnChangeStateUpdater, fieldOnChangeDependenciesUpdater, fieldOnChangeManagementUpdater, fieldOnChangeApplyDecorators ];
+          updaters = [
+            FieldOnChangeUpdaters.stateUpdater, 
+            FieldOnChangeUpdaters.dependenciesUpdater, 
+            FieldOnChangeUpdaters.managementUpdater, 
+            FieldOnChangeUpdaters.applyDecorators, 
+          ];
 
         updaters.forEach((updater) => updater(options));
       };

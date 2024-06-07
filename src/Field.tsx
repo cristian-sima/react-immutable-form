@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 import Immutable from "immutable";
 import React, { useContext } from "react";
 import FieldRender from "./FieldRender";
 import FormContext from "./context";
-import { FieldProps, FieldRendererProps } from "./types";
+import { FieldProps, FieldRendererProps, ID_FieldName, INDEX_FieldName } from "./types";
 import { getNodesFromString, getRealPath } from "./util";
 
 const 
@@ -12,10 +13,13 @@ const
       form = useContext(FormContext),
       fieldName = props.name,
       hasIndex = typeof index !== "undefined",
-      indexPath = hasIndex ? `${listName}.${index}.${fieldName}`: fieldName,
+      indexPath = (hasIndex ? `${listName}.${index}.${fieldName}`: fieldName) as INDEX_FieldName,
       nodes = React.useMemo(() => getRealPath(getNodesFromString(indexPath)), [indexPath]),
       data = form.formState.getIn(nodes) as Immutable.Map<string, any> || Immutable.Map(),
-      isSubmitting = form.management.get("isSubmitting"),
+      idFileName = React.useMemo(() => (
+        (hasIndex ? `${listName}.${ID}.${fieldName}` : fieldName) as ID_FieldName
+      ), [hasIndex, listName, ID, fieldName]),
+      isSubmitting = form.management.get("isSubmitting") as boolean,
   
       passedProps = React.useMemo(() => {
         const
@@ -24,7 +28,8 @@ const
             componentProps : props.componentProps,
             disabled       : isSubmitting,
             elementProps   : inputProps,
-            name           : indexPath,
+            indexFileName  : indexPath,
+            idFileName,
             data,
             handleBlur     : form.handleBlur,
             handleChange   : form.handleChange,
@@ -41,15 +46,13 @@ const
       ), [component, passedProps]);
 
     React.useEffect(() => {      
-      const idPath = hasIndex ? `${listName}.${ID}.${fieldName}` : fieldName;
-
-      form.registerField(idPath);
+      form.registerField(idFileName, indexPath);
   
       if (validate) {
-        form.setFieldValidator(fieldName, validate);
+        form.setFieldValidator(idFileName, validate);
       }
   
-      return () => form.unregisterField(idPath);
+      return () => form.unregisterField(idFileName, indexPath);
     }, []);
   
     return memoizedFieldRenderer;

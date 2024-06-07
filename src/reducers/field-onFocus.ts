@@ -1,10 +1,7 @@
-/* eslint-disable new-cap */
-
 import Immutable from "immutable";
-import { ImmutableFormState } from "../types";
-import { FieldEventOnFocusAction } from "../types-actions";
-import { getDefaultField, getNodesFromString, getRealPath } from "../util";
-
+import { ImmutableFormState } from "./array";
+import { FieldEventOnFocusAction } from "src/types-actions";
+import { getDefaultField, getNodesFromString, getRealPath } from "src/util";
 
 export const 
   handleOnFocus = (state : ImmutableFormState, action : FieldEventOnFocusAction) => {
@@ -14,15 +11,22 @@ export const
         const 
           elementNodes = getRealPath(getNodesFromString(field)),
           theNode = formState.getIn(elementNodes) as Immutable.Map<string, any> | undefined,
-          focusedNodes = Immutable.List(["meta", "isFocused"]);
+          focusedNodes = Immutable.List(["meta", "isFocused"]),
+          hasTheNode = () => (
+            formState.setIn([...elementNodes, ...focusedNodes], true)
+          ),
+          doesNotHaveTheNode = () => {
+            const 
+              newElementValue = getDefaultField(field, "").setIn(focusedNodes, false);
+
+            return formState.setIn(elementNodes, newElementValue);
+          };
 
         if (theNode) {
-          return formState.setIn([...elementNodes, ...focusedNodes], true);
+          return hasTheNode();
         }
 
-        const newElementValue = getDefaultField(field, "").setIn(focusedNodes, false);
-
-        return formState.setIn(elementNodes, newElementValue);
+        return doesNotHaveTheNode();
       };
 
     return state.update("state", stateUpdater);

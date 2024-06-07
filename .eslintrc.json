@@ -50,14 +50,7 @@
       "error",
       "consecutive"
     ],
-    "camelcase": [
-      "error",
-      {
-        "allow": [
-          "^UNSAFE_"
-        ]
-      }
-    ],
+    "camelcase": 0,
     "max-lines": [
       2,
       600

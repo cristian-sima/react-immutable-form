@@ -3,7 +3,7 @@
 import Immutable from "immutable";
 import React, { useCallback } from "react";
 import { getInitialState, reducer } from "./reducers";
-import { FormOptions, ImmutableFormHandlers, ImmutableFormValidatorFunc, onSubmitFunc } from "./types";
+import { FormOptions, ID_FieldName, INDEX_FieldName, ImmutableFormHandlers, ImmutableFormValidatorFunc, onSubmitFunc } from "./types";
 import { FORM_ERROR, getDefaultField } from "./util";
 import { generateUniqueUUIDv4 } from "./uuid";
 import { getWords } from "./words";
@@ -24,7 +24,7 @@ const
       formState = formData.get("state") as Immutable.Map<string, any>,
       management = formData.get("management") as Immutable.Map<string, any>,
 
-      setFieldValidator = useCallback((field: string, value : ImmutableFormValidatorFunc) => {
+      setFieldValidator = useCallback((field: ID_FieldName, value : ImmutableFormValidatorFunc) => {
         dispatchFormAction({
           type    : "form-set-field-validator",
           payload : {
@@ -42,7 +42,7 @@ const
         (formData.getIn(["state", field]) || getDefaultField(field, "")) as Immutable.Map<string, any>
       ),  [formData]),
 
-      handleChange = useCallback((field : string, value : any) => {
+      handleChange = useCallback((field : ID_FieldName, value : any) => {
         dispatchFormAction({
           type    : "field-event-onChange",
           payload : {
@@ -52,38 +52,42 @@ const
         });
       }, [dispatchFormAction]),
 
-      handleFocus = useCallback((field : string) => {
+      handleFocus = useCallback((field : ID_FieldName, name : INDEX_FieldName) => {
         dispatchFormAction({
           type    : "field-event-onFocus",
           payload : {
             field,
+            name,
           },
         });
       }, [dispatchFormAction]),
 
-      handleBlur = useCallback((field : string) => {
+      handleBlur = useCallback((field : ID_FieldName, name : INDEX_FieldName) => {
         dispatchFormAction({
           type    : "field-event-onBlur",
           payload : {
             field,
+            name,
           },
         });
       }, [dispatchFormAction]),
 
-      registerField = useCallback((field : string) => {
+      registerField = useCallback((field : ID_FieldName, name : INDEX_FieldName) => {
         dispatchFormAction({
           type    : "field-event-registerField",
           payload : {
-            field,
+            idFieldName    : field,
+            indexFieldName : name,
           },
         });
       }, [dispatchFormAction]),
 
-      unregisterField = useCallback((field : string) => {
+      unregisterField = useCallback((field : ID_FieldName, name: INDEX_FieldName) => {
         dispatchFormAction({
           type    : "field-event-unregisterField",
           payload : {
             field,
+            name,
           },
         });
       }, [dispatchFormAction]),

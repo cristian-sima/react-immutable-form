@@ -6,7 +6,7 @@ import { REFERENCES_PATH } from "./util";
 const 
   FieldRendererInner = (props: FieldRendererProps<HTMLInputElement>) => {
     const
-      { name, data = Immutable.Map(), handleBlur, handleChange, handleFocus } = props,
+      { indexFileName, idFileName, data = Immutable.Map(), handleBlur, handleChange, handleFocus } = props,
       renderCount = useRef(0),
       value = data.get("value") || "",
       meta = data.get("meta") || Immutable.Map(),
@@ -16,23 +16,23 @@ const
       showError = isTouched && hasError,
       onFocus = (event : React.FocusEvent<HTMLInputElement, Element>) => {
         if (typeof props.customOnFocus === "function") {
-          props.customOnFocus(event, handleFocus, name);
+          props.customOnFocus(event, handleFocus, idFileName, indexFileName);
         } else {
-          handleFocus(name);
+          handleFocus(idFileName, indexFileName);
         }
       }, 
       onBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
         if (typeof props.customOnBlur === "function") {
-          props.customOnBlur(event, handleBlur, name);
+          props.customOnBlur(event, handleBlur, idFileName, indexFileName);
         } else {
-          handleBlur(name);
+          handleBlur(idFileName, indexFileName);
         }
       },
       onChange = (event: React.ChangeEvent<HTMLInputElement> ) => {
         if (typeof props.customOnChange === "function") {
-          props.customOnChange(event, handleChange, name);
+          props.customOnChange(event, handleChange, idFileName);
         } else {
-          handleChange(name, event.target.value);
+          handleChange(idFileName, event.target.value);
         }
       };
 
@@ -46,7 +46,7 @@ const
         <span className="badge text-bg-danger">{meta.get(REFERENCES_PATH)}</span>
         <input
           disabled={props.disabled}
-          name={name}
+          name={indexFileName}
           onBlur={onBlur}
           onChange={onChange}
           onFocus={onFocus}

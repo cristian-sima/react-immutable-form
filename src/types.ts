@@ -15,7 +15,7 @@ export type FormOptions = {
 
 export type DecoratorOptions = {
   formData: ImmutableFormState;
-  field: string;
+  field: ID_FieldName;
   value: string;
   nodes: Nodes;
 }
@@ -50,19 +50,34 @@ export type Nodes = Immutable.List<string>;
   
 export type RemoveArrayFunc = (listName: string, ID: string) => void;
   
-  
-export type HandleChangeFunc = (field: any, value: any) => void;
-export type HandleBlurFunc = (field: any) => void;
-export type HandleFocusFunc =  (field: any) => void;
+/**
+ * If the field is an array: 
+ *  - this field is `[ARRAY_NAME]`.`[ID_OF_ROW]`.`[NAME_OF_FIELD]`
+ * otherwise
+ *  - this is the same as `FullFieldName` (the field name)
+ */
+export type ID_FieldName = string & { readonly __ID_FieldName: unique symbol };
+
+/**
+ * If the field is an array: 
+ *  - this field is [`ARRAY_NAME`].[`INDEX_OF_ROW`].[`NAME_OF_FIELD`]
+ * otherwise
+ *  - this is the same as `FullFieldName` (the field name)
+ */
+export type INDEX_FieldName  = string & { readonly __INDEX_FieldName: unique symbol };
+
+export type HandleChangeFunc = (idFieldName: ID_FieldName, value: any) => void;
+export type HandleBlurFunc = (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
+export type HandleFocusFunc =  (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
   
 export type FormMutators = {
-  readonly setFieldValidator: (field: string, validator: ImmutableFormValidatorFunc) => void;
-  readonly registerField: (field: string) => void;
-  readonly unregisterField: (field: string) => void;
+  readonly setFieldValidator: (field: ID_FieldName, validator: ImmutableFormValidatorFunc) => void;
+  readonly registerField: (field: ID_FieldName, name : INDEX_FieldName) => void;
+  readonly unregisterField: (field: ID_FieldName, name : INDEX_FieldName) => void;
 }
   
 export type Getters = {
-  getFieldState: (field: any) => Immutable.Map<string, any>;
+  getFieldState: (field: ID_FieldName) => Immutable.Map<string, any>;
   getFormData: () => Immutable.Map<string, any>;
 }
   
@@ -94,12 +109,13 @@ export type GenericFieldProps<T extends HTMLElement> = {
 
   
 export type FieldRendererProps<T extends HTMLElement> = FieldMutators & {
-  readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, name: string) => any;
-  readonly customOnFocus?: (event: React.FocusEvent<T, Element>, handleFocus: HandleFocusFunc, name: string) => any;
-  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, name: string) => any;
+  readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
+  readonly customOnFocus?: (event: React.FocusEvent<T, Element>, handleFocus: HandleFocusFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
+  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, name: ID_FieldName) => any;
   disabled: boolean;
   readonly elementProps?: InputProps<T>;
-  readonly name: string;
+  readonly indexFileName: INDEX_FieldName;
+  readonly idFileName: ID_FieldName;
   readonly data: Immutable.Map<string, any>;
   componentProps?: Immutable.Map<string, any>;
   hideError?: boolean;

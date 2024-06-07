@@ -96,4 +96,13 @@ export const
     target.reduce((acc, value, key) => (
       acc.set(key, initialFieldState(value, key))
     ), Immutable.Map() as InitialValues),
-  );
+  ),
+  getIndexPathForRowValues = (dotList : string) => {
+    const 
+      position = 3,
+      newElement = ARRAY_VALUES_FIELD,
+      theList = dotList.split(".");
+
+    theList.splice(position, 0, newElement);
+    return theList;
+  };

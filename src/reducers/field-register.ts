@@ -1,98 +1,126 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { ImmutableFormState } from "../types";
+import { ID_FieldName, INDEX_FieldName, ImmutableFormState, Nodes } from "../types";
 import { FieldEventRegisterFieldAction } from "../types-actions";
-import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getDefaultField, getNodesFromString, getRealPath } from "../util";
+import { REFERENCES_PATH, getDefaultField, getIndexPathForRowValues, getNodesFromString, getRealPath } from "../util";
 
+type genericWrapperOptions = {
+  indexFieldName: INDEX_FieldName;
+  idFieldName : ID_FieldName;
+  nodes: Nodes;
+  /*** 
+   * it is Immutable.withMutations
+   */
+  formDataWithMutations : ImmutableFormState; 
+}
+
+export class FieldRegisterUpdaters {
+  static stateUpdater = (options : genericWrapperOptions) => {
+    const 
+      { nodes, formDataWithMutations, idFieldName, indexFieldName } = options,
+      isOneNode = nodes.size === 1,
+      formState = formDataWithMutations.get("state"),
+      handleOneNode = () => {
+        if (formState.hasIn(nodes)) {
+          return formState;
+        }
+        
+        return formState.setIn(nodes, getDefaultField(idFieldName, ""));
+      },
+      handleList = () => {
+        const 
+          listName = nodes.first() as string,
+          list = formState.get(listName) as Immutable.List<Immutable.Map<string, any>>;
+
+        if (list) {
+          const pathWithIndex = getIndexPathForRowValues(indexFieldName);
+
+          if (formState.hasIn(pathWithIndex)) {
+            return formState;
+          }
+
+          // todo to remove this 
+          return formState.setIn(pathWithIndex, getDefaultField(idFieldName, ""));
+        }
+
+        return formState;
+      },
+      getNewState = () => {
+        if (isOneNode) {
+          return handleOneNode();
+        }
+    
+        return handleList();
+      };
+
+    formDataWithMutations.set("state", getNewState());
+  };
+
+  static managementUpdater = (options : genericWrapperOptions) => {
+    const 
+      { nodes, formDataWithMutations, idFieldName } = options,
+      newFormState = formDataWithMutations.get("state"),
+      getNewManagement = (givenState: Immutable.Map<string, any>) => {
+        const 
+          managementPath = [...nodes, REFERENCES_PATH],
+          hasInMemory = givenState.hasIn(nodes),
+          handleHasInMemory = () => {
+            const 
+              updateDirtyFields = (dirtyFields : Immutable.Set<string>) => {
+                const 
+                  formPath = [...nodes, "meta", "isDirty"],
+                  isDirty = newFormState.getIn(formPath);
+
+                if (isDirty) {
+                  return dirtyFields.add(idFieldName);
+                }
+
+                return dirtyFields; 
+              };
+
+            return (
+              givenState
+                .updateIn(managementPath, (value : any) => value ? value + 1 : 1)
+                .update("dirtyFields", updateDirtyFields)
+            );
+          },
+          handleNotInMemory = () => (
+            givenState.setIn(managementPath, 1)
+          );
+
+        if (hasInMemory) {
+          return handleHasInMemory();
+        }
+
+        return handleNotInMemory();
+      };
+
+    formDataWithMutations.update("management", getNewManagement);
+  };
+}
 
 export const 
   handleRegisterField= (formData : ImmutableFormState, action : FieldEventRegisterFieldAction) => {
     const 
-      { field } = action.payload,
-      getNewFormState = (formState : Immutable.Map<string, any>) => {
+      { idFieldName, indexFieldName } = action.payload,
+      formDataUpdater = (formDataWithMutations : ImmutableFormState) => {
         const 
-          nodes = getRealPath(getNodesFromString(field)),
-          isOneNode = nodes.size === 1,
-          handleOneNode = () => {
-            if (formState.hasIn(nodes)) {
-              return formState;
-            }
-              
-            return formState.setIn(nodes, getDefaultField(field, ""));
+          nodes = getRealPath(getNodesFromString(idFieldName)),
+         
+          options : genericWrapperOptions = {
+            nodes,
+            idFieldName,
+            indexFieldName, 
+            formDataWithMutations,
           },
-          handleList = () => {
-            const 
-              listName = nodes.first() as string,
-              list = formState.get(listName) as Immutable.List<Immutable.Map<string, any>>;
+          updaters = [
+            FieldRegisterUpdaters.stateUpdater,
+            FieldRegisterUpdaters.managementUpdater,
+          ];
 
-            if (list) {
-              const 
-                idPosition = 1,
-                id = nodes.get(idPosition) as string,
-                fieldName = nodes.last() as string,
-                index = list.findIndex((current) => current.get("ID") === id),
-                pathWithIndex = [listName, index, ARRAY_VALUES_FIELD, fieldName];
-
-              if (formState.hasIn(pathWithIndex)) {
-                return formState;
-              }
-
-              return formState.setIn(pathWithIndex, getDefaultField(field, ""));
-            }
-
-            return formState;
-          };
-
-        if (isOneNode) {
-          return handleOneNode();
-        }
-
-        return handleList();
-      },
-      getNewManagementState = (newFormData : Immutable.Map<string, any>) => {
-        const 
-          newFormState = newFormData.get("state"),
-          updateReference = (givenState: Immutable.Map<string, any>) => {
-            const 
-              nodes = getRealPath(getNodesFromString(field)),
-              managementPath = [...nodes, REFERENCES_PATH],
-              hasInMemory = givenState.hasIn(nodes),
-              handleHasInMemory = () => {
-                const 
-                  updateDirtyFields = (dirtyFields : Immutable.Set<string>) => {
-                    const 
-                      formPath = [...nodes, "meta", "isDirty"],
-                      isDirty = newFormState.getIn(formPath);
-
-                    if (isDirty) {
-                      return dirtyFields.add(field);
-                    }
-  
-                    return dirtyFields; 
-                  };
-  
-                return (
-                  givenState
-                    .updateIn(managementPath, (value : any) => value ? value + 1 : 1)
-                    .update("dirtyFields", updateDirtyFields)
-                );
-              },
-              handleNotInMemory = () => (
-                givenState.setIn(managementPath, 1)
-              );
-  
-            if (hasInMemory) {
-              return handleHasInMemory();
-            }
-  
-            return handleNotInMemory();
-          };
-  
-        return newFormData.update("management", updateReference);
+        updaters.forEach((updater) => updater(options));
       };
 
-    return formData
-      .update("state", getNewFormState)
-      .update(getNewManagementState);
+    return formData.withMutations(formDataUpdater);
   };

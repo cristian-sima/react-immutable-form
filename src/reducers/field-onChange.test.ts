@@ -2,13 +2,13 @@
 /* eslint-disable no-magic-numbers */
 import Immutable from "immutable";
 import { describe, expect, test } from "vitest";
-import { Decorator, ImmutableFormState } from "../types";
+import { Decorator, ID_FieldName, ImmutableFormState } from "../types";
 import { DEFAULT_VALUE_NO_ERROR, getDefaultField, getNodesFromString, getRealPath } from "../util";
-import { fieldOnChangeApplyDecorators, fieldOnChangeDependenciesUpdater, fieldOnChangeManagementUpdater, fieldOnChangeStateUpdater } from "./field-onChange";
+import { FieldOnChangeUpdaters } from "./field-onChange";
 
 
 describe("Field onChange", () => {
-  describe("DependenciesUpdater", () => {
+  describe("FieldOnChangeUpdaters.dependenciesUpdater", () => {
     const getInitialState = () => Immutable.fromJS({
       state: {
         field1: {
@@ -49,9 +49,9 @@ describe("Field onChange", () => {
     test("Field1 has a validation dep to Field2, when it calls, it updates it validation", () => {
       const 
         initialFormData = getInitialState(),
-        fieldName = "field1",
+        fieldName = "field1" as ID_FieldName,
         nodes = getRealPath(getNodesFromString(fieldName)),
-        updater = (givenFormData : ImmutableFormState) => fieldOnChangeDependenciesUpdater({
+        updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.dependenciesUpdater({
           givenFormData,
           field : fieldName,
           value : "updatedValue",
@@ -64,10 +64,10 @@ describe("Field onChange", () => {
 
     test("Field3 does not have validation deps, so it does not change the state", () => {
       const 
-        fieldName = "field3",
+        fieldName = "field3" as ID_FieldName,
         initialFormData = getInitialState() as ImmutableFormState,
         nodes = getRealPath(getNodesFromString(fieldName)),
-        updater = (givenFormData : ImmutableFormState) => fieldOnChangeDependenciesUpdater({
+        updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.dependenciesUpdater({
           givenFormData,
           field : fieldName,
           value : "updatedValue",
@@ -79,7 +79,7 @@ describe("Field onChange", () => {
     });
   });
 
-  describe("StateUpdater", () => {
+  describe("FieldOnChangeUpdaters.stateUpdater", () => {
     const getInitialState = () => Immutable.fromJS({
       state: {
         field1: {
@@ -115,9 +115,9 @@ describe("Field onChange", () => {
       test("it creates a new field in the state", () => {
         const 
           initialFormData = getInitialState(),
-          fieldName = "field3",
+          fieldName = "field3" as ID_FieldName,
           nodes = getRealPath(getNodesFromString(fieldName)),
-          updater = (givenFormData : ImmutableFormState) => fieldOnChangeStateUpdater({
+          updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.stateUpdater({
             givenFormData,
             field : fieldName,
             value : "value-for-field3",
@@ -136,9 +136,9 @@ describe("Field onChange", () => {
         test("for changing value to its initial, it sets the isDirty to false", () => {
           const 
             initialFormData = getInitialState(),
-            fieldName = "field1",
+            fieldName = "field1" as ID_FieldName,
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeStateUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.stateUpdater({
               givenFormData,
               field : fieldName,
               value : "value1",
@@ -153,9 +153,9 @@ describe("Field onChange", () => {
         test("for changing value to its initial, it sets the isDirty to false", () => {
           const 
             initialFormData = getInitialState(),
-            fieldName = "field1",
+            fieldName = "field1" as ID_FieldName,
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeStateUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.stateUpdater({
               givenFormData,
               field : fieldName,
               value : "updatedValue",
@@ -172,9 +172,9 @@ describe("Field onChange", () => {
         test("field 1 is validated and changed", () => {
           const 
             initialFormData = getInitialState(),
-            fieldName = "field1",
+            fieldName = "field1" as ID_FieldName,
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeStateUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.stateUpdater({
               givenFormData,
               field : fieldName,
               value : "updatedValue1",
@@ -189,9 +189,9 @@ describe("Field onChange", () => {
         test("field 1 fails validation", () => {
           const 
             initialFormData = getInitialState(),
-            fieldName = "field1",
+            fieldName = "field1" as ID_FieldName,
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeStateUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.stateUpdater({
               givenFormData,
               field : fieldName,
               value : "updatedValue",
@@ -207,7 +207,7 @@ describe("Field onChange", () => {
 
   });
 
-  describe("ManagementUpdater", () => {
+  describe("FieldOnChangeUpdaters.managementUpdater", () => {
     const getInitialState = () => Immutable.fromJS({
       state: {
         field1: {
@@ -247,9 +247,9 @@ describe("Field onChange", () => {
       test("dirtyFieldsUpdater does nothing", () => {
         const 
           initialFormData = getInitialState(),
-          fieldName = "field4",
+          fieldName = "field4" as ID_FieldName,
           nodes = getRealPath(getNodesFromString(fieldName)),
-          updater = (givenFormData : ImmutableFormState) => fieldOnChangeManagementUpdater({
+          updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.managementUpdater({
             givenFormData,
             field : fieldName,
             value : "value-for-field4",
@@ -266,9 +266,9 @@ describe("Field onChange", () => {
         test("if the field is not in the list, add it", () => {
           const 
             initialFormData = getInitialState(),
-            fieldName = "field1",
+            fieldName = "field1" as ID_FieldName,
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeManagementUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.managementUpdater({
               givenFormData,
               field : fieldName,
               value : "value-for-field4",
@@ -284,9 +284,9 @@ describe("Field onChange", () => {
         test("if the field is in the list, ignore it", () => {
           const 
             initialFormData = getInitialState(),
-            fieldName = "field1",
+            fieldName = "field1" as ID_FieldName,
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeManagementUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.managementUpdater({
               givenFormData,
               field : fieldName,
               value : "value-for-field4",
@@ -309,12 +309,12 @@ describe("Field onChange", () => {
       describe("if the field is not dirty", () => {
         test("if the field is not in the list, ignore it", () => {
           const 
-            fieldName = "field2",
+            fieldName = "field2" as ID_FieldName,
             initialFormData = getInitialState().setIn(["management", "dirtyFields"], (
               Immutable.Set(["field3", "field1"])
             )),
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeManagementUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.managementUpdater({
               givenFormData,
               field : fieldName,
               value : "",
@@ -328,12 +328,12 @@ describe("Field onChange", () => {
 
         test("if the field is in the list, remove it", () => {
           const 
-            fieldName = "field2",
+            fieldName = "field2" as ID_FieldName,
             initialFormData = getInitialState().setIn(["management", "dirtyFields"], (
               Immutable.Set(["field2", "field1"])
             )),
             nodes = getRealPath(getNodesFromString(fieldName)),
-            updater = (givenFormData : ImmutableFormState) => fieldOnChangeManagementUpdater({
+            updater = (givenFormData : ImmutableFormState) => FieldOnChangeUpdaters.managementUpdater({
               givenFormData,
               field : fieldName,
               value : "",
@@ -375,18 +375,18 @@ describe("Field onChange", () => {
       };
     };
       
-    describe("applyDecorators", () => {
+    describe("FieldOnChangeUpdaters.applyDecorators", () => {
       test("Decorator called when found", () => {
         const    
           { mockDecorator, givenFormData }   =  getInitialValues(),
           options = {
             nodes : Immutable.List(["field1"]),
             value : "updatedValue",
-            field : "field1",
+            field : "field1" as ID_FieldName,
             givenFormData,
           };
 
-        fieldOnChangeApplyDecorators(options);
+        FieldOnChangeUpdaters.applyDecorators(options);
       
         const decoratorOptions: any = { 
           formData : options.givenFormData,
@@ -406,12 +406,12 @@ describe("Field onChange", () => {
           options = {
             nodes : Immutable.List(["field1"]),
             value : "updatedValue",
-            field : "field1",
+            field : "field1"  as ID_FieldName,
             givenFormData ,
           },
-          optionsWithoutDecorator = { ...options, field: "field2" };
+          optionsWithoutDecorator = { ...options, field: "field2" as ID_FieldName };
 
-        fieldOnChangeApplyDecorators(optionsWithoutDecorator);
+        FieldOnChangeUpdaters.applyDecorators(optionsWithoutDecorator);
       
         expect(mockDecorator.calls).toHaveLength(0);
       });

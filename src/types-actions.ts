@@ -1,38 +1,42 @@
-import { ImmutableFormValidatorFunc } from "./types";
+import { ID_FieldName, INDEX_FieldName, ImmutableFormValidatorFunc } from "./types";
 
 export type FieldEventOnFocusAction = {
   type: "field-event-onFocus",
   payload: {
-    field: string;
+    field: ID_FieldName;
+    name: INDEX_FieldName;
   };
 }
   
 export type FieldEventOnBlurAction = {
   type: "field-event-onBlur",
   payload: {
-    field: string;
+    field: ID_FieldName;
+    name: INDEX_FieldName;
   };
 }
   
 export type FieldEventOnChangeAction = {
   type: "field-event-onChange",
   payload: {
+    field: ID_FieldName;
     value: any;
-    field: string;
   };
 }
   
 export type FieldEventRegisterFieldAction = {
   type: "field-event-registerField",
   payload: {
-    field: string;
+    idFieldName: ID_FieldName;
+    indexFieldName: INDEX_FieldName;
   };
 }
   
 export type FieldEventUnregisterFieldAction = {
   type: "field-event-unregisterField",
   payload: {
-    field: string;
+    field: ID_FieldName;
+    name: INDEX_FieldName;
   };
 }
 
@@ -68,7 +72,7 @@ export type FormEventSubmitHandled = {
 export type FormSetFieldValidator = {
   type: "form-set-field-validator",
   payload: {
-    field: string;
+    field: ID_FieldName;
     value: ImmutableFormValidatorFunc;
   };
 }

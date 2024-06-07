@@ -1,9 +1,10 @@
 /* eslint-disable no-magic-numbers */
 import { fromJS } from "immutable";
 import { describe, expect, it } from "vitest";
+import { FieldEventOnBlurAction } from "../types-actions";
 import { ImmutableFormState } from "./array";
 import { handleOnBlur } from "./field-onBlur";
-import { FieldEventOnBlurAction } from "src/types-actions";
+import { ID_FieldName, INDEX_FieldName } from "src/types";
 
 // Mock validator function
 const mockValidator = (value: any) => typeof value === "string" && value !== "" ? undefined : "Required";
@@ -29,7 +30,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field: "field1",
+          field : "field1" as ID_FieldName,
+          name  : "field1" as INDEX_FieldName,
         },
       },
 
@@ -61,7 +63,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field: "field1",
+          field : "field1" as ID_FieldName,
+          name  : "field1" as INDEX_FieldName,
         },
       },
 
@@ -84,7 +87,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field: "field1",
+          field : "field1" as ID_FieldName,
+          name  : "field1" as INDEX_FieldName,
         },
       },
 
@@ -124,7 +128,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field: "field1",
+          field : "field1" as ID_FieldName,
+          name  : "field1" as INDEX_FieldName,
         },
       },
 
@@ -154,7 +159,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field: "field1",
+          field : "field1" as ID_FieldName,
+          name  : "field1" as INDEX_FieldName,
         },
       },
 

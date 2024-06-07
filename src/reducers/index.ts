@@ -9,6 +9,7 @@ import { handleOnBlur } from "./field-onBlur";
 import { handleOnChange } from "./field-onChange";
 import { handleOnFocus } from "./field-onFocus";
 import { handleRegisterField } from "./field-register";
+import { fieldSetValidator } from "./field-setValidator";
 import { handleUnregisterField } from "./field-unRegister";
 import { handleFormOnSubmit, handleFormSubmitHandled, setFormIsSubmitting } from "./form-events";
 
@@ -47,7 +48,7 @@ export const
         return setFormIsSubmitting(state, action);
 
       case "form-set-field-validator":
-        return state.setIn(["validators", action.payload.field], action.payload.value);
+        return fieldSetValidator(state, action);
     
       default:
         return state;
