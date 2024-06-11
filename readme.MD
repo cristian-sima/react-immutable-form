@@ -16,18 +16,19 @@ react-immutable-form - the **immutableJS form** library
 
 **react-immutable-form** was created taking into account the following principles:
 
-## 1. efficiency ✅
-    - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
-    - it can handle `1000 inputs out-of-the-box`, without any optimization 
-    - it `receives decorators` for computing additional states (eg. total of an invoice)
-    - `instant feedback` for validation, submitting and other events
-    - `smart-management` of the fields, using a complex system of references 
-        - if the fields are `displayed`, their value `is verified `
-        - if they are `hidden` they `will not be validated`, but `their values are kept`
+## 1. Efficiency ✅
+
+  - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
+  - it can handle `1000 inputs out-of-the-box`, without any optimization 
+  - it `receives decorators` for computing additional states (eg. total of an invoice)
+  - `instant feedback` for validation, submitting and other events
+  - `smart-management` of the fields, using a complex system of references 
+    - if the fields are `displayed`, their value `is verified `
+    - if they are `hidden` they `will not be validated`, but `their values are kept`
 
 <img src="img/cycle.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-## 2. simplicity ✅
+## 2. Simplicity ✅
   -  comes out-of-the-box with all the features you would want to use:
   - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
   - *FocusPromt* - `warn the user` the form has unsaved changes
@@ -38,8 +39,8 @@ react-immutable-form - the **immutableJS form** library
 
 <img src="img/field.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-## 3. use cases ✅
-  - your form must allow to get data, validate data, show errors and derive a new state
+## 3. Normal use ✅
+  - your form must collect data, validate data, show errors and derive a new state
   - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
   - create your own custom field using *Field* and *FieldRender*
   - it provides out the box custom Inputs using `react-immutable-form-with-bootstrap` library
@@ -52,13 +53,12 @@ react-immutable-form - the **immutableJS form** library
     - *SimpleSelect*        - displays a select 
     - *SelectTemplate*      - a select input with a label
 
-## A simple illustration of an invoice form
+# The flow
 
 <img src="img/state.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-## Other features:
+# Other features:
 1. `Small size` of library  ⚡⚡⚡⚡ [![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)
-
 
 
 2. `No extra dependencies` (React and ImmutableJS are excluded)
