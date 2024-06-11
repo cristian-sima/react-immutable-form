@@ -3,7 +3,7 @@
 import Immutable from "immutable";
 import { ImmutableFormState } from "../types";
 import { FormSetIsSubmitting } from "../types-actions";
-import { verifyAllItems } from "./util-verify";
+import { verifyAllItems } from "./form-events-util";
 
 
 export const 

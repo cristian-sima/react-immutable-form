@@ -61,8 +61,7 @@ const
   /**
    * Field component.
    * 
-   * This component renders a form field and manages its state, validation, and event handling. It supports
-   * custom components for rendering and handles the registration and unregistration of the field within the form context.
+   * This component renders a form field and manages its state, validation, and event handling. It supports custom components for rendering and handles the registration and unregistration of the field within the form context.
    * It memories the props using React.memo
    * 
    * @template T - The type of the HTML element for the field.

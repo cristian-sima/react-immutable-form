@@ -1,10 +1,10 @@
 /* eslint-disable no-magic-numbers */
 import { fromJS } from "immutable";
 import { describe, expect, it } from "vitest";
+import { ID_FieldName, INDEX_FieldName } from "../types";
 import { FieldEventOnBlurAction } from "../types-actions";
 import { ImmutableFormState } from "./array";
 import { handleOnBlur } from "./field-onBlur";
-import { ID_FieldName, INDEX_FieldName } from "src/types";
 
 // Mock validator function
 const mockValidator = (value: any) => typeof value === "string" && value !== "" ? undefined : "Required";

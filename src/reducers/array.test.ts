@@ -1,8 +1,8 @@
 import Immutable from "immutable";
 import { describe, expect, it } from "vitest";
+import { ArrayEventAdd, ArrayEventRemove } from "../types-actions";
+import { createRow } from "../util";
 import { handleArrayAddAction, handleArrayRemoveAction } from "./array";
-import { ArrayEventAdd, ArrayEventRemove } from "src/types-actions";
-import { createRow } from "src/util";
 
 describe("handleArrayAddAction", () => {
   it("should add a new row to the specified list in the state", () => {

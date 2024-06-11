@@ -10,10 +10,10 @@ export const
   handleOnBlur = (formData : ImmutableFormState, action : FieldEventOnBlurAction) => {
     const 
       validators = formData.get("validators") as ImmutableFormValidators,
-      { idFieldName } = action.payload,
+      { indexFieldName } = action.payload,
       stateUpdater = (formState : Immutable.Map<string, any>) => {
         const 
-          nodes = getRealPath(getNodesFromString(idFieldName)),
+          nodes = getRealPath(getNodesFromString(indexFieldName)),
           value = formState.getIn([...nodes, "value"]),
           validatorErr = performValidation(validators, nodes, value, formState),
           theNode = formState.getIn(nodes) as Immutable.Map<string, any> | undefined,
@@ -28,7 +28,7 @@ export const
           ),
           nodeIsNotPresent = () => {
             const elementDefaultValue = (
-              getDefaultField(idFieldName, "").withMutations((state) => {
+              getDefaultField(indexFieldName, "").withMutations((state) => {
                 state.mergeDeepIn(["meta"], Immutable.fromJS({
                   isTouched : true,
                   isFocused : false,

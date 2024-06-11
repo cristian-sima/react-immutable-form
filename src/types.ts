@@ -1,4 +1,12 @@
+import { ReactElement } from "react";
 import { ImmutableFormActions } from "./types-actions";
+
+export interface FormInterface { readonly form :  ImmutableFormHandlers}
+
+export interface ImmutableFormProps {
+  readonly children: ReactElement<FormInterface>;
+  readonly handlers: ImmutableFormHandlers;
+}
 
 export type onSubmitFunc = (values : ImmutableFormState, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => any;
 
@@ -66,7 +74,7 @@ export type ID_FieldName = string & { readonly __ID_FieldName: unique symbol };
  */
 export type INDEX_FieldName  = string & { readonly __INDEX_FieldName: unique symbol };
 
-export type HandleChangeFunc = (idFieldName: ID_FieldName, indexFieldName: INDEX_FieldName, value: any) => void;
+export type HandleChangeFunc = (idFieldName: string, value: any, indexFieldName?: INDEX_FieldName) => void;
 export type HandleBlurFunc = (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
 export type HandleFocusFunc =  (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
   
@@ -80,12 +88,30 @@ export type Getters = {
   getFieldState: (idFieldName: ID_FieldName) => Immutable.Map<string, any>;
   getFormData: () => Immutable.Map<string, any>;
 }
-  
-export type ImmutableFormHandlers = ArrayMutators & FieldMutators & FormMutators & Getters & {
+
+
+/**
+ * Type representing the handlers for an immutable form.
+ */
+export type ImmutableFormHandlers = {
+  /** The current state of the form. */
   formState: ImmutableFormState;
+  /** The management state of the form. */
   management: ManagementState;
+  /**
+   * Function to handle form submission.
+   * @param event The form submission event.
+   */
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
+  /** Function to handle form submission completion. */
+  formSubmitHandled: () => void;
+  /**
+   * Function to set the submission status of the form.
+   * @param isSubmitting Whether the form is currently submitting.
+   * @param error Optional error message if submission failed.
+   */
+  formSetIsSubmitting: (isSubmitting: boolean, error?: string) => void;
+} & ArrayMutators & FieldMutators & FormMutators & Getters;
   
 // fields 
 export type FieldMutators = {

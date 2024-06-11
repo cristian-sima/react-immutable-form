@@ -1,9 +1,9 @@
 import Immutable from "immutable";
 import { describe, expect, it } from "vitest";
+import { ID_FieldName, INDEX_FieldName } from "../types";
+import { FieldEventOnFocusAction } from "../types-actions";
 import { getDefaultField } from "../util";
 import { handleOnFocus } from "./field-onFocus";
-import { FieldEventOnFocusAction } from "src/types-actions";
-import { ID_FieldName, INDEX_FieldName } from "src/types";
 
 describe("handleOnFocus", () => {
   describe("if a field does not exists in the state", () => {
@@ -43,7 +43,7 @@ describe("handleOnFocus", () => {
           type    : "field-event-onFocus",
           payload : {
             idFieldName,
-            indexFieldName: "newField" as INDEX_FieldName,
+            indexFieldName: "testField" as INDEX_FieldName,
           },
         },
         newState = handleOnFocus(initialState, action);
@@ -65,7 +65,7 @@ describe("handleOnFocus", () => {
           type    : "field-event-onFocus",
           payload : {
             idFieldName,
-            indexFieldName: "newField" as INDEX_FieldName,
+            indexFieldName: "testField" as INDEX_FieldName,
           },
         },
         newState = handleOnFocus(initialState, action);

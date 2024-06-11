@@ -32,7 +32,7 @@ const
         if (typeof props.customOnChange === "function") {
           props.customOnChange(event, handleChange, idFileName, indexFileName);
         } else {
-          handleChange(idFileName, indexFileName, event.target.value);
+          handleChange(idFileName, event.target.value, indexFileName);
         }
       };
 

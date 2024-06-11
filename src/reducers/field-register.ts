@@ -30,21 +30,22 @@ export class FieldRegisterUpdaters {
       },
       handleList = () => {
         const 
-          listName = nodes.first() as string,
-          list = formState.get(listName) as Immutable.List<Immutable.Map<string, any>>;
+          // listName = nodes.first() as string,
+          // list = formState.get(listName) as Immutable.List<Immutable.Map<string, any>>;
+          // if (list) {
 
-        if (list) {
-          const pathWithIndex = getIndexPathForRowValues(indexFieldName);
+          pathWithIndex = getIndexPathForRowValues(indexFieldName);
 
-          if (formState.hasIn(pathWithIndex)) {
-            return formState;
-          }
-
-          // todo to remove this 
-          return formState.setIn(pathWithIndex, getDefaultField(idFieldName, ""));
+        if (formState.hasIn(pathWithIndex)) {
+          return formState;
         }
 
-        return formState;
+        // todo to remove this - because it updates a lot of fields at the start
+        
+        return formState.setIn(pathWithIndex, getDefaultField(idFieldName, ""));
+
+        // }
+        // return formState;
       },
       getNewState = () => {
         if (isOneNode) {

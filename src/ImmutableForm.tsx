@@ -1,15 +1,19 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import FormContext from "./context";
-import { ImmutableFormHandlers } from "./types";
-
-interface FormInterface { readonly form :  ImmutableFormHandlers}
-
-interface ImmutableFormProps {
-  readonly children: ReactElement<FormInterface>;
-  readonly handlers: ImmutableFormHandlers;
-}
+import { FormInterface, ImmutableFormProps } from "./types";
 
 const 
+  /**
+   * ImmutableForm component.
+   *
+   * A React functional component that provides a form context and handles form submission.
+   *
+   * @param props - The props for the ImmutableForm component.
+   * @param props.handlers - An object containing form handler functions.
+   * @param props.children - The child elements to be rendered within the form.
+   * 
+   * @returns The ImmutableForm component.
+   */
   ImmutableForm :  React.FC<ImmutableFormProps> = ({ handlers, children }) => (
     <FormContext.Provider value={handlers}>
       <form onSubmit={handlers.handleSubmit}>

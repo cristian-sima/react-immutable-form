@@ -6,7 +6,6 @@ import { default as ImmutableFormContext } from "./context";
 import { default as immutableGetters } from "./getters";
 import { default as useImmutableForm } from "./useImmutableForm";
 
-
 export {
   ImmutableField, ImmutableFieldRenderer, ImmutableForm, ImmutableFormArray, ImmutableFormContext, immutableGetters, useImmutableForm,
 };

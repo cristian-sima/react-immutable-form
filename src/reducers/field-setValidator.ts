@@ -1,7 +1,7 @@
 import Immutable from "immutable";
+import { FormSetFieldValidator } from "../types-actions";
+import { getNodesFromString, getRealPath } from "../util";
 import { ImmutableFormState } from "./array";
-import { FormSetFieldValidator } from "src/types-actions";
-import { getNodesFromString, getRealPath } from "src/util";
 
 export const 
   fieldSetValidator = (state : ImmutableFormState, action : FormSetFieldValidator) => {
