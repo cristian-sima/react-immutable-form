@@ -30,22 +30,13 @@ export class FieldRegisterUpdaters {
       },
       handleList = () => {
         const 
-          // listName = nodes.first() as string,
-          // list = formState.get(listName) as Immutable.List<Immutable.Map<string, any>>;
-          // if (list) {
-
           pathWithIndex = getIndexPathForRowValues(indexFieldName);
 
         if (formState.hasIn(pathWithIndex)) {
           return formState;
         }
 
-        // todo to remove this - because it updates a lot of fields at the start
-        
         return formState.setIn(pathWithIndex, getDefaultField(idFieldName, ""));
-
-        // }
-        // return formState;
       },
       getNewState = () => {
         if (isOneNode) {
@@ -60,7 +51,7 @@ export class FieldRegisterUpdaters {
 
   static managementUpdater = (options : fieldRegisterGenericWrapperOptions) => {
     const 
-      { nodes, formDataWithMutations, idFieldName } = options,
+      { nodes, formDataWithMutations, idFieldName, indexFieldName } = options,
       newFormState = formDataWithMutations.get("state"),
       getNewManagement = (givenState: Immutable.Map<string, any>) => {
         const 
@@ -70,7 +61,8 @@ export class FieldRegisterUpdaters {
             const 
               updateDirtyFields = (dirtyFields : Immutable.Set<string>) => {
                 const 
-                  formPath = [...nodes, "meta", "isDirty"],
+                  indexNodes = getRealPath(getNodesFromString(indexFieldName)),
+                  formPath = [...indexNodes, "meta", "isDirty"],
                   isDirty = newFormState.getIn(formPath);
 
                 if (isDirty) {
