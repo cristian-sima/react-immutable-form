@@ -57,28 +57,27 @@ const
   
     return memoizedFieldRenderer;
   },
-
   /**
-   * Field component.
-   * 
-   * This component renders a form field and manages its state, validation, and event handling. It supports custom components for rendering and handles the registration and unregistration of the field within the form context.
-   * It memories the props using React.memo
-   * 
-   * @template T - The type of the HTML element for the field.
-   * 
-   * @param {Object} props - Component properties.
-   * @param {string} props.name - The name of the field.
-   * @param {boolean} [props.hideError] - Whether to hide the error message.
-   * @param {Object} [props.inputProps] - Props to pass to the input element.
-   * @param {React.ComponentType<FieldRendererProps<T>>} [props.component] - Custom component to render the field.
-   * @param {Function} [props.validate] - Validation function for the field.
-   * @param {number} [props.index] - Index of the field in a list.
-   * @param {string} [props.listName] - Name of the list containing the field.
-   * @param {string} props.ID - Unique identifier for the field.
-   * @param {Object} [props.componentProps] - Additional props to pass to the custom component.
-   * 
-   * @returns {JSX.Element} The Field component.
-   */
+ * Field component.
+ * 
+ * This component renders a form field and manages its state, validation, and event handling. It supports custom components for rendering and handles the registration and unregistration of the field within the form context.
+ * It memories the props using React.memo
+ * 
+ * @template T - The type of the HTML element for the field.
+ * 
+ * @param {Object} props - Component properties.
+ * @param {string} props.name - The name of the field.
+ * @param {boolean} [props.hideError] - Whether to hide the error message.
+ * @param {Object} [props.inputProps] - Props to pass to the input element.
+ * @param {React.ComponentType<FieldRendererProps<T>>} [props.component] - Custom component to render the field.
+ * @param {Function} [props.validate] - Validation function for the field.
+ * @param {number} [props.index] - Index of the field in a list.
+ * @param {string} [props.listName] - Name of the list containing the field.
+ * @param {string} props.ID - Unique identifier for the field.
+ * @param {Object} [props.componentProps] - Additional props to pass to the custom component.
+ * 
+ * @returns {JSX.Element} The Field component.
+ */
   Field = React.memo(FieldInner);
 
 export default Field;

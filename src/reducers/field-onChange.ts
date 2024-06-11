@@ -5,7 +5,7 @@ import { Decorator, DecoratorOptions, DependenciesValidationList, INDEX_FieldNam
 import { FieldEventOnChangeAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
-type genericWrapperOptions = {
+export type onChangeGenericWrapperOptions = {
   indexFieldName: INDEX_FieldName;
   nodes: Nodes;
   value: any;
@@ -15,9 +15,9 @@ type genericWrapperOptions = {
   givenFormData : ImmutableFormState; 
 }
 
-type applyDecoratorsOptions = genericWrapperOptions 
-type managementUpdaterOptions = genericWrapperOptions
-type stateUpdaterOptions = genericWrapperOptions 
+type applyDecoratorsOptions = onChangeGenericWrapperOptions 
+type managementUpdaterOptions = onChangeGenericWrapperOptions
+type stateUpdaterOptions = onChangeGenericWrapperOptions 
 type dependenciesUpdaterOptions = stateUpdaterOptions
 
 export class FieldOnChangeUpdaters {

@@ -178,6 +178,15 @@ export type TranslationMap = {
   [key: string]: string;
 };
 
-type metaFields = "isTouched" | "theError" | "isFocused" | "initialValue" | "isDirty"
 
-export type MetaProps = Immutable.Map<keyof metaFields, any>
+export type updateValuesStateOptions = {
+  whatToSet : any;
+  fieldKey : string;
+  nodes: Nodes;
+}
+
+export type verifyAllItemsFuncOptions = {
+  validators: ImmutableFormValidators;
+  formState: ImmutableFormState;
+  management: ManagementState;
+}

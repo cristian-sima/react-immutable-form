@@ -1,19 +1,8 @@
 
 import Immutable from "immutable";
-import { ImmutableFormState, ImmutableFormValidators, ManagementState, Nodes, ValidationResult } from "../types";
+import { ValidationResult, updateValuesStateOptions, verifyAllItemsFuncOptions } from "../types";
 import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, performValidation } from "../util";
 
-type verifyAllItemsFuncOptions = {
-  validators: ImmutableFormValidators;
-  formState: ImmutableFormState;
-  management: ManagementState;
-}
-
-type updateValuesStateOptions = {
-  whatToSet : any;
-  fieldKey : string;
-  nodes: Nodes;
-}
 
 export const 
   updateValuesState = (givenValues : Immutable.Map<string, any>, options : updateValuesStateOptions) => {

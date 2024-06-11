@@ -5,7 +5,7 @@ import { ID_FieldName, INDEX_FieldName, ImmutableFormState, Nodes } from "../typ
 import { FieldEventRegisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getDefaultField, getIndexPathForRowValues, getNodesFromString, getRealPath } from "../util";
 
-type genericWrapperOptions = {
+export type fieldRegisterGenericWrapperOptions = {
   indexFieldName: INDEX_FieldName;
   idFieldName : ID_FieldName;
   nodes: Nodes;
@@ -16,7 +16,7 @@ type genericWrapperOptions = {
 }
 
 export class FieldRegisterUpdaters {
-  static stateUpdater = (options : genericWrapperOptions) => {
+  static stateUpdater = (options : fieldRegisterGenericWrapperOptions) => {
     const 
       { nodes, formDataWithMutations, idFieldName, indexFieldName } = options,
       isOneNode = nodes.size === 1,
@@ -58,7 +58,7 @@ export class FieldRegisterUpdaters {
     formDataWithMutations.set("state", getNewState());
   };
 
-  static managementUpdater = (options : genericWrapperOptions) => {
+  static managementUpdater = (options : fieldRegisterGenericWrapperOptions) => {
     const 
       { nodes, formDataWithMutations, idFieldName } = options,
       newFormState = formDataWithMutations.get("state"),
@@ -109,7 +109,7 @@ export const
         const 
           nodes = getRealPath(getNodesFromString(idFieldName)),
          
-          options : genericWrapperOptions = {
+          options : fieldRegisterGenericWrapperOptions = {
             nodes,
             idFieldName,
             indexFieldName, 

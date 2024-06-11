@@ -5,7 +5,10 @@ import { ID_FieldName, ImmutableFormState, ManagementState, Nodes } from "../typ
 import { FieldEventUnregisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getNodesFromString, getRealPath } from "../util";
 
-type hasInNodesOptions = {
+/**
+ * @intern
+ */
+export type hasInNodesOptions = {
   idFieldName: ID_FieldName;
   nodes: Nodes;
   management: ManagementState;

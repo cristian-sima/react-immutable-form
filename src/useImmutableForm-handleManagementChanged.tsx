@@ -7,14 +7,8 @@ import { getWords } from "./words";
  * Additional options for handling form management changes.
  * @internal
  */
-type Options = {
-  /**
-   * A dispatch function for form actions.
-   */
+export type handleManagementChangedOptions = {
   dispatchFormAction: React.Dispatch<ImmutableFormActions>;
-  /**
-   * A function to be executed on form submission.
-   */
   onSubmit: onSubmitFunc;
 };
 
@@ -27,7 +21,7 @@ export const
    * @returns A function to handle management changes.
    * @internal
    */
-  handleManagementChanged = (api : ImmutableFormHandlers, options : FormOptions, ownOptions : Options) => () => {
+  handleManagementChanged = (api : ImmutableFormHandlers, options : FormOptions, ownOptions : handleManagementChangedOptions) => () => {
     const
       { onSubmit, dispatchFormAction } = ownOptions, 
       { management } = api,
