@@ -48,11 +48,11 @@ export const
     
     const 
       { validators, formState, management } = verifyOptions,
-      verifyItem = (field : Immutable.Map<string, any> , fieldKey : string  ) => {
+      verifyItem = (item : Immutable.Map<string, any> , fieldKey : string  ) => {
         const 
           rawNodes = getNodesFromString(fieldKey),
           nodes = getRealPath(rawNodes),
-          value = field.get("value"),
+          value = item.get("value"),
           validatorErr = performValidation(validators, nodes, value, formState) as ValidationResult,
           hasError = validatorErr !== undefined,
           valuesOptions = { fieldKey, nodes, whatToSet: value } as updateValuesStateOptions;
@@ -62,7 +62,7 @@ export const
         if (hasError) {
           errors = errors.setIn(rawNodes, validatorErr);
 
-          return field.withMutations((state) => {
+          return item.withMutations((state) => {
             state.mergeDeepIn(["meta"], Immutable.fromJS({
               isTouched : true,
               theError  : validatorErr,
@@ -70,12 +70,12 @@ export const
           });
         }
 
-        return field;
+        return item;
       },
       
       newFormState = (
         formState.withMutations((givenFormState) => {
-          givenFormState.forEach((field: Immutable.Map<string, any>, fieldKey) => {
+          givenFormState.forEach((item: Immutable.Map<string, any>, fieldKey) => {
             const getNewValue = () => {
               const
                 checkRow = (items: Immutable.List<Immutable.Map<string, any>>, listName: string, rowIndex: number) => (
@@ -128,25 +128,25 @@ export const
                   const
                     hasReference = management.hasIn([fieldKey, REFERENCES_PATH]),
                     shouldCheck = (
-                      field.get("meta") && hasReference
+                      item.get("meta") && hasReference
                     );
 
                   if (shouldCheck) {
-                    return verifyItem(field, fieldKey);
+                    return verifyItem(item, fieldKey);
                   }
                   
-                  return field;
+                  return item;
                 };
 
-              if (Immutable.List.isList(field)) {
-                return checkList(field as Immutable.List<Immutable.Map<string, any>>, fieldKey);
+              if (Immutable.List.isList(item)) {
+                return checkList(item as Immutable.List<Immutable.Map<string, any>>, fieldKey);
               }
 
-              if (Immutable.Map.isMap(field)) {
+              if (Immutable.Map.isMap(item)) {
                 return checkMap();
               }
 
-              return field;
+              return item;
             };
 
             givenFormState.set(fieldKey, getNewValue());

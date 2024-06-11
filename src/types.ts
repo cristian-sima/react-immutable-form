@@ -15,7 +15,7 @@ export type FormOptions = {
 
 export type DecoratorOptions = {
   formData: ImmutableFormState;
-  idFieldName: ID_FieldName;
+  indexFieldName: INDEX_FieldName;
   value: string;
   nodes: Nodes;
 }
@@ -66,7 +66,7 @@ export type ID_FieldName = string & { readonly __ID_FieldName: unique symbol };
  */
 export type INDEX_FieldName  = string & { readonly __INDEX_FieldName: unique symbol };
 
-export type HandleChangeFunc = (idFieldName: ID_FieldName, value: any) => void;
+export type HandleChangeFunc = (idFieldName: ID_FieldName, indexFieldName: INDEX_FieldName, value: any) => void;
 export type HandleBlurFunc = (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
 export type HandleFocusFunc =  (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
   
@@ -110,7 +110,7 @@ export type GenericFieldProps<T extends HTMLElement> = {
 export type FieldRendererProps<T extends HTMLElement> = FieldMutators & {
   readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
   readonly customOnFocus?: (event: React.FocusEvent<T, Element>, handleFocus: HandleFocusFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
-  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, name: ID_FieldName) => any;
+  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, idFileName: ID_FieldName, indexFileName: INDEX_FieldName) => any;
   disabled: boolean;
   readonly elementProps?: InputProps<T>;
   readonly indexFileName: INDEX_FieldName;

@@ -30,9 +30,9 @@ const
       },
       onChange = (event: React.ChangeEvent<HTMLInputElement> ) => {
         if (typeof props.customOnChange === "function") {
-          props.customOnChange(event, handleChange, idFileName);
+          props.customOnChange(event, handleChange, idFileName, indexFileName);
         } else {
-          handleChange(idFileName, event.target.value);
+          handleChange(idFileName, indexFileName, event.target.value);
         }
       };
 

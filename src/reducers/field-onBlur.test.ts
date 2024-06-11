@@ -30,8 +30,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field : "field1" as ID_FieldName,
-          name  : "field1" as INDEX_FieldName,
+          idFieldName    : "field1" as ID_FieldName,
+          indexFieldName : "field1" as INDEX_FieldName,
         },
       },
 
@@ -63,8 +63,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field : "field1" as ID_FieldName,
-          name  : "field1" as INDEX_FieldName,
+          idFieldName    : "field1" as ID_FieldName,
+          indexFieldName : "field1" as INDEX_FieldName,
         },
       },
 
@@ -87,8 +87,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field : "field1" as ID_FieldName,
-          name  : "field1" as INDEX_FieldName,
+          idFieldName    : "field1" as ID_FieldName,
+          indexFieldName : "field1" as INDEX_FieldName,
         },
       },
 
@@ -128,8 +128,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field : "field1" as ID_FieldName,
-          name  : "field1" as INDEX_FieldName,
+          idFieldName    : "field1" as ID_FieldName,
+          indexFieldName : "field1" as INDEX_FieldName,
         },
       },
 
@@ -159,8 +159,8 @@ describe("handleOnBlur", () => {
       action: FieldEventOnBlurAction = {
         type    : "field-event-onBlur",
         payload : {
-          field : "field1" as ID_FieldName,
-          name  : "field1" as INDEX_FieldName,
+          idFieldName    : "field1" as ID_FieldName,
+          indexFieldName : "field1" as INDEX_FieldName,
         },
       },
 

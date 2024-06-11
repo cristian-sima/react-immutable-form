@@ -6,15 +6,15 @@ import { FieldEventUnregisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getNodesFromString, getRealPath } from "../util";
 
 type hasInNodesOptions = {
-  field: ID_FieldName;
+  idFieldName: ID_FieldName;
   nodes: Nodes;
   management: ManagementState;
 }
 
 export class FieldUnRegisterUpdaters {
-  static checkDirty = (field : ID_FieldName) => (givenState : Immutable.Map<string, any>) => {
+  static checkDirty = (idFieldName : ID_FieldName) => (givenState : Immutable.Map<string, any>) => {
     const performDirtyUpdate = (dirtyFields : Immutable.Set<string>) => (
-      dirtyFields.delete(field)
+      dirtyFields.delete(idFieldName)
     );
   
     return givenState.update("dirtyFields", performDirtyUpdate);
@@ -24,19 +24,19 @@ export class FieldUnRegisterUpdaters {
     const 
       handleNodeHasOneReferenceAndItIsList = () => {
         const
-          { field, nodes, management } = options,
+          { idFieldName, nodes, management } = options,
           parentNodes = nodes.slice(0, -1),
           parentNode = management.getIn(parentNodes) as Immutable.Map<string, any>,
           hasParents = parentNode.size === 1,
           handleHasParents = () => (
             management.
               deleteIn(parentNodes.slice(0, -1)).
-              withMutations(FieldUnRegisterUpdaters.checkDirty(field))
+              withMutations(FieldUnRegisterUpdaters.checkDirty(idFieldName))
           ),
           handleNoParents = () => (
             management.
               deleteIn(nodes).
-              withMutations(FieldUnRegisterUpdaters.checkDirty(field))
+              withMutations(FieldUnRegisterUpdaters.checkDirty(idFieldName))
           );
     
         if (hasParents) {
@@ -45,11 +45,11 @@ export class FieldUnRegisterUpdaters {
     
         return handleNoParents();
       },
-      { field, nodes, management } = options,
+      { idFieldName, nodes, management } = options,
       handleSingleNode = () => (
         management.
           deleteIn(nodes).
-          withMutations(FieldUnRegisterUpdaters.checkDirty(field))
+          withMutations(FieldUnRegisterUpdaters.checkDirty(idFieldName))
       );
       
     if (nodes.size === 1) {
@@ -61,12 +61,12 @@ export class FieldUnRegisterUpdaters {
 
   static managementHasNode = (options : hasInNodesOptions) => {
     const 
-      { field, nodes, management } = options,
+      { idFieldName, nodes, management } = options,
       path = [...nodes, REFERENCES_PATH],
       handleNodeHasMultipleReferences = () => (
         management.
           updateIn(path, (value: any) => value - 1).
-          withMutations(FieldUnRegisterUpdaters.checkDirty(field))
+          withMutations(FieldUnRegisterUpdaters.checkDirty(idFieldName))
       );
 
     if (management.getIn(path) === 1) {
@@ -80,15 +80,15 @@ export class FieldUnRegisterUpdaters {
 export const 
   handleUnregisterField= (formData : ImmutableFormState, action : FieldEventUnregisterFieldAction) => {
     const 
-      { field } = action.payload,
+      { idFieldName } = action.payload,
       getNewManagement = (management : ManagementState) => {
         const 
-          nodes = getRealPath(getNodesFromString(field));
+          nodes = getRealPath(getNodesFromString(idFieldName));
             
         if (management.hasIn(nodes)) {
           const options = {
             nodes,
-            field,
+            idFieldName,
             management,
           };
         

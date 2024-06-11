@@ -3,23 +3,24 @@ import { ID_FieldName, INDEX_FieldName, ImmutableFormValidatorFunc } from "./typ
 export type FieldEventOnFocusAction = {
   type: "field-event-onFocus",
   payload: {
-    field: ID_FieldName;
-    name: INDEX_FieldName;
+    idFieldName: ID_FieldName;
+    indexFieldName: INDEX_FieldName;
   };
 }
   
 export type FieldEventOnBlurAction = {
   type: "field-event-onBlur",
   payload: {
-    field: ID_FieldName;
-    name: INDEX_FieldName;
+    idFieldName: ID_FieldName;
+    indexFieldName: INDEX_FieldName;
   };
 }
   
 export type FieldEventOnChangeAction = {
   type: "field-event-onChange",
   payload: {
-    field: ID_FieldName;
+    idFieldName: ID_FieldName;
+    indexFieldName: INDEX_FieldName;
     value: any;
   };
 }
@@ -35,8 +36,8 @@ export type FieldEventRegisterFieldAction = {
 export type FieldEventUnregisterFieldAction = {
   type: "field-event-unregisterField",
   payload: {
-    field: ID_FieldName;
-    name: INDEX_FieldName;
+    idFieldName: ID_FieldName;
+    indexFieldName: INDEX_FieldName;
   };
 }
 
@@ -72,7 +73,7 @@ export type FormEventSubmitHandled = {
 export type FormSetFieldValidator = {
   type: "form-set-field-validator",
   payload: {
-    field: ID_FieldName;
+    idFieldName: ID_FieldName;
     value: ImmutableFormValidatorFunc;
   };
 }

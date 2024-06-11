@@ -1,12 +1,12 @@
 /* eslint-disable new-cap */
 
 import Immutable from "immutable";
-import { Decorator, DecoratorOptions, DependenciesValidationList, ID_FieldName, ImmutableFormDecorators, ImmutableFormState, ImmutableFormValidationDependencies, ImmutableFormValidators, Nodes } from "../types";
+import { Decorator, DecoratorOptions, DependenciesValidationList, INDEX_FieldName, ImmutableFormDecorators, ImmutableFormState, ImmutableFormValidationDependencies, ImmutableFormValidators, Nodes } from "../types";
 import { FieldEventOnChangeAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
 type genericWrapperOptions = {
-  field: ID_FieldName;
+  indexFieldName: INDEX_FieldName;
   nodes: Nodes;
   value: any;
   /*** 
@@ -23,11 +23,11 @@ type dependenciesUpdaterOptions = stateUpdaterOptions
 export class FieldOnChangeUpdaters {
   static dependenciesUpdater = (options : dependenciesUpdaterOptions) => {
     const 
-      { givenFormData, field } = options,
+      { givenFormData, indexFieldName } = options,
       validators = givenFormData.get("validators") as ImmutableFormValidators,
       validationDependencies = givenFormData.get("validationDependencies") as ImmutableFormValidationDependencies,
       formState = givenFormData.get("state") as ImmutableFormState,
-      source = validationDependencies.get(field) as DependenciesValidationList | undefined,
+      source = validationDependencies.get(indexFieldName) as DependenciesValidationList | undefined,
       performValidationDependenciesCheck = (theSource : DependenciesValidationList) => (
         theSource.forEach((target) => {
           const 
@@ -47,13 +47,13 @@ export class FieldOnChangeUpdaters {
 
   static stateUpdater = (options : stateUpdaterOptions) => {
     const
-      { givenFormData, nodes, value, field } = options,
+      { givenFormData, nodes, value, indexFieldName } = options,
       validators = givenFormData.get("validators") as ImmutableFormValidators,
       formState = givenFormData.get("state"),
       validatorErr = performValidation(validators, nodes, value, formState),
       elementUpdater = (currentNode : Immutable.Map<string, any> | undefined) => {
         if (typeof currentNode === "undefined") {
-          return getDefaultField(field, value);
+          return getDefaultField(indexFieldName, value);
         }
 
         const 
@@ -109,11 +109,11 @@ export class FieldOnChangeUpdaters {
 
   static applyDecorators = (options : applyDecoratorsOptions) => {
     const 
-      { nodes, value, field, givenFormData } = options,
+      { nodes, value, indexFieldName, givenFormData } = options,
       decorators = givenFormData.get("decorators") as ImmutableFormDecorators,
       getDecoratorPath = () => {
         if (nodes.size === 1) {
-          return field;
+          return indexFieldName;
         }
 
         return `${nodes.first()}.${nodes.last()}`;
@@ -125,8 +125,8 @@ export class FieldOnChangeUpdaters {
     }
 
     const decoratorOptions : DecoratorOptions = { 
-      formData    : givenFormData,
-      idFieldName : field, 
+      formData: givenFormData,
+      indexFieldName, 
       value,
       nodes,
     };
@@ -140,13 +140,13 @@ export const
     const 
       formDataUpdater = (givenFormData : ImmutableFormState) => {
         const 
-          { value, field } = action.payload,
-          nodes = getRealPath(getNodesFromString(field)),
+          { value, indexFieldName } = action.payload,
+          nodes = getRealPath(getNodesFromString(indexFieldName)),
          
           options : stateUpdaterOptions = {
             givenFormData,
             value,
-            field, 
+            indexFieldName, 
             nodes,
           },
           updaters = [

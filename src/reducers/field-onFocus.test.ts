@@ -9,40 +9,41 @@ describe("handleOnFocus", () => {
   describe("if a field does not exists in the state", () => {
     it("should add a new field with isFocused set to true", () => {
       const 
-        field = "newField" as ID_FieldName,
+        idFieldName = "newField" as ID_FieldName,
         initialState = Immutable.Map({
           state: Immutable.Map(),
         }),
         action : FieldEventOnFocusAction = {
           type    : "field-event-onFocus",
           payload : {
-            field,
-            name: "newField" as INDEX_FieldName,
+            idFieldName,
+            indexFieldName: "newField" as INDEX_FieldName,
           },
         },
         focusedNodes = Immutable.List(["meta", "isFocused"]),
         newState = handleOnFocus(initialState, action),
-        newField = newState.getIn(["state", field]) as Immutable.Map<string, any>;
+        newField = newState.getIn(["state", idFieldName]) as Immutable.Map<string, any>;
 
       expect(newField.toJS()).toEqual(
-        getDefaultField(field, "").setIn(focusedNodes, false).toJS(),
+        getDefaultField(idFieldName, "").setIn(focusedNodes, false).toJS(),
       );
     });
   });
 
   describe("if a field exists in the state", () => {
     it("should set isFocused to true for that field", () => {
-      const field = "testField" as ID_FieldName,
+      const
+        idFieldName = "testField" as ID_FieldName,
         initialState = Immutable.Map({
           state: Immutable.Map({
-            testField: getDefaultField(field, "").setIn(["meta", "isFocused"], false),
+            testField: getDefaultField(idFieldName, "").setIn(["meta", "isFocused"], false),
           }), 
         }),
         action : FieldEventOnFocusAction = {
           type    : "field-event-onFocus",
           payload : {
-            field,
-            name: "newField" as INDEX_FieldName,
+            idFieldName,
+            indexFieldName: "newField" as INDEX_FieldName,
           },
         },
         newState = handleOnFocus(initialState, action);
@@ -51,19 +52,20 @@ describe("handleOnFocus", () => {
     });
 
     it("should not modify other fields in the state", () => {
-      const field = "testField" as ID_FieldName,
+      const 
+        idFieldName = "testField" as ID_FieldName,
         otherField = "otherField",
         initialState = Immutable.Map({
           state: Immutable.Map({
-            testField  : getDefaultField(field, "").setIn(["meta", "isFocused"], false),
+            testField  : getDefaultField(idFieldName, "").setIn(["meta", "isFocused"], false),
             otherField : getDefaultField(otherField, "").setIn(["meta", "isFocused"], false),
           }),
         }),
         action : FieldEventOnFocusAction = {
           type    : "field-event-onFocus",
           payload : {
-            field,
-            name: "newField" as INDEX_FieldName,
+            idFieldName,
+            indexFieldName: "newField" as INDEX_FieldName,
           },
         },
         newState = handleOnFocus(initialState, action);
