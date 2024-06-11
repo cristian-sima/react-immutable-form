@@ -5,6 +5,7 @@ import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, p
 
 
 export const 
+  /** @intern */
   updateValuesState = (givenValues : Immutable.Map<string, any>, options : updateValuesStateOptions) => {
     const 
       { fieldKey, nodes, whatToSet } = options,
@@ -29,6 +30,7 @@ export const
 
     return setValueForArrays();
   },
+  /** @intern */
   verifyAllItems = (verifyOptions : verifyAllItemsFuncOptions) => {
     
     let 

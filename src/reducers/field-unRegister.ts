@@ -5,15 +5,14 @@ import { ID_FieldName, ImmutableFormState, ManagementState, Nodes } from "../typ
 import { FieldEventUnregisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getNodesFromString, getRealPath } from "../util";
 
-/**
- * @intern
- */
+/** @intern */
 export type hasInNodesOptions = {
   idFieldName: ID_FieldName;
   nodes: Nodes;
   management: ManagementState;
 }
 
+/** @intern */
 export class FieldUnRegisterUpdaters {
   static checkDirty = (idFieldName : ID_FieldName) => (givenState : Immutable.Map<string, any>) => {
     const performDirtyUpdate = (dirtyFields : Immutable.Set<string>) => (
@@ -80,6 +79,7 @@ export class FieldUnRegisterUpdaters {
   };
 }
 
+/** @intern */
 export const 
   handleUnregisterField= (formData : ImmutableFormState, action : FieldEventUnregisterFieldAction) => {
     const 

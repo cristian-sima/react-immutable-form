@@ -4,7 +4,8 @@ import Immutable from "immutable";
 import { ID_FieldName, INDEX_FieldName, ImmutableFormState, Nodes } from "../types";
 import { FieldEventRegisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getDefaultField, getIndexPathForRowValues, getNodesFromString, getRealPath } from "../util";
-
+  
+/** @intern */
 export type fieldRegisterGenericWrapperOptions = {
   indexFieldName: INDEX_FieldName;
   idFieldName : ID_FieldName;
@@ -15,6 +16,7 @@ export type fieldRegisterGenericWrapperOptions = {
   formDataWithMutations : ImmutableFormState; 
 }
 
+/** @intern */
 export class FieldRegisterUpdaters {
   static stateUpdater = (options : fieldRegisterGenericWrapperOptions) => {
     const 
@@ -93,6 +95,7 @@ export class FieldRegisterUpdaters {
   };
 }
 
+/** @intern */
 export const 
   handleRegisterField= (formData : ImmutableFormState, action : FieldEventRegisterFieldAction) => {
     const 

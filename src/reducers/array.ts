@@ -7,6 +7,7 @@ import { createRow } from "../util";
 export type ImmutableFormState = Immutable.Map<string, any>;
 
 export const 
+  /** @intern */
   handleArrayAddAction = (state : ImmutableFormState, action : ArrayEventAdd) => {
     const 
       { data, listName, ID  } = action.payload,
@@ -23,6 +24,7 @@ export const
 
     return state.update("state", getNewFormState);
   },
+  /** @intern */
   handleArrayRemoveAction = (state : ImmutableFormState, action : ArrayEventRemove) => {
     const 
       { ID, listName } = action.payload,

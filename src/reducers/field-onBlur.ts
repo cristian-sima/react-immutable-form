@@ -5,8 +5,8 @@ import { ImmutableFormState, ImmutableFormValidators } from "../types";
 import { FieldEventOnBlurAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
-
 export const 
+  /** @intern */
   handleOnBlur = (formData : ImmutableFormState, action : FieldEventOnBlurAction) => {
     const 
       validators = formData.get("validators") as ImmutableFormValidators,

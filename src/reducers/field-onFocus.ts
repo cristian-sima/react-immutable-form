@@ -4,6 +4,7 @@ import { getDefaultField, getNodesFromString, getRealPath } from "../util";
 import { ImmutableFormState } from "./array";
 
 export const 
+  /** @intern */
   handleOnFocus = (state : ImmutableFormState, action : FieldEventOnFocusAction) => {
     const 
       { indexFieldName } = action.payload,

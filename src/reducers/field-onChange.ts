@@ -5,6 +5,7 @@ import { Decorator, DecoratorOptions, DependenciesValidationList, INDEX_FieldNam
 import { FieldEventOnChangeAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
+/** @intern */
 export type onChangeGenericWrapperOptions = {
   indexFieldName: INDEX_FieldName;
   nodes: Nodes;
@@ -20,6 +21,7 @@ type managementUpdaterOptions = onChangeGenericWrapperOptions
 type stateUpdaterOptions = onChangeGenericWrapperOptions 
 type dependenciesUpdaterOptions = stateUpdaterOptions
 
+/** @intern */
 export class FieldOnChangeUpdaters {
   static dependenciesUpdater = (options : dependenciesUpdaterOptions) => {
     const 
@@ -135,6 +137,7 @@ export class FieldOnChangeUpdaters {
   };
 }
 
+/** @intern */
 export const 
   handleOnChange = (initialFormData : ImmutableFormState, action : FieldEventOnChangeAction) => {
     const 
