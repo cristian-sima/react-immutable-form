@@ -1,0 +1,24 @@
+<svg width="400" height="150" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#61DAFB;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#490861;stop-opacity:1" />
+        </linearGradient>
+        <filter id="f1" x="0" y="0">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+        </filter>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grad1)" />
+    <g transform="translate(50,75)">
+        <circle cx="0" cy="0" r="40" fill="white" filter="url(#f1)" />
+        <circle cx="0" cy="0" r="30" fill="#61DAFB" />
+        <text x="0" y="5" font-family="Arial" font-size="20" fill="white" text-anchor="middle"
+            alignment-baseline="middle">
+
+        </text>
+    </g>
+    <text x="240" y="80" font-family="Arial" font-size="24" fill="white" text-anchor="middle"
+        alignment-baseline="middle">
+        react-immutable-form
+    </text>
+</svg>

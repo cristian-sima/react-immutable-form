@@ -5,7 +5,7 @@ react-immutable-form - the **immutableJS form** library
 
 💥 [**handles 1️⃣0️⃣0️⃣0️⃣ fields, providing instant response**](https://bundlephobia.com/result?p=react-immutable-form) 💥
 
-<img src="docs/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="img/logo.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 
 [![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9) [![NPM Downloads](https://img.shields.io/npm/dm/react-immutable-form.svg?style=flat)](https://www.npmjs.com/package/react-immutable-form)
@@ -15,7 +15,7 @@ react-immutable-form - the **immutableJS form** library
 # Principles
 **react-immutable-form** was created taking into account the following principles:
 
-1. *efficiency* ✅
+## 1. *efficiency* ✅
     - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
     - it can handle `1000 inputs out-of-the-box`, without any optimization 
     - it `receives decorators` for computing additional states (eg. total of an invoice)
@@ -24,9 +24,9 @@ react-immutable-form - the **immutableJS form** library
         - if the fields are `displayed`, their value `is verified `
         - if they are `hidden` they `will not be validated`, but `their values are kept`
 
-<img src="docs/cycle.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="img/cycle.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-2. *simplicity* ✅
+## 2. *simplicity* ✅
     -  comes out-of-the-box with all the features you would want to use:
     - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
     - *FocusPromt* - `warn the user` the form has unsaved changes
@@ -35,9 +35,9 @@ react-immutable-form - the **immutableJS form** library
     - `simple API` for managing the inputs
     
 
-<img src="docs/field.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="img/field.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-3. *focused on normal used cases* ✅
+## 3. *focused on normal used cases* ✅
     - your form must allow to get data, validate data, show errors and derive a new state
     - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
     - create your own custom field using *Field* and *FieldRender*
@@ -53,7 +53,7 @@ react-immutable-form - the **immutableJS form** library
 
 ## A simple illustration of an invoice form
 
-<img src="docs/state.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="img/state.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 ## Other features:
 1. `Small size` of library  ⚡⚡⚡⚡ [![size](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)](https://badgen.net/bundlephobia/minzip/react-immutable-form@1.0.9)
@@ -61,7 +61,7 @@ react-immutable-form - the **immutableJS form** library
 
 
 2. `No extra dependencies` (React and ImmutableJS are excluded)
-<img src="docs/dependencies.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
+<img src="img/dependencies.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
 # Installation 
 
