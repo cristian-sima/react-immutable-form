@@ -4,9 +4,9 @@
 import Immutable from "immutable";
 import { describe, expect, it } from "vitest";
 import { ID_FieldName, INDEX_FieldName, ImmutableFormState, Nodes } from "../types";
+import { FieldEventRegisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getDefaultField, getNodesFromString, getRealPath } from "../util";
 import { FieldRegisterUpdaters, handleRegisterField } from "./field-register";
-import { FieldEventRegisterFieldAction } from "src/types-actions";
 
 describe("FieldRegisterUpdaters", () => {
   describe("stateUpdater", () => {

@@ -1,8 +1,8 @@
 import Immutable from "immutable";
 import { describe, expect, it } from "vitest";
+import { ID_FieldName } from "../types";
 import { FormSetFieldValidator } from "../types-actions";
 import { fieldSetValidator } from "./field-setValidator";
-import { ID_FieldName } from "src/types";
 
 describe("fieldSetValidator", () => {
   it("should update the validator for a single node path", () => {
