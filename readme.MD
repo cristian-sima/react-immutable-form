@@ -13,9 +13,10 @@ react-immutable-form - the **immutableJS form** library
 
 
 # Principles
+
 **react-immutable-form** was created taking into account the following principles:
 
-## 1. *efficiency* ✅
+## 1. efficiency ✅
     - it updates `just the necessary fields`, doing it efficiently using Immutable.Js
     - it can handle `1000 inputs out-of-the-box`, without any optimization 
     - it `receives decorators` for computing additional states (eg. total of an invoice)
@@ -26,30 +27,30 @@ react-immutable-form - the **immutableJS form** library
 
 <img src="img/cycle.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-## 2. *simplicity* ✅
-    -  comes out-of-the-box with all the features you would want to use:
-    - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
-    - *FocusPromt* - `warn the user` the form has unsaved changes
-    - *ErrorDisplay* - shows the `errors in a friendly way`
-    - `easy access` for the state
-    - `simple API` for managing the inputs
+## 2. simplicity ✅
+  -  comes out-of-the-box with all the features you would want to use:
+  - `full integration with arrays` (add rows, delete, etc) - using `uuid as keys`
+  - *FocusPromt* - `warn the user` the form has unsaved changes
+  - *ErrorDisplay* - shows the `errors in a friendly way`
+  - `easy access` for the state
+  - `simple API` for managing the inputs
     
 
 <img src="img/field.svg" alt="react-immutable-form" style="width:100%; height:auto;" />
 
-## 3. *focused on normal used cases* ✅
-    - your form must allow to get data, validate data, show errors and derive a new state
-    - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
-    - create your own custom field using *Field* and *FieldRender*
-    - it provides out the box custom Inputs using `react-immutable-form-with-bootstrap` library
-        - *SimpleInput*         - it is a string input
-        - *TemplateInput*       - used for input with a label
-        - *NumericInput*        - used for numbers
-        - *NumericTemplate*     - used for numeric input with a label
-        - *SimpleTextarea*      - used for textarea
-        - *TextareaTemplate*    - used for textarea with a label
-        - *SimpleSelect*        - displays a select 
-        - *SelectTemplate*      - a select input with a label
+## 3. use cases ✅
+  - your form must allow to get data, validate data, show errors and derive a new state
+  - it handles `the most common used cases`, thus solving their key problems and removing the complexity of dealing with complex cases 
+  - create your own custom field using *Field* and *FieldRender*
+  - it provides out the box custom Inputs using `react-immutable-form-with-bootstrap` library
+    - *SimpleInput*         - it is a string input
+    - *TemplateInput*       - used for input with a label
+    - *NumericInput*        - used for numbers
+    - *NumericTemplate*     - used for numeric input with a label
+    - *SimpleTextarea*      - used for textarea
+    - *TextareaTemplate*    - used for textarea with a label
+    - *SimpleSelect*        - displays a select 
+    - *SelectTemplate*      - a select input with a label
 
 ## A simple illustration of an invoice form
 
