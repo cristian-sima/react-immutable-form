@@ -4,7 +4,7 @@ import { getNodesFromString, getRealPath } from "../util";
 import { ImmutableFormState } from "./array";
 
 export const 
-  fieldSetValidator = (state : ImmutableFormState, action : FormSetFieldValidator) => {
+  fieldSetValidator = (validatorsState : ImmutableFormState, action : FormSetFieldValidator) => {
     const 
       { idFieldName, value  } = action.payload,
       validatorUpdater = (formState : Immutable.Map<string, any>) => {
@@ -18,17 +18,17 @@ export const
             const 
               listName = nodes.first(),
               fieldName = nodes.last(),
-              path = ["validators", listName, fieldName];
+              path = [ listName, fieldName];
 
-            return state.setIn(path, value);
+            return validatorsState.setIn(path, value);
           };
 
         if (nodes.size === 1) {
-          return state.setIn(["validators", idFieldName], value);
+          return validatorsState.set(idFieldName, value);
         }
 
         return handleList();
       };
 
-    return state.update("state", validatorUpdater);
+    return validatorsState.update("validators", validatorUpdater);
   };
