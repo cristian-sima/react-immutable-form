@@ -6,7 +6,7 @@ import { FieldEventOnChangeAction } from "../types-actions";
 import { getDefaultField, getNodesFromString, getRealPath, performValidation } from "../util";
 
 /** @intern */
-export type onChangeGenericWrapperOptions = {
+type onChangeGenericWrapperOptions = {
   indexFieldName: INDEX_FieldName;
   nodes: Nodes;
   value: any;
@@ -94,14 +94,14 @@ export class FieldOnChangeUpdaters {
             
         const 
           initialValue = currentNode.getIn(["meta", "initialValue"]) as any,
-          idPath = currentNode.get("path") as string,
+          idFieldName = currentNode.get("idFieldName") as string,
           isDirty =  initialValue !== value;
 
         if (isDirty) {
-          return current.add(idPath);
+          return current.add(idFieldName);
         }
                             
-        return current.delete(idPath);
+        return current.delete(idFieldName);
       };
 
     givenFormData.updateIn(["management", "dirtyFields"], (innerValue : any) => (

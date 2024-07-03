@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 
 import Immutable, { List } from "immutable";
-import { FormOptions, InitialValues } from "../types";
+import { ImmutableFormOptions, InitialValues } from "../types";
 import { ImmutableFormActions } from "../types-actions";
 import { createRow, getDefaultField } from "../util";
 import { generateUniqueUUIDv4 } from "../uuid";
@@ -12,13 +12,13 @@ import { handleOnFocus } from "./field-onFocus";
 import { handleRegisterField } from "./field-register";
 import { fieldSetValidator } from "./field-setValidator";
 import { handleUnregisterField } from "./field-unRegister";
-import { handleFormOnSubmit, handleFormSubmitHandled, setFormIsSubmitting } from "./form-events";
+import { handleFormOnSubmit, handleFormSubmitHandled, setFormDerivedState, setFormIsSubmitting } from "./form-events";
 
 const 
   getDefaultManagement = () => (
     Immutable.fromJS({
       dirtyFields: Immutable.Set<string>(),
-    })
+    }) as Immutable.Map<string, any>
   ),
   initialFieldState = (value: any, name : string) => {
     const
@@ -85,21 +85,32 @@ export const
       case "form-set-field-validator":
         return fieldSetValidator(state, action);
     
+      case "form-set-derived-state":
+        return setFormDerivedState(state, action);
+    
+      case "form-reset-to-default": 
+        return action.payload;
+
       default:
         return state;
     }
   },
 
   /** @internal */
-  getInitialState = (options : FormOptions) => {
+  getInitialState = (options : ImmutableFormOptions) => {
     const 
-      validators = options.initialValidators,
-      { decorators } = options,
-      { validationDependencies  = Immutable.Map() } = options,
-      management =  options.management || getDefaultManagement(),
-      state = parseInitialData(options.initialValues);
+      management =  getDefaultManagement().mergeDeep(
+        options.management || Immutable.Map<string, any>(),
+      ),
+      validationDependencies = options.validationDependencies || Immutable.Map<string, any>(),
+      validators = options.initialValidators || Immutable.Map<string, any>(),
+      derived = options.derived || Immutable.Map<string, any>(),
+      initialValues = options.initialValues || Immutable.Map<string, any>(),
+      decorators = options.decorators || Immutable.Map<string, any>(),
+      state = parseInitialData(initialValues);
 
     return Immutable.Map({
+      derived,
       state,
       validators,
       management,

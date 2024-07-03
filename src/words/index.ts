@@ -1,4 +1,4 @@
-import { TranslationMap } from "../types";
+import { TranslationMap, Words } from "../types";
 
 let 
   words = {
@@ -12,7 +12,7 @@ let
   };
 
 export const 
-  setWords = ((newWords : any) => {
+  setWords = ((newWords : Words) => {
     words = {
       ...words,
       ...newWords,

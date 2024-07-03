@@ -6,7 +6,7 @@ import { FieldEventUnregisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getNodesFromString, getRealPath } from "../util";
 
 /** @intern */
-export type hasInNodesOptions = {
+type hasInNodesOptions = {
   idFieldName: ID_FieldName;
   nodes: Nodes;
   management: ManagementState;
@@ -22,6 +22,22 @@ export class FieldUnRegisterUpdaters {
     return givenState.update("dirtyFields", performDirtyUpdate);
   };
 
+  /**
+   * Handles a node that has one reference within an immutable data structure.
+   *
+   * This function manages the deletion of nodes from an immutable data structure
+   * based on the provided options. It distinguishes between handling a single node
+   * and a list of nodes, performing the appropriate operations to maintain the 
+   * integrity of the data structure.
+   *
+   * @param options - An object containing the following properties:
+   *   @property idFieldName - The name of the ID field to be managed.
+   *   @property nodes - An array of nodes representing the path in the data structure.
+   *   @property management - An object that provides methods to manipulate the data structure,
+   *                          specifically supporting the `deleteIn` and `withMutations` methods.
+   * 
+   * @returns The updated management object after processing the nodes.
+   */
   static handleNodeHasOneReference = (options : hasInNodesOptions) => {
     const 
       handleNodeHasOneReferenceAndItIsList = () => {
@@ -29,23 +45,23 @@ export class FieldUnRegisterUpdaters {
           { idFieldName, nodes, management } = options,
           parentNodes = nodes.slice(0, -1),
           parentNode = management.getIn(parentNodes) as Immutable.Map<string, any>,
-          hasParents = parentNode.size === 1,
-          handleHasParents = () => (
+          theRowHasOnlyThisField = parentNode.size === 1,
+          handleRowHasOnlyThisField = () => (
             management.
               deleteIn(parentNodes.slice(0, -1)).
               withMutations(FieldUnRegisterUpdaters.checkDirty(idFieldName))
           ),
-          handleNoParents = () => (
+          handleRowHasMultipleFields = () => (
             management.
               deleteIn(nodes).
               withMutations(FieldUnRegisterUpdaters.checkDirty(idFieldName))
           );
     
-        if (hasParents) {
-          return handleHasParents();
+        if (theRowHasOnlyThisField) {
+          return handleRowHasOnlyThisField();
         }
     
-        return handleNoParents();
+        return handleRowHasMultipleFields();
       },
       { idFieldName, nodes, management } = options,
       handleSingleNode = () => (
@@ -97,6 +113,7 @@ export const
         
           return FieldUnRegisterUpdaters.managementHasNode(options);
         }
+
         return management;
       };
 

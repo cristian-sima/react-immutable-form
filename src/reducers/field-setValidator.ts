@@ -5,12 +5,12 @@ import { ImmutableFormState } from "./array";
 
 export const 
   /** @intern */
-  fieldSetValidator = (validatorsState : ImmutableFormState, action : FormSetFieldValidator) => {
+  fieldSetValidator = (formState : ImmutableFormState, action : FormSetFieldValidator) => {
     const 
       { idFieldName, value  } = action.payload,
-      validatorUpdater = (formState : Immutable.Map<string, any>) => {
-        if (!formState) {
-          return formState;
+      validatorUpdater = (givenState : Immutable.Map<string, any>) => {
+        if (!givenState) {
+          return givenState;
         }
 
         const  
@@ -21,15 +21,15 @@ export const
               fieldName = nodes.last(),
               path = [ listName, fieldName];
 
-            return validatorsState.setIn(path, value);
+            return givenState.setIn(path, value);
           };
 
         if (nodes.size === 1) {
-          return validatorsState.set(idFieldName, value);
+          return givenState.set(idFieldName, value);
         }
 
         return handleList();
       };
 
-    return validatorsState.update("validators", validatorUpdater);
+    return formState.update("validators", validatorUpdater);
   };

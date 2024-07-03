@@ -2,8 +2,9 @@
 
 import Immutable from "immutable";
 import React, { useCallback } from "react";
+import immutableGetters from "./getters";
 import { getInitialState, reducer } from "./reducers";
-import { FormOptions, ID_FieldName, INDEX_FieldName, ImmutableFormHandlers, ImmutableFormValidatorFunc, onSubmitFunc } from "./types";
+import { ID_FieldName, INDEX_FieldName, ImmutableFormHandlers, ImmutableFormOptions, ImmutableFormValidatorFunc, onSubmitImmutableFormFunc } from "./types";
 import { handleManagementChanged } from "./useImmutableForm-handleManagementChanged";
 import { getDefaultField } from "./util";
 import { generateUniqueUUIDv4 } from "./uuid";
@@ -12,35 +13,18 @@ const
   /**
    * Custom hook to handle form logic and to create a react-immutable-form
    * 
-   * @param {FormOptions} options - The configuration options for the form.
-   * @param {onSubmitFunc} onSubmit - The function to handle form submission.
+   * @param {ImmutableFormOptions} options - The configuration options for the form.
+   * @param {onSubmitImmutableFormFunc} onSubmit - The function to handle form submission.
    * @returns {FormInterface} The form interface to manage form state and actions.
    */
-  useImmutableForm = (options : FormOptions, onSubmit: onSubmitFunc) => {
+  useImmutableForm = <T>(options : ImmutableFormOptions, onSubmit: onSubmitImmutableFormFunc) => {
     const 
       initialState = React.useMemo(() => getInitialState(options), []),
       [formData, dispatchFormAction] = React.useReducer(reducer, initialState),
 
       formState = formData.get("state") as Immutable.Map<string, any>,
       management = formData.get("management") as Immutable.Map<string, any>,
-
-      /**
-     * Set the validator function for a specific form field.
-     * 
-     * @function setFieldValidator
-     * @param {ID_FieldName} idFieldName - The ID of the field for which the validator is being set.
-     * @param {ImmutableFormValidatorFunc} value - The validator function to be set for the field.
-     * @returns {void}
-     */
-      setFieldValidator = useCallback((idFieldName: ID_FieldName, value : ImmutableFormValidatorFunc) => {
-        dispatchFormAction({
-          type    : "form-set-field-validator",
-          payload : {
-            idFieldName, 
-            value,
-          },
-        });
-      }, [dispatchFormAction]),
+      derivedState = formData.get("derived") as Immutable.Map<string, any>,
 
       /**
        * Get the entire form data.
@@ -62,6 +46,45 @@ const
       getFieldState = useCallback((fieldName : string) => (
         (formData.getIn(["state", fieldName]) || getDefaultField(fieldName, "")) as Immutable.Map<string, any>
       ),  [formData]),
+
+      /**
+       * Function to clear the form. It sets it to the initialValues.
+       */
+      formResetToDefault = useCallback(() => {
+        dispatchFormAction({
+          type    : "form-reset-to-default",
+          payload : getInitialState(options),
+        });
+      }, [dispatchFormAction]),
+
+      /**
+       * Function to set a custom derived state in the form
+       * @param newDerivedState - The new derived state to set.
+       */
+      formSetDerivedState = useCallback((newDerivedState : Immutable.Map<string, any>) => {
+        dispatchFormAction({
+          type    : "form-set-derived-state",
+          payload : newDerivedState,
+        });
+      }, [dispatchFormAction]),
+
+      /**
+     * Set the validator function for a specific form field.
+     * 
+     * @function setFieldValidator
+     * @param {ID_FieldName} idFieldName - The ID of the field for which the validator is being set.
+     * @param {ImmutableFormValidatorFunc} value - The validator function to be set for the field.
+     * @returns {void}
+     */
+      setFieldValidator = useCallback((idFieldName: ID_FieldName, value : ImmutableFormValidatorFunc) => {
+        dispatchFormAction({
+          type    : "form-set-field-validator",
+          payload : {
+            idFieldName, 
+            value,
+          },
+        });
+      }, [dispatchFormAction]),
 
       /**
      * Handle change events for a form field.
@@ -205,6 +228,10 @@ const
        * @param {string} [error] - An error message, if any.
        */
       formSetIsSubmitting = useCallback((isSubmitting : boolean, error?: string) => {
+        if (typeof options.onServerFailed === "function" && !isSubmitting && typeof error !== "undefined") {
+          options.onServerFailed(error);
+        }
+
         dispatchFormAction({
           type    : "form-set-isSubmitting",
           payload : {
@@ -228,15 +255,39 @@ const
         });
 
       }, [dispatchFormAction]),
+      /**
+       * It allows to receives the requested values from the form
+       */
+      getRequestedValues =  useCallback(<K extends keyof T>(requiredKeys : K[]) => (
+        immutableGetters.getRequestedValues<T, K>(formState, requiredKeys)
+      ), [formState]),
+
+      /**
+       * It allows to receives all the values
+       */
+      getAllValues =  useCallback(() => {
+        const inner =  formState.reduce((reduction, currentState, key) => (
+          reduction.set(key, currentState.get("value"))
+        ), Immutable.Map({}));
+
+        return inner.toJS() as T;
+
+      }, [formState]),
 
       api = React.useMemo(() => {
-        const inner :ImmutableFormHandlers = {
+        const inner :ImmutableFormHandlers<T> = {
           // form
           formState,
           management,
+          derivedState,
+          
           handleSubmit,
           getFormData,
           getFieldState,
+
+          // getters 
+          getRequestedValues,
+          getAllValues,
   
           // array mutators
           handleArrayAdd,
@@ -252,12 +303,14 @@ const
 
           formSubmitHandled,
           formSetIsSubmitting,
+          formSetDerivedState,
+          formResetToDefault,
         };
         
         return inner; 
-      }, [formState, management]);
+      }, [formState, management, derivedState]);
 
-    React.useEffect(handleManagementChanged(api, options, {
+    React.useEffect(handleManagementChanged<T>(api, options, {
       dispatchFormAction,
       onSubmit,
     }), [management]);

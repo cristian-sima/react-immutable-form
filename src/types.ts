@@ -1,24 +1,98 @@
-import { ReactElement } from "react";
+import Immutable from "immutable";
 import { ImmutableFormActions } from "./types-actions";
 
-export interface FormInterface { readonly form :  ImmutableFormHandlers}
+export interface ImmutableFormInterface<T> { readonly form :  ImmutableFormHandlers<T>}
 
-export interface ImmutableFormProps {
-  readonly children: ReactElement<FormInterface>;
-  readonly handlers: ImmutableFormHandlers;
-}
+export type ImmutableFormProps<T> = ImmutableFormOptions & {
+  children: ((props: ImmutableFormHandlers<T>) => React.ReactNode) | React.ReactElement<ImmutableFormHandlers<T>>;
+  onSubmit: onSubmitImmutableFormFunc;
+} 
 
-export type onSubmitFunc = (values : ImmutableFormState, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => any;
+/**
+ * Async function handling form submission with Immutable.js data.
+ *
+ * @param values Immutable.Map<string, any> - The form values as an Immutable Map.
+ * @returns void
+ * @throws ImmutableFormError if there is an error during form submission.
+ */
+export type onSubmitImmutableFormFunc = (values : ImmutableFormState, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => Promise<void>;
 
-export type onSubmitErrorFunc =  (errors :  Immutable.Map<string, any>, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => any;
+export type onSubmitImmutableFormErrorFunc =  (errors :  Immutable.Map<string, any>, dispatchFormAction : React.Dispatch<ImmutableFormActions>) => any;
 
-export type FormOptions = {
-  initialValues: InitialValues, 
-  initialValidators: ImmutableFormValidators,
-  decorators: ImmutableFormDecorators;
-  management? : Immutable.Map<string, any>,
-  validationDependencies? : ImmutableFormValidationDependencies, 
-  onSubmitError?: onSubmitErrorFunc;
+/**
+ * Options for configuring a form.
+ */
+export type ImmutableFormOptions = {
+  /**
+   * The initial values for the form fields, specified as an Immutable.Map where keys are field names
+   * and values are the initial values for those fields.
+   * 
+   * This allows setting default values for the form fields upon initialization.
+   */
+  initialValues?: InitialValues,
+
+  /**
+   * A map containing all the validators for the form fields, specified as Immutable.Map where keys are field names
+   * and values are functions that validate the corresponding field values.
+   * 
+   * If a field has a `validation` prop specified directly, that prop takes precedence over the validator in this map.
+   * Validators are used to enforce rules and constraints on the form field values.
+   */
+  initialValidators?: ImmutableFormValidators,
+
+  /**
+   * A collection of decorator functions specified as a key-function pair, where the key is a field name
+   * and the function receives the current state of the form and can derive a new state (e.g., performing calculations or transformations).
+   * 
+   * Decorators are used to dynamically alter or derive new state values based on the current state of the form.
+   */
+  decorators?: ImmutableFormDecorators,
+
+  /** 
+   * The initial management state for the form, specified as an Immutable.Map. This state can include various
+   * properties related to the management and behavior of the form.
+   * 
+   * Properties include:
+   * - `showRenderCounts`: A boolean indicating whether to display the number of renders for each field.
+   * 
+   * This state helps manage form-level settings and behaviors.
+   */
+  management?: Immutable.Map<string, any>,
+
+  /**
+   * The initial derived state for the form, specified as an Immutable.Map. This state is used for calculations
+   * and other derived values based on the form data.
+   * 
+   * Derived state values are calculated based on the initial form data and can be used to perform complex calculations
+   * or transformations that depend on multiple form fields.
+   */
+  derived?: Immutable.Map<string, any>,
+
+  /**
+   * A map specifying dependencies between form fields for validation purposes, defined as Immutable.Map where
+   * keys are field names and values are arrays of dependent field names.
+   * 
+   * When a field value changes, its dependencies are notified and re-validated. For example, if field `a` depends on field `b`,
+   * and field `b` depends on field `c`, changing the value of `a` will trigger validation for both `b` and `c`.
+   * 
+   * This ensures that interdependent fields are consistently validated whenever any related field changes.
+   */
+  validationDependencies?: ImmutableFormValidationDependencies,
+
+  /**
+   * A function that is called when the form submission results in an error. This function receives
+   * an error object or message as a parameter and can handle the error accordingly.
+   * 
+   * This allows custom handling of submission errors, such as displaying error messages or performing
+   * specific actions based on the error type.
+   */
+  onSubmitError?: onSubmitImmutableFormErrorFunc;
+
+  /**
+   * Optional callback function to handle errors occurring during form submission.
+   * @param error The error object representing the form submission error, if available.
+   */
+  onServerFailed?: (error: string) => void;
 }
 
 export type DecoratorOptions = {
@@ -93,11 +167,27 @@ export type Getters = {
 /**
  * Type representing the handlers for an immutable form.
  */
-export type ImmutableFormHandlers = {
+export type ImmutableFormHandlers<T> = {
   /** The current state of the form. */
   formState: ImmutableFormState;
-  /** The management state of the form. */
+  /**
+   * It allows to receives the requested values from the form
+   */
+  getRequestedValues: <K extends keyof T>(requiredKeys : K[]) => PartialPick<T, K>
+  /**
+   * It returns all the form values. 
+   * Please use this, only if you need to use all keys
+   */
+  getAllValues: () => T
+  /** The management state of the form. 
+   * 
+   * Contains: 
+   *  - `isSubmitting` boolean - if the form is submitting to the server
+   *  - `formError` string|undefined - The error from submitting from the server
+  */
   management: ManagementState;
+  /** The derived state of the form. It includes all possible extra calculations using the form */
+  derivedState: Immutable.Map<string, any>;
   /**
    * Function to handle form submission.
    * @param event The form submission event.
@@ -111,6 +201,16 @@ export type ImmutableFormHandlers = {
    * @param error Optional error message if submission failed.
    */
   formSetIsSubmitting: (isSubmitting: boolean, error?: string) => void;
+  /**
+   * Function to modify the derived state
+   * @param newState The new derived state
+   */
+  formSetDerivedState: (newState: Immutable.Map<string, any>) => void;
+
+  /**
+   * It resets the form to the initial values (it clears the form)
+   */
+  formResetToDefault: () => void;
 } & ArrayMutators & FieldMutators & FormMutators & Getters;
   
 // fields 
@@ -126,34 +226,42 @@ export type InputProps<T extends HTMLElement> = T extends HTMLInputElement
     ? React.TextareaHTMLAttributes<T> & { ref?: React.RefObject<T> }
     : React.HTMLAttributes<T> & { ref?: React.RefObject<T> };
 
-export type GenericFieldProps<T extends HTMLElement> = {
+export type GenericImmutableFieldProps<T extends HTMLElement> = {
   component?: React.JSXElementConstructor<FieldRendererProps<T> & any>;
+  componentProps?: any;
   readonly name: string;
   validate?: ImmutableFormValidatorFunc;
   inputProps?:  InputProps<T>;
 }
-  
+
+
 export type FieldRendererProps<T extends HTMLElement> = FieldMutators & {
-  readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
-  readonly customOnFocus?: (event: React.FocusEvent<T, Element>, handleFocus: HandleFocusFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
-  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, idFileName: ID_FieldName, indexFileName: INDEX_FieldName) => any;
-  disabled: boolean;
-  readonly elementProps?: InputProps<T>;
+  // passed automatically 
+  readonly showRenderCounts?: boolean;
+  readonly disabled: boolean;
   readonly indexFileName: INDEX_FieldName;
   readonly idFileName: ID_FieldName;
   readonly data: Immutable.Map<string, any>;
-  componentProps?: Immutable.Map<string, any>;
-  hideError?: boolean;
+  readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
+  readonly customOnFocus?: (event: React.FocusEvent<T, Element>, handleFocus: HandleFocusFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
+  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, idFileName: ID_FieldName, indexFileName: INDEX_FieldName) => any;
+
+  // custom 
+  readonly elementProps?: InputProps<T>;
+  readonly componentProps?: Immutable.Map<string, any>;
+  readonly hideError?: boolean;
+  readonly parse?: (rawValue : any) => string | number | undefined;
 };
   
 // arrays
   
-export type FieldProps<T extends HTMLElement> = GenericFieldProps<T> & {
+export type ImmutableFieldProps<T extends HTMLElement> = GenericImmutableFieldProps<T> & {
   ID?: string;
   listName?: string;
   index?: number;
-  componentProps?: Immutable.Map<string, any>;
   hideError?: boolean;
+  render?: (props: FieldRendererProps<T>) => JSX.Element;
+  parse?: (rawValue : any) => string | number | undefined;
 }
   
 export type ArrayRendererProps = {
@@ -178,6 +286,10 @@ export type TranslationMap = {
   [key: string]: string;
 };
 
+export type Words = {
+  [key: string]: any;
+};
+
 
 export type updateValuesStateOptions = {
   whatToSet : any;
@@ -190,3 +302,7 @@ export type verifyAllItemsFuncOptions = {
   formState: ImmutableFormState;
   management: ManagementState;
 }
+
+export type PartialPick<T, K extends keyof T> = {
+  [P in K]: T[P];
+};

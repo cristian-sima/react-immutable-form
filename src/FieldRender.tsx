@@ -1,40 +1,64 @@
 import Immutable from "immutable";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { FieldRendererProps } from "./types";
 import { REFERENCES_PATH } from "./util";
+
+type fieldValues = {
+  value: string | undefined;
+  references: number;
+  theError: string | undefined;
+  isTouched: boolean;
+  showError: boolean;
+}
 
 const 
   FieldRendererInner = (props: FieldRendererProps<HTMLInputElement>) => {
     const
       { indexFileName, idFileName, data = Immutable.Map(), handleBlur, handleChange, handleFocus } = props,
       renderCount = useRef(0),
-      value = data.get("value") || "",
-      meta = data.get("meta") || Immutable.Map(),
-      theError = meta.get("theError") as string | undefined,
-      isTouched = meta.get("isTouched") as boolean,
-      hasError = typeof theError !== "undefined",
-      showError = isTouched && hasError,
-      onFocus = (event : React.FocusEvent<HTMLInputElement, Element>) => {
+      { value, references, theError, showError } = React.useMemo<fieldValues>(() => {
+        const inner = {
+            value      : (data.get("value") || "") as string | undefined,
+            meta       : (data.get("meta") || Immutable.Map<string, any>()) as Immutable.Map<string, any>,
+            theError   : data.getIn(["meta", "theError"]) as string | undefined,
+            isTouched  : data.getIn(["meta", "isTouched"]) as boolean,
+            references : data.getIn(["meta",REFERENCES_PATH]) as number,
+            showError  : false,
+          },
+          hasError = typeof inner.theError !== "undefined";
+
+        inner.showError = inner.isTouched && hasError;
+
+        return inner;
+      }, [data]),
+
+      onFocus = useCallback((event : React.FocusEvent<HTMLInputElement, Element>) => {
         if (typeof props.customOnFocus === "function") {
           props.customOnFocus(event, handleFocus, idFileName, indexFileName);
         } else {
           handleFocus(idFileName, indexFileName);
         }
-      }, 
-      onBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+      }, [idFileName, indexFileName]), 
+      
+      onBlur = useCallback((event: React.FocusEvent<HTMLInputElement, Element>) => {
         if (typeof props.customOnBlur === "function") {
           props.customOnBlur(event, handleBlur, idFileName, indexFileName);
         } else {
           handleBlur(idFileName, indexFileName);
         }
-      },
-      onChange = (event: React.ChangeEvent<HTMLInputElement> ) => {
+      }, [idFileName, indexFileName]),
+
+      onChange = useCallback((event: React.ChangeEvent<HTMLInputElement> ) => {
         if (typeof props.customOnChange === "function") {
           props.customOnChange(event, handleChange, idFileName, indexFileName);
         } else {
-          handleChange(idFileName, event.target.value, indexFileName);
+          const parsedValue = typeof props.parse === "function" ? (
+            props.parse(event.target.value)
+          ) : event.target.value;
+
+          handleChange(idFileName, parsedValue, indexFileName);
         }
-      };
+      }, [idFileName, indexFileName]);
 
     React.useEffect(() => {
       renderCount.current += 1;
@@ -43,7 +67,7 @@ const
     return (
       <div>
         <span className="badge text-bg-primary">{renderCount.current}</span>
-        <span className="badge text-bg-danger">{meta.get(REFERENCES_PATH)}</span>
+        <span className="badge text-bg-danger">{references}</span>
         <input
           disabled={props.disabled}
           name={indexFileName}

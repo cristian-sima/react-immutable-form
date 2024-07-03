@@ -87,9 +87,9 @@ describe("FieldRegisterUpdaters", () => {
                 "0": Immutable.Map({
                   "VALUES": Immutable.Map({
                     "name": Immutable.Map({
-                      "path"  : "item.ABC.name",
-                      "value" : "",
-                      "meta"  : Immutable.Map({
+                      "idFieldName" : "item.ABC.name",
+                      "value"       : "",
+                      "meta"        : Immutable.Map({
                         "isTouched"    : false,
                         "theError"     : undefined,
                         "isFocused"    : false,
@@ -119,9 +119,9 @@ describe("FieldRegisterUpdaters", () => {
                 "0": Immutable.Map({
                   "VALUES": Immutable.Map({
                     "name": Immutable.Map({
-                      "path"  : "item.ABC.name",
-                      "value" : "",
-                      "meta"  : Immutable.Map({
+                      "idFieldName" : "item.ABC.name",
+                      "value"       : "",
+                      "meta"        : Immutable.Map({
                         "isTouched"    : false,
                         "theError"     : undefined,
                         "isFocused"    : false,
@@ -369,9 +369,9 @@ describe("handleRegisterField", () => {
       updatedFormData = handleRegisterField(formData, action);
 
     expect(updatedFormData.getIn(["state", "testField"])).toEqual(Immutable.Map({ 
-      "path"  : "testField",
-      "value" : "",
-      "meta"  : Immutable.Map ({
+      "idFieldName" : "testField",
+      "value"       : "",
+      "meta"        : Immutable.Map ({
         "isTouched"    : false,
         "theError"     : undefined,
         "isFocused"    : false,

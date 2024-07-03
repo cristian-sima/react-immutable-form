@@ -3,13 +3,13 @@ import Immutable from "immutable";
 import React, { useContext } from "react";
 import FieldRender from "./FieldRender";
 import FormContext from "./context";
-import { FieldProps, FieldRendererProps, ID_FieldName, INDEX_FieldName } from "./types";
+import { FieldRendererProps, ID_FieldName, INDEX_FieldName, ImmutableFieldProps } from "./types";
 import { getNodesFromString, getRealPath } from "./util";
 
 const 
-  FieldInner = <T extends HTMLElement>(props: FieldProps<T>) => {
+  FieldInner = <T extends HTMLElement>(props: ImmutableFieldProps<T>) => {
     const
-      { hideError, inputProps, component, validate, index, listName, ID,  componentProps } = props,
+      { hideError, inputProps, component, validate, index, listName, ID, componentProps, render } = props,
       form = useContext(FormContext),
       fieldName = props.name,
       hasIndex = typeof index !== "undefined",
@@ -20,17 +20,20 @@ const
         (hasIndex ? `${listName}.${ID}.${fieldName}` : fieldName) as ID_FieldName
       ), [hasIndex, listName, ID, fieldName]),
       isSubmitting = form.management.get("isSubmitting") as boolean,
+      showRenderCounts = form.management.get("showRenderCounts") === true,
   
       passedProps = React.useMemo(() => {
         const
           theProps : FieldRendererProps<T> = {
             hideError,
+            showRenderCounts,
             componentProps : props.componentProps,
             disabled       : isSubmitting,
             elementProps   : inputProps,
             indexFileName  : indexPath,
             idFileName,
             data,
+            parse          : props.parse,
             handleBlur     : form.handleBlur,
             handleChange   : form.handleChange,
             handleFocus    : form.handleFocus,
@@ -39,7 +42,7 @@ const
         return theProps;
       } , [componentProps, isSubmitting, indexPath, data, listName, index, hideError]),
   
-      memoizedFieldRenderer = React.useMemo(() => (
+      memoizedFieldRenderer = render ? render(passedProps) : React.useMemo(() => (
         component ? React.createElement(component, passedProps) : (
           <FieldRender {...passedProps as any} />
         )
@@ -75,9 +78,10 @@ const
  * @param {string} [props.listName] - Name of the list containing the field.
  * @param {string} props.ID - Unique identifier for the field.
  * @param {Object} [props.componentProps] - Additional props to pass to the custom component.
+ * @param {Function} [props.render] - Render function to customize field rendering.
  * 
  * @returns {JSX.Element} The Field component.
  */
-  Field = React.memo(FieldInner);
+  Field = React.memo(FieldInner) as <T extends HTMLElement>(props: ImmutableFieldProps<T>) => JSX.Element;
 
 export default Field;

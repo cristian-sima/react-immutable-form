@@ -5,6 +5,7 @@ import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, p
 
 
 export const 
+
   /** @intern */
   updateValuesState = (givenValues : Immutable.Map<string, any>, options : updateValuesStateOptions) => {
     const 
@@ -30,6 +31,7 @@ export const
 
     return setValueForArrays();
   },
+
   /** @intern */
   verifyAllItems = (verifyOptions : verifyAllItemsFuncOptions) => {
     
@@ -39,7 +41,7 @@ export const
     
     const 
       { validators, formState, management } = verifyOptions,
-      verifyItem = (item : Immutable.Map<string, any> , fieldKey : string  ) => {
+      verifyItem = (item : Immutable.Map<string, any>, fieldKey : string  ) => {
         const 
           rawNodes = getNodesFromString(fieldKey),
           nodes = getRealPath(rawNodes),
@@ -81,7 +83,7 @@ export const
 
                         if (shouldCheck) {
                           const
-                            managementPath = rowField.get("path"), managementNodes = getRealPath(getNodesFromString(managementPath)), hasReferences = management.hasIn(managementNodes);
+                            idFieldName = rowField.get("idFieldName"), managementNodes = getRealPath(getNodesFromString(idFieldName)), hasReferences = management.hasIn(managementNodes);
 
                           if (!hasReferences) {
                             return rowField;

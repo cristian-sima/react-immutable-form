@@ -1,5 +1,6 @@
-import { ImmutableFormSingleField, ImmutableFormState } from "./types";
+import { PartialPick as ExtractRequestedValues, ImmutableFormSingleField, ImmutableFormState } from "./types";
 import { ARRAY_VALUES_FIELD } from "./util";
+
 
 const    
 /**
@@ -32,10 +33,45 @@ const
   getArray = (formData : ImmutableFormState, fieldName : string) => (
     formData.getIn(["state", fieldName]) as ImmutableFormState
   ),
+
+  /**
+ * Extracts values from an Immutable.js Map based on specified keys and returns them as a partial object of type T.
+ * @param formState The Immutable.js Map representing the form state.
+ * @param keys List of keys whose values need to be extracted from formState.
+ * @returns A partial object of type T containing the extracted values.
+ */
+  getValues = <T, K extends keyof T>(formState: Immutable.Map<string, any>, keys: K[]): ExtractRequestedValues<T, K>  => {
+    const result = {} as any;
+  
+    keys.forEach((key : any) => {
+      const value = formState.getIn([key, "value"]) as T[keyof T] | undefined;
+  
+      if (typeof value !== "undefined") {
+        result[key] = value; 
+      }
+    });
+  
+    return result as ExtractRequestedValues<T, K>;
+  },
+
+  getValue = <T>(formState: Immutable.Map<string, any>, key : keyof T): (keyof T) | undefined => {
+    const 
+      value = formState.getIn([key as string, "value"]) as keyof T;
+
+    if (value !== undefined) {
+      return value; 
+    }
+
+    return undefined;
+  },
+
+
   immutableGetters = {
     getArrayRowFieldValue,
     getSingleField,
     getArray,
+    getValue,
+    getRequestedValues: getValues,
   };
 
 export default immutableGetters;

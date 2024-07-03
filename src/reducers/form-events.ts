@@ -2,11 +2,12 @@
 
 import Immutable from "immutable";
 import { ImmutableFormState } from "../types";
-import { FormSetIsSubmitting } from "../types-actions";
+import { FormSetDerivedState, FormSetIsSubmitting } from "../types-actions";
 import { verifyAllItems } from "./form-events-util";
 
-/** @intern */
 export const 
+
+  /** @intern */
   handleFormOnSubmit = (formData : ImmutableFormState) => {
     const 
       validationResult = verifyAllItems({
@@ -23,6 +24,8 @@ export const
         "errors"        : validationResult.errors,
       }));
   },
+
+  /** @intern */
   handleFormSubmitHandled = (formData : ImmutableFormState) => (
     formData
       .mergeDeepIn(["management"], Immutable.Map({
@@ -32,10 +35,18 @@ export const
         "errors"        : undefined,
       }))
   ),
+
+  /** @intern */
   setFormIsSubmitting = (formData : ImmutableFormState, action : FormSetIsSubmitting) => (
     formData
       .mergeDeepIn(["management"], Immutable.Map({
         "isSubmitting" : action.payload.isSubmitting,
         "formError"    : action.payload.error || undefined,
       }))
+  ),
+
+  /** @intern */
+  setFormDerivedState = (formData : ImmutableFormState, action : FormSetDerivedState) => (
+    formData
+      .mergeDeepIn(["derived"], action.payload)
   );

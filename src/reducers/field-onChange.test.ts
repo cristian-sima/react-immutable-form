@@ -211,17 +211,17 @@ describe("Field onChange", () => {
     const getInitialState = () => Immutable.fromJS({
       state: {
         field1: {
-          value : "value1",
-          path  : "field1",
-          meta  : {
+          value       : "value1",
+          idFieldName : "field1",
+          meta        : {
             initialValue : "value1",
             theError     : undefined,
           },
         },
         field2: {
-          value : "",
-          path  : "field2",
-          meta  : {
+          value       : "",
+          idFieldName : "field2",
+          meta        : {
             theError     : undefined,
             initialValue : "",
             isDirty      : false,

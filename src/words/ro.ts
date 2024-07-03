@@ -2,6 +2,12 @@ import { TranslationMap } from "../types";
 
 const 
   fieldsToDescriptions = {
+    "CountryID"           : "Țară",
+    "CountyID"            : "Județ",
+    "CityID"              : "Oraș",
+    "ExternNid"           : "Cod VAT",
+    "CityName"            : "Nume oraș",
+    "EntityNid"           : "Cod unic fiscal",
     "SerialID"            : "Serie",
     "Serial"              : "Serie",
     "Date"                : "Dată",

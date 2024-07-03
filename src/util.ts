@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 import Immutable from "immutable";
-import { ImmutableFormState, ImmutableFormValidators, InitialValues, Nodes, ValidationResult } from "./types";
+import { ID_FieldName, ImmutableFormState, ImmutableFormValidators, InitialValues, Nodes, ValidationResult } from "./types";
 
 export const 
   /**
@@ -68,17 +68,17 @@ export const
    * Creates a default field configuration.
    *
    * This function creates a default field configuration as an Immutable Map, including
-   * the specified name, value, and optional path. It also initializes metadata fields.
+   * the specified name, value, and optional idFieldName. It also initializes metadata fields.
    *
    * @param name - The name of the field.
    * @param value - The value of the field.
-   * @param path - The path of the field (optional, defaults to the name).
+   * @param idFieldName - The idFieldName of the field (optional, defaults to the name).
    * @returns A default field configuration as an Immutable Map.
    * @internal
    */
-  getDefaultField = (name : string, value: string, path : string = name) => (
+  getDefaultField = (indexFieldName : string, value: string, idFieldName : ID_FieldName = indexFieldName as ID_FieldName) => (
     Immutable.Map({
-      path,
+      idFieldName,
       value,
       meta: Immutable.Map({
         isTouched    : false,
@@ -99,14 +99,14 @@ export const
    * @internal
    */
   createRowValues = (ID: string, target: Immutable.Map<string, any>, listName : string) => Immutable.Map((
-    target.reduce((rowAcc, rowFieldDefaultValue, rowFieldName) => {
+    target.reduce((rowAcc, rowFieldDefaultValue, indexFieldName) => {
       const 
-        path = `${listName}.${ID}.${rowFieldName}`,
+        idFieldName = `${listName}.${ID}.${indexFieldName}` as ID_FieldName,
         givenValue = rowFieldDefaultValue || "",
-        rowField = getDefaultField(rowFieldName, givenValue, path);
+        rowField = getDefaultField(indexFieldName, givenValue, idFieldName);
 
       return (
-        rowAcc.set(rowFieldName, rowField)
+        rowAcc.set(indexFieldName, rowField)
       );
     }, Immutable.Map() as InitialValues)
   )),

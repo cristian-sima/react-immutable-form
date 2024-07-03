@@ -6,7 +6,7 @@ import { FieldEventRegisterFieldAction } from "../types-actions";
 import { REFERENCES_PATH, getDefaultField, getIndexPathForRowValues, getNodesFromString, getRealPath } from "../util";
   
 /** @intern */
-export type fieldRegisterGenericWrapperOptions = {
+type fieldRegisterGenericWrapperOptions = {
   indexFieldName: INDEX_FieldName;
   idFieldName : ID_FieldName;
   nodes: Nodes;

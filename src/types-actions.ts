@@ -1,3 +1,4 @@
+import Immutable from "immutable";
 import { ID_FieldName, INDEX_FieldName, ImmutableFormValidatorFunc } from "./types";
 
 export type FieldEventOnFocusAction = {
@@ -59,14 +60,19 @@ export type ArrayEventRemove = {
     ID: string;
   };
 }
+
+export type FormSetDerivedState = {
+  type: "form-set-derived-state",
+  payload: Immutable.Map<string, any>;
+}
   
 // form 
   
-export type FormEventOnSubmit = {
+type FormEventOnSubmit = {
   type: "form-event-onSubmit",
 }
   
-export type FormEventSubmitHandled = {
+type FormEventSubmitHandled = {
   type: "form-event-submitHandled",
 }
 
@@ -86,6 +92,11 @@ export type FormSetIsSubmitting = {
   };
 }
 
+type FormResetToDefault = {
+  type:  "form-reset-to-default",
+  payload: Immutable.Map<string, any>;
+}
+
 export type ImmutableFormActions = 
   // field
   FieldEventOnFocusAction | 
@@ -101,4 +112,6 @@ export type ImmutableFormActions =
   FormEventOnSubmit |
   FormSetFieldValidator |
   FormEventSubmitHandled |
-  FormSetIsSubmitting
+  FormSetIsSubmitting |
+  FormSetDerivedState |
+  FormResetToDefault
