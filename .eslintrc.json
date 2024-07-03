@@ -32,25 +32,12 @@
     ],
     "max-len": 0,
     "no-empty-function": 0,
-    "new-cap": [
-      2,
-      {
-        "capIsNewExceptions": [
-          "List",
-          "Map",
-          "OrderedList",
-          "OrderedMap",
-          "OrderedSet",
-          "Record",
-          "Stack"
-        ]
-      }
-    ],
     "one-var": [
       "error",
       "consecutive"
     ],
     "camelcase": 0,
+    "new-cap": 0,
     "max-lines": [
       2,
       600

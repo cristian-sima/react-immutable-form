@@ -4,7 +4,7 @@
   "description": "react-immutable-form the [i]mmutable form library for react - using hooks",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "load": "npm run intern-pre && cd dist && npm run ts && npm run intern-copy && npm publish",
+    "load": "npm run intern-pre && cd dist && npm run ts && npm run intern-copy && npm run clean-dist && npm publish",
     "load-beta": "npm run intern-pre && cd dist && npm run ts && npm run intern-copy && npm publish --tag beta",
     "eslint": "eslint --ext .tsx,.ts src --fix",
     "intern-pre": "npm run eslint && npm run intern-clean && npm run intern-build",
@@ -21,6 +21,7 @@
     "depcheck": "depcheck --ignores=@docusaurus/react-loadable,webpack-cli,@hot-loader/react-dom --ignore-patterns=server,node_modules,tmp,fonts",
     "check:global": "npm-check -gu",
     "ts:check": "tsc --noEmit",
+    "clean-dist": "rimraf ./**/*.test.*",
     "ts": "tsc --declaration"
   },
   "repository": {
