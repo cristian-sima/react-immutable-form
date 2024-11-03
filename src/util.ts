@@ -3,12 +3,12 @@ import Immutable from "immutable";
 import { ID_FieldName, ImmutableFormState, ImmutableFormValidators, InitialValues, Nodes, ValidationResult } from "./types";
 
 export const 
-  /**
-   * The default error that can be returned by onSubmit 
-   * @see onSubmit
-   * 
-   */
-  FORM_ERROR = "REACT_IMMUTABLE_FORM/error",
+  // /**
+  //  * The default error that can be returned by onSubmit 
+  //  * @see onSubmit
+  //  * 
+  //  */
+  // FORM_ERROR = "REACT_IMMUTABLE_FORM/error",
 
   /**
    * The field name for the references in the management state

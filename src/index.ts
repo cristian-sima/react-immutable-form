@@ -1,13 +1,12 @@
-import { default as ImmutableField } from "./Field";
-import { default as ImmutableFieldRenderer } from "./FieldRender";
-import { default as ImmutableFormArray } from "./FormArray";
-import { default as ImmutableForm } from "./ImmutableForm";
-import { default as ImmutableFormContext } from "./context";
-import { default as ImmutableFormError } from "./error";
-import { default as immutableGetters } from "./getters";
-import { default as useImmutableForm } from "./useImmutableForm";
+export { default as ImmutableFormError } from "./error";
 
-export {
-  ImmutableField, ImmutableFieldRenderer, ImmutableForm, ImmutableFormArray, ImmutableFormContext, ImmutableFormError, immutableGetters, useImmutableForm,
-};
+export { default as ImmutableFormContext } from "./context";
+export { default as ImmutableFieldRenderer } from "./FieldRender";
+export { default as ImmutableFormArray } from "./FormArray";
+export { default as immutableGetters } from "./getters";
+export { default as language } from "./words";
+
+export { default as ImmutableField } from "./Field";
+export { default as ImmutableForm } from "./ImmutableForm";
+export { default as useImmutableForm } from "./useImmutableForm";
 

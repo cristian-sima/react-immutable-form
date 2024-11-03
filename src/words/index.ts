@@ -1,4 +1,5 @@
 import { TranslationMap, Words } from "../types";
+import romanianWords from "./ro";
 
 let 
   words = {
@@ -11,11 +12,20 @@ let
     "FIELDS_TO_DESCRIPTIONS"  : {} as TranslationMap,
   };
 
-export const 
-  setWords = ((newWords : Words) => {
+const 
+  setCustomLanguage = ((newWords : Words) => {
     words = {
       ...words,
       ...newWords,
     };
   }),
-  getWords = () => words;
+  getWords = () => words,
+  language = {
+    setCustomLanguage,
+    getWords,
+    customLanguage: {
+      romanianWords,
+    },
+  };
+
+export default language;

@@ -1,7 +1,7 @@
 import Immutable from "immutable";
 import { ImmutableFormActions } from "./types-actions";
 
-export interface ImmutableFormInterface<T> { readonly form :  ImmutableFormHandlers<T>}
+// interface ImmutableFormInterface<T> { readonly form :  ImmutableFormHandlers<T>}
 
 export type ImmutableFormProps<T> = ImmutableFormOptions & {
   children: ((props: ImmutableFormHandlers<T>) => React.ReactNode) | React.ReactElement<ImmutableFormHandlers<T>>;
@@ -110,8 +110,9 @@ export type ManagementState = Immutable.Map<string, any>;
 
 export type ImmutableFormSingleField = Immutable.Map<string, any>;
 
-export type ImmutableFormArray =  Immutable.List<ImmutableFormSingleField>
-export type ImmutableFormField = ImmutableFormSingleField
+// export type ImmutableFormArray =  Immutable.List<ImmutableFormSingleField>
+
+// export type ImmutableFormField = ImmutableFormSingleField
   
 export type ValidationResult = string | undefined;
   
@@ -152,13 +153,13 @@ export type HandleChangeFunc = (idFieldName: string, value: any, indexFieldName?
 export type HandleBlurFunc = (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
 export type HandleFocusFunc =  (idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => void;
   
-export type FormMutators = {
+type FormMutators = {
   readonly setFieldValidator: (idFieldName: ID_FieldName, validator: ImmutableFormValidatorFunc) => void;
   readonly registerField: (idFieldName: ID_FieldName, name : INDEX_FieldName) => void;
   readonly unregisterField: (idFieldName: ID_FieldName, name : INDEX_FieldName) => void;
 }
   
-export type Getters = {
+type Getters = {
   getFieldState: (idFieldName: ID_FieldName) => Immutable.Map<string, any>;
   getFormData: () => Immutable.Map<string, any>;
 }
@@ -214,7 +215,7 @@ export type ImmutableFormHandlers<T> = {
 } & ArrayMutators & FieldMutators & FormMutators & Getters;
   
 // fields 
-export type FieldMutators = {
+type FieldMutators = {
   readonly handleChange: HandleChangeFunc;
   readonly handleFocus:HandleFocusFunc;
   readonly handleBlur: HandleBlurFunc;
@@ -226,7 +227,7 @@ export type InputProps<T extends HTMLElement> = T extends HTMLInputElement
     ? React.TextareaHTMLAttributes<T> & { ref?: React.RefObject<T> }
     : React.HTMLAttributes<T> & { ref?: React.RefObject<T> };
 
-export type GenericImmutableFieldProps<T extends HTMLElement> = {
+type GenericImmutableFieldProps<T extends HTMLElement> = {
   component?: React.JSXElementConstructor<FieldRendererProps<T> & any>;
   componentProps?: any;
   readonly name: string;
@@ -375,7 +376,7 @@ export type FormArrayProps = {
   readonly children: (props: ArrayRendererProps) => any;
 }
   
-export type ArrayMutators = {
+type ArrayMutators = {
   handleArrayAdd: (listName : string, value: Immutable.Map<string, any>) => void;
   handleArrayRemove: (listName: any, index: any) => void;
 }

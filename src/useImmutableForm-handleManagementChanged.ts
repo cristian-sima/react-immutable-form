@@ -1,7 +1,7 @@
 import ImmutableFormError from "./error";
 import { ImmutableFormHandlers, ImmutableFormOptions, onSubmitImmutableFormFunc } from "./types";
 import { ImmutableFormActions } from "./types-actions";
-import { getWords } from "./words";
+import language from "./words";
 
 /**
  * Additional options for handling form management changes.
@@ -45,7 +45,7 @@ export const
                     if (error instanceof ImmutableFormError) {
                       setError(error.message);
                     } else {
-                      setError(getWords().SOMETHING_WENT_WRONG);
+                      setError(language.getWords().SOMETHING_WENT_WRONG);
                     }
                   }
                 });
@@ -62,7 +62,7 @@ export const
           try {
             handleNoError();
           } catch (err) {
-            setError(getWords().SOMETHING_WENT_WRONG);
+            setError(language.getWords().SOMETHING_WENT_WRONG);
           } 
         }
       };
