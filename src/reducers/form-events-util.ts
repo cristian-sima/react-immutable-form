@@ -3,9 +3,7 @@ import Immutable from "immutable";
 import { ValidationResult, updateValuesStateOptions, verifyAllItemsFuncOptions } from "../types";
 import { ARRAY_VALUES_FIELD, REFERENCES_PATH, getNodesFromString, getRealPath, performValidation } from "../util";
 
-
-export const 
-
+const 
   /** @intern */
   updateValuesState = (givenValues : Immutable.Map<string, any>, options : updateValuesStateOptions) => {
     const 
@@ -30,8 +28,9 @@ export const
     }
 
     return setValueForArrays();
-  },
+  };
 
+export const 
   /** @intern */
   verifyAllItems = (verifyOptions : verifyAllItemsFuncOptions) => {
     

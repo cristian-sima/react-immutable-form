@@ -14,7 +14,7 @@ var config = {
 
       {
         test : /\.scss$/u,
-        use  : ["style-loader", "css-loader", "sass-loader"],
+        use  : ["style-loader", "css-loader"],
       },
       {
         test : /\.css$/u,

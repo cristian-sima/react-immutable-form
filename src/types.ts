@@ -236,21 +236,120 @@ export type GenericImmutableFieldProps<T extends HTMLElement> = {
 
 
 export type FieldRendererProps<T extends HTMLElement> = FieldMutators & {
-  // passed automatically 
+  /**
+   * Enables display of the component's render count, primarily for performance measurement
+   * during development. Displays the number of times the component has re-rendered.
+   * Note: This should not be enabled in production environments.
+   */
   readonly showRenderCounts?: boolean;
+
+  /**
+   * Specifies whether the input is disabled, preventing any interaction.
+   * - `true`: The input is disabled.
+   * - `false`: The input is enabled.
+   */
   readonly disabled: boolean;
+
+  /**
+   * A unique identifier representing the file index for reference in operations or events.
+   */
   readonly indexFileName: INDEX_FieldName;
+
+  /**
+   * A unique identifier representing the file name for reference in operations or events.
+   */
   readonly idFileName: ID_FieldName;
+
+  /**
+   * An object containing the data associated with the component, represented as
+   * an immutable map. Keys are strings, and values can be any data type.
+   */
   readonly data: Immutable.Map<string, any>;
-  readonly customOnBlur?: (event: React.FocusEvent<T, Element>, handleBlur: HandleBlurFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
-  readonly customOnFocus?: (event: React.FocusEvent<T, Element>, handleFocus: HandleFocusFunc, idFieldName: ID_FieldName, indexFieldName : INDEX_FieldName) => any;
-  readonly customOnChange?: (event: React.ChangeEvent<T>, handleChange: HandleChangeFunc, idFileName: ID_FieldName, indexFileName: INDEX_FieldName) => any;
+
+  /**
+   * Allows customization of the `onBlur` event. When using this function,
+   * you must manually invoke `handleBlur` as it will not be called automatically.
+   *
+   * Call `handleBlur` in the following format:
+   * `handleBlur(idFieldName, indexFieldName);`
+   *
+   * @param event - The blur event triggering this function.
+   * @param handleBlur - The blur handler function, called with `idFieldName` and `indexFieldName`.
+   * @param idFieldName - The identifier associated with the field name.
+   * @param indexFieldName - The index or key associated with the field name.
+   * @returns Any result, if applicable.
+   */
+  readonly customOnBlur?: (
+    event: React.FocusEvent<T, Element>, 
+    handleBlur: HandleBlurFunc, 
+    idFieldName: ID_FieldName, 
+    indexFieldName: INDEX_FieldName
+  ) => any;
+
+  /**
+   * Allows customization of the `onFocus` event. When using this function,
+   * you must manually invoke `handleFocus` as it will not be called automatically.
+   *
+   * Call `handleFocus` in the following format:
+   * `handleFocus(idFieldName, indexFieldName);`
+   *
+   * @param event - The focus event triggering this function.
+   * @param handleFocus - The focus handler function, called with `idFieldName` and `indexFieldName`.
+   * @param idFieldName - The identifier associated with the field name.
+   * @param indexFieldName - The index or key associated with the field name.
+   * @returns Any result, if applicable.
+   */
+  readonly customOnFocus?: (
+    event: React.FocusEvent<T, Element>, 
+    handleFocus: HandleFocusFunc, 
+    idFieldName: ID_FieldName, 
+    indexFieldName: INDEX_FieldName
+  ) => any;
+
+  /**
+   * Customize the behavior of the `customOnChange` event. When implementing this function,
+   * ensure that `handleChange` is called manually, as it will not be invoked automatically.
+   *
+   * To call `handleChange`, use the following format:
+   * `handleChange(idFileName, parsedValue, indexFileName);`
+   * - Here, only `parsedValue` is required as the primary argument; other parameters should align with the expected types.
+   *
+   * @param event - The change event triggering this function.
+   * @param handleChange - The handler function to apply the parsed value. Call this function 
+   * with `idFileName`, `parsedValue`, and `indexFileName` as needed.
+   * @param idFileName - The identifier associated with the file name field.
+   * @param indexFileName - The index or key associated with the file name field.
+   * @returns Any result, if applicable.
+   */
+  readonly customOnChange?: (
+    event: React.ChangeEvent<T>, 
+    handleChange: HandleChangeFunc, 
+    idFileName: ID_FieldName, 
+    indexFileName: INDEX_FieldName
+  ) => any;
 
   // custom 
   readonly elementProps?: InputProps<T>;
   readonly componentProps?: Immutable.Map<string, any>;
+  
+  /**
+   * Determines whether the component should automatically display error messages.
+   * - `true`: Errors will be hidden.
+   * - `false` (default): Errors will be displayed automatically.
+   */
   readonly hideError?: boolean;
-  readonly parse?: (rawValue : any) => string | number | undefined;
+
+  /**
+   * A function to format the value whenever an `onChange` event is fired.
+   * - If provided, `parse` receives the raw value from the event and returns a formatted value.
+   * - Unlike `customOnChange`, which customizes the entire event, `parse` is a simple formatter
+   *   focused solely on transforming the raw input value.
+   *
+   * @param rawValue - The raw value from the event.
+   * @returns A formatted value as a `string`, `number`, or `undefined`.
+   */
+  readonly parse?: (rawValue: any) => string | number | undefined;
+
 };
   
 // arrays

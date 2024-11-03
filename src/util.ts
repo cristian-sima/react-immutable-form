@@ -23,14 +23,62 @@ export const
    *  @internal 
    */
   ARRAY_VALUES_FIELD = "VALUES",
-  
+
   /**
    * The default value when there is no error
    * 
    *  @internal 
    */
   DEFAULT_VALUE_NO_ERROR = undefined,
+  /**
+   * Creates a default field configuration.
+   *
+   * This function creates a default field configuration as an Immutable Map, including
+   * the specified name, value, and optional idFieldName. It also initializes metadata fields.
+   *
+   * @param name - The name of the field.
+   * @param value - The value of the field.
+   * @param idFieldName - The idFieldName of the field (optional, defaults to the name).
+   * @returns A default field configuration as an Immutable Map.
+   * @internal
+   */
+  getDefaultField = (indexFieldName : string, value: string, idFieldName : ID_FieldName = indexFieldName as ID_FieldName) => (
+    Immutable.Map({
+      idFieldName,
+      value,
+      meta: Immutable.Map({
+        isTouched    : false,
+        theError     : DEFAULT_VALUE_NO_ERROR,
+        isFocused    : false,
+        initialValue : value,
+        isDirty      : false,
+      }),
+    })
+  );
 
+const 
+  /**
+   * Creates row values for a specific ID within a target map, using the provided list name.
+   * @param ID The identifier for the row.
+   * @param target The target map containing existing data.
+   * @param listName The name of the list containing the rows.
+   * @returns An Immutable.Map containing the row values.
+   * @internal
+   */
+  createRowValues = (ID: string, target: Immutable.Map<string, any>, listName : string) => Immutable.Map((
+    target.reduce((rowAcc, rowFieldDefaultValue, indexFieldName) => {
+      const 
+        idFieldName = `${listName}.${ID}.${indexFieldName}` as ID_FieldName,
+        givenValue = rowFieldDefaultValue || "",
+        rowField = getDefaultField(indexFieldName, givenValue, idFieldName);
+
+      return (
+        rowAcc.set(indexFieldName, rowField)
+      );
+    }, Immutable.Map() as InitialValues)
+  ));
+
+export const 
   /**
    * Converts a dot-separated string representation of nodes into an ImmutableJS List.
    *
@@ -63,53 +111,6 @@ export const
       nodes.insert(nodes.size - 1, ARRAY_VALUES_FIELD)
     )
   ),
-
-  /**
-   * Creates a default field configuration.
-   *
-   * This function creates a default field configuration as an Immutable Map, including
-   * the specified name, value, and optional idFieldName. It also initializes metadata fields.
-   *
-   * @param name - The name of the field.
-   * @param value - The value of the field.
-   * @param idFieldName - The idFieldName of the field (optional, defaults to the name).
-   * @returns A default field configuration as an Immutable Map.
-   * @internal
-   */
-  getDefaultField = (indexFieldName : string, value: string, idFieldName : ID_FieldName = indexFieldName as ID_FieldName) => (
-    Immutable.Map({
-      idFieldName,
-      value,
-      meta: Immutable.Map({
-        isTouched    : false,
-        theError     : DEFAULT_VALUE_NO_ERROR,
-        isFocused    : false,
-        initialValue : value,
-        isDirty      : false,
-      }),
-    })
-  ),
-
-  /**
-   * Creates row values for a specific ID within a target map, using the provided list name.
-   * @param ID The identifier for the row.
-   * @param target The target map containing existing data.
-   * @param listName The name of the list containing the rows.
-   * @returns An Immutable.Map containing the row values.
-   * @internal
-   */
-  createRowValues = (ID: string, target: Immutable.Map<string, any>, listName : string) => Immutable.Map((
-    target.reduce((rowAcc, rowFieldDefaultValue, indexFieldName) => {
-      const 
-        idFieldName = `${listName}.${ID}.${indexFieldName}` as ID_FieldName,
-        givenValue = rowFieldDefaultValue || "",
-        rowField = getDefaultField(indexFieldName, givenValue, idFieldName);
-
-      return (
-        rowAcc.set(indexFieldName, rowField)
-      );
-    }, Immutable.Map() as InitialValues)
-  )),
 
 
   /**

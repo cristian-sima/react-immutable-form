@@ -1,0 +1,17 @@
+{
+    "entry": [
+        "src/index.ts",
+        "webpack.config.js",
+        "webpack-dev-server.js"
+    ],
+    "project": [
+        "src/**",
+        "client/_config/**",
+        "webpack.config.js",
+        "webpack-dev-server.js"
+    ],
+    "ignoreDependencies": [],
+    "ignore": [
+        "src/Examples/**"
+    ]
+}
