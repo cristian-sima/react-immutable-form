@@ -13,10 +13,12 @@ let
   };
 
 const 
-  setCustomLanguage = ((newWords : Words) => {
+  setCustomLanguage = ((newWords : Words, fieldsTranslation : TranslationMap) => {
     words = {
       ...words,
       ...newWords,
+
+      FIELDS_TO_DESCRIPTIONS: fieldsTranslation,
     };
   }),
   getWords = () => words,
