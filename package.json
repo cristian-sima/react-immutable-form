@@ -1,15 +1,17 @@
 {
-  "version": "1.1.8",
+  "version": "1.1.11",
   "name": "react-immutable-form",
+  "type": "module",
   "description": "react-immutable-form the [i]mmutable form library for react - using hooks",
-  "types": "./dist/index.d.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
-    "load": "npm run intern-pre && cd dist && npm run ts && npm run intern-copy && npm run clean-dist && npm publish",
-    "load-beta": "npm run intern-pre && cd dist && npm run ts && npm run intern-copy && npm publish --tag beta",
+    "load": "npm run intern-pre && npm run ts && npm run intern-copy && npm publish ./dist",
+    "load-beta": "npm run intern-pre && npm run ts && npm run intern-copy && npm publish ./dist --tag beta",
     "eslint": "eslint --ext .tsx,.ts src --fix",
     "intern-pre": "npm run eslint && npm run intern-clean && npm run intern-build",
     "knip": "knip --include-libs",
-    "intern-build-scss": "node-sass --output-style compressed src -o dist",
+    "intern-build-scss": "sass --style=compressed --no-source-map src:dist",
     "intern-copy": " copy package.json dist",
     "lint": "npm run knip && npm run test-once && npm run ts:check & npm run eslint",
     "intern-build": "npm run intern-build-scss",
@@ -23,7 +25,7 @@
     "check:global": "npm-check -gu",
     "ts:check": "tsc --noEmit",
     "clean-dist": "trash \"./**/*.test.*\"",
-    "ts": "tsc --declaration"
+    "ts": "tsc --declaration && node script/fix-esm-imports.cjs"
   },
   "repository": {
     "type": "git",
@@ -98,7 +100,7 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-react": "^7.33.2",
     "knip": "^5.36.2",
-    "node-sass": "^9.0.0",
+    "sass": "^1.98.0",
     "npm-check": "^6.0.1",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.1",
@@ -111,6 +113,6 @@
   },
   "dependencies": {
     "immutable": "^4.3.4",
-    "react": "^17.0.2"
+    "react": "^18.3.1"
   }
 }
