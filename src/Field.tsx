@@ -82,6 +82,6 @@ const
  * 
  * @returns {JSX.Element} The Field component.
  */
-  Field = React.memo(FieldInner) as <T extends HTMLElement>(props: ImmutableFieldProps<T>) => JSX.Element;
+  Field = React.memo(FieldInner) as <T extends HTMLElement>(props: ImmutableFieldProps<T>) => React.JSX.Element;
 
 export default Field;

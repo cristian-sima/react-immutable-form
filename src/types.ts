@@ -222,10 +222,10 @@ type FieldMutators = {
 }
   
 export type InputProps<T extends HTMLElement> = T extends HTMLInputElement
-  ? React.InputHTMLAttributes<T> & { ref?: React.RefObject<T> }
+  ? React.InputHTMLAttributes<T> & { ref?: React.RefObject<T | null> }
   : T extends HTMLTextAreaElement
-    ? React.TextareaHTMLAttributes<T> & { ref?: React.RefObject<T> }
-    : React.HTMLAttributes<T> & { ref?: React.RefObject<T> };
+    ? React.TextareaHTMLAttributes<T> & { ref?: React.RefObject<T | null> }
+    : React.HTMLAttributes<T> & { ref?: React.RefObject<T | null> };
 
 type GenericImmutableFieldProps<T extends HTMLElement> = {
   component?: React.JSXElementConstructor<FieldRendererProps<T> & any>;
@@ -360,7 +360,7 @@ export type ImmutableFieldProps<T extends HTMLElement> = GenericImmutableFieldPr
   listName?: string;
   index?: number;
   hideError?: boolean;
-  render?: (props: FieldRendererProps<T>) => JSX.Element;
+  render?: (props: FieldRendererProps<T>) => React.JSX.Element;
   parse?: (rawValue : any) => string | number | undefined;
 }
   
