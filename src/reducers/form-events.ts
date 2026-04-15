@@ -18,7 +18,7 @@ export const
       
     return formData
       .set("state", validationResult.newFormState)
-      .mergeDeepIn(["management"], Immutable.Map({
+      .mergeIn(["management"], Immutable.Map({
         "readyToSubmit" : true,
         "values"        : validationResult.values,
         "errors"        : validationResult.errors,
@@ -28,7 +28,7 @@ export const
   /** @intern */
   handleFormSubmitHandled = (formData : ImmutableFormState) => (
     formData
-      .mergeDeepIn(["management"], Immutable.Map({
+      .mergeIn(["management"], Immutable.Map({
         "formError"     : undefined,
         "readyToSubmit" : false,
         "values"        : undefined,
@@ -39,7 +39,7 @@ export const
   /** @intern */
   setFormIsSubmitting = (formData : ImmutableFormState, action : FormSetIsSubmitting) => (
     formData
-      .mergeDeepIn(["management"], Immutable.Map({
+      .mergeIn(["management"], Immutable.Map({
         "isSubmitting" : action.payload.isSubmitting,
         "formError"    : action.payload.error || undefined,
       }))
@@ -48,5 +48,5 @@ export const
   /** @intern */
   setFormDerivedState = (formData : ImmutableFormState, action : FormSetDerivedState) => (
     formData
-      .mergeDeepIn(["derived"], action.payload)
+      .mergeIn(["derived"], action.payload)
   );

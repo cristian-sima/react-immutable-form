@@ -58,18 +58,16 @@ export class FieldOnChangeUpdaters {
           return getDefaultField(indexFieldName, value);
         }
 
-        const 
+        const
           initialValue = currentNode.getIn(["meta", "initialValue"]) as any,
-          isDirty =  initialValue !== value,
-          nodeDeepMerger = Immutable.fromJS({
-            value,
-            meta: Immutable.Map({
-              theError: validatorErr,
-              isDirty   ,
-            }),
-          });
-  
-        return currentNode.mergeDeep(nodeDeepMerger);
+          isDirty =  initialValue !== value;
+
+        return currentNode.
+          set("value", value).
+          mergeIn(["meta"], Immutable.Map({
+            theError: validatorErr,
+            isDirty,
+          }));
       };
 
     givenFormData.updateIn(["state", ...nodes], (

@@ -55,7 +55,7 @@ export const
           errors = errors.setIn(rawNodes, validatorErr);
 
           return item.withMutations((state) => {
-            state.mergeDeepIn(["meta"], Immutable.fromJS({
+            state.mergeIn(["meta"], Immutable.fromJS({
               isTouched : true,
               theError  : validatorErr,
             }));

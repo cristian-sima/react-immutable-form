@@ -1,5 +1,5 @@
 {
-  "version": "19.0.1",
+  "version": "19.0.2",
   "name": "react-immutable-form",
   "type": "module",
   "description": "react-immutable-form the [i]mmutable form library for react - using hooks",

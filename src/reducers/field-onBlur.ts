@@ -19,7 +19,7 @@ export const
           theNode = formState.getIn(nodes) as Immutable.Map<string, any> | undefined,
           hasNode = () => (
             formState.withMutations((state) =>
-              state.mergeDeepIn([...nodes, "meta"], Immutable.fromJS({
+              state.mergeIn([...nodes, "meta"], Immutable.fromJS({
                 isTouched : true,
                 isFocused : false,
                 theError  : validatorErr,
@@ -29,7 +29,7 @@ export const
           nodeIsNotPresent = () => {
             const elementDefaultValue = (
               getDefaultField(indexFieldName, "").withMutations((state) => {
-                state.mergeDeepIn(["meta"], Immutable.fromJS({
+                state.mergeIn(["meta"], Immutable.fromJS({
                   isTouched : true,
                   isFocused : false,
                   theError  : validatorErr,

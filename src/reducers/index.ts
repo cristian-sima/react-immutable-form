@@ -99,7 +99,7 @@ export const
   /** @internal */
   getInitialState = (options : ImmutableFormOptions) => {
     const 
-      management =  getDefaultManagement().mergeDeep(
+      management =  getDefaultManagement().merge(
         options.management || Immutable.Map<string, any>(),
       ),
       validationDependencies = options.validationDependencies || Immutable.Map<string, any>(),
