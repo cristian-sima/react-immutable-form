@@ -1,5 +1,16 @@
 {
+    "version": "0.2",
+    "language": "en,ro-RO",
+    "import": [
+        "@cspell/dict-ro-ro/cspell-ext.json"
+    ],
     "ignorePaths": [
+        ".*/**",
+        "node_modules/**",
+        "dist/**",
+        "docs/**",
+        "garbage/**",
+        "package-lock.json",
         "./src/utility/languages/ro.ts"
     ],
     "words": [
